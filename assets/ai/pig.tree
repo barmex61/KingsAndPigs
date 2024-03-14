@@ -1,0 +1,34 @@
+#Actions
+import idle:"com.fatih.kingsofpigs.ai.Idle"
+import jump:"com.fatih.kingsofpigs.ai.Jump"
+import fall:"com.fatih.kingsofpigs.ai.Fall"
+import throwBox:"com.fatih.kingsofpigs.ai.ThrowBox"
+import throwBomb:"com.fatih.kingsofpigs.ai.ThrowBomb"
+import meleeAttack:"com.fatih.kingsofpigs.ai.MeleeAttack"
+
+#Conditions
+import isJumping?:"com.fatih.kingsofpigs.ai.IsJumping"
+import isFalling?:"com.fatih.kingsofpigs.ai.IsFalling"
+import isMeleeAttack?:"com.fatih.kingsofpigs.ai.IsMeleeAttack"
+import isRangeAttack?:"com.fatih.kingsofpigs.ai.IsRangeAttack"
+import canAttack?:"com.fatih.kingsofpigs.ai.CanAttack"
+import isEnemyNearby?:"com.fatih.kingsofpigs.ai.IsEnemyNearby"
+import isPigBox?:"com.fatih.kingsofpigs.ai.IsPigBox"
+import isPigBomb?:"com.fatih.kingsofpigs.ai.IsPigBomb"
+
+subtree name : "rangeAttack"
+    selector
+        (isPigBox?) throwBox
+        (isPigBomb?) throwBomb
+
+subtree name : "attack"
+    selector
+        (isRangeAttack?) $rangeAttack
+        (isMeleeAttack?) meleeAttack
+
+root
+    selector
+        (isJumping?) jump
+        (isFalling?) fall
+        (isEnemyNearby?)(canAttack?) $attack
+        (random success:0.25) idle duration:"uniform,1.5,2.5"

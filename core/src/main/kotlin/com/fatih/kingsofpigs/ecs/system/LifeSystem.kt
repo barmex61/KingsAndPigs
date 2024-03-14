@@ -1,0 +1,76 @@
+package com.fatih.kingsofpigs.ecs.system
+
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
+import com.fatih.kingsofpigs.ecs.component.DeadComponent
+import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent
+import com.fatih.kingsofpigs.ecs.component.LifeComponent
+import com.fatih.kingsofpigs.ecs.component.PhysicComponent
+import com.fatih.kingsofpigs.ecs.component.PlayerComponent
+import com.fatih.kingsofpigs.event.PigGetHitEvent
+import com.fatih.kingsofpigs.event.PlayerGetHitEvent
+import com.fatih.kingsofpigs.event.fireEvent
+import com.github.quillraven.fleks.AllOf
+import com.github.quillraven.fleks.ComponentMapper
+import com.github.quillraven.fleks.Entity
+import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.NoneOf
+import ktx.math.plus
+
+@AllOf([LifeComponent::class])
+@NoneOf([DeadComponent::class])
+class LifeSystem (
+    private val lifeComps : ComponentMapper<LifeComponent>,
+    private val deadComps : ComponentMapper<DeadComponent>,
+    private val playerComps : ComponentMapper<PlayerComponent>,
+    private val physicComps : ComponentMapper<PhysicComponent>,
+    private val gameStage : Stage
+): IteratingSystem(){
+
+    private val bitmapFont = BitmapFont(Gdx.files.internal("ui/damage_font.fnt")).apply { data.setScale(0.4f) }
+    private val damageLabelStyle = LabelStyle(bitmapFont, Color.RED)
+
+    override fun onTickEntity(entity: Entity) {
+        val lifeComponent = lifeComps[entity]
+        lifeComponent.run {
+            if (currentLife > 0f){
+                currentLife += (regeneration * deltaTime).coerceAtMost(maxLife)
+                if (damageTaken > 0f){
+                    createFloatingText(damageTaken.toInt().toString(),isCrit,physicComps[entity].body.position,physicComps[entity].bodyOffset)
+                    if (entity in playerComps){
+                        gameStage.fireEvent(PlayerGetHitEvent())
+                    }else{
+                        gameStage.fireEvent(PigGetHitEvent())
+                    }
+                    currentLife -= damageTaken
+                    damageTaken = 0f
+                }
+            }else{
+                if (entity !in deadComps){
+                    configureEntity(entity){
+                        deadComps.add(entity){
+                            this.canResurrect = this@run.canResurrect
+                            this.resurrectionTime = this@run.resurrectionTime
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun createFloatingText(damageText : String,isCrit : Boolean,position : Vector2,offset : Vector2){
+        world.entity {
+            add<FloatingTextComponent>{
+                this.text = damageText
+                this.isCrit = isCrit
+                this.startPosition.set(position + offset)
+                label = Label(text + if (isCrit) " Crit!" else "",damageLabelStyle)
+            }
+        }
+    }
+}
