@@ -17,16 +17,17 @@ import com.fatih.kingsofpigs.actor.FlipImage
 import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationType
-import com.fatih.kingsofpigs.ecs.component.AttackComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_LIFE
+import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent.Companion.DEFAULT_MOVE_SPEED
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.createBody
 import com.fatih.kingsofpigs.ecs.component.PlayerComponent
+import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
 import com.fatih.kingsofpigs.ecs.component.StateComponent
@@ -87,23 +88,40 @@ class EntitySpawnSystem (
                 if (speedScaling != 0f){
                     add<MoveComponent>{
                         speed = DEFAULT_MOVE_SPEED * speedScaling
+                        aiMoveRadius = this@run.aiMoveRadius
+                        aiCanMove = this@run.entityModel != EntityModel.PIG_LIGHT
                     }
                 }
-                if (attackScaling != 0f){
-                    add<AttackComponent>{
-                        this.attackDamage = (AttackComponent.DEFAULT_ATTACK_DAMAGE * attackScaling).toInt()
-                        this.critChance = this@run.critChance
-                        this.attackRange = this@run.attackRange
-                        this.critDamage = this@run.critDamage
-                        this.isRangeAttack = this@run.isRangeAttack
-                        this.attackFloatArray = this@run.attackFloatArray
-                        this.attackFloatArrayMirror = this@run.attackFloatArrayMirror
-                        this.entityModel = this@run.entityModel
-                        this.isPlayer = entityModel == EntityModel.KING
-                        this.attackBodyType = this@run.attackBodyType
-                        this.attackBodyImage = if (this@run.attackBodyImageDrawable != null) Image(this@run.attackBodyImageDrawable).apply { isVisible = false }else null
+                if (attackScaling != 0f ){
+                    if (!isRangeAttack){
+                        add<MeleeAttackComponent>{
+                            this.attackDamage = (MeleeAttackComponent.DEFAULT_ATTACK_DAMAGE * attackScaling).toInt()
+                            this.critChance = this@run.critChance
+                            this.attackRange = this@run.attackRange
+                            this.critDamage = this@run.critDamage
+                            this.attackFloatArray = this@run.attackFloatArray
+                            this.attackFloatArrayMirror = this@run.attackFloatArrayMirror
+                            this.entityModel = this@run.entityModel
+                            this.isPlayer = entityModel == EntityModel.KING
+                        }
+                    }else{
+                        add<RangeAttackComponent>{
+                            this.attackDamage = (MeleeAttackComponent.DEFAULT_ATTACK_DAMAGE * attackScaling).toInt()
+                            this.critChance = this@run.critChance
+                            this.attackRange = this@run.attackRange
+                            this.critDamage = this@run.critDamage
+                            this.attackFloatArray = this@run.attackFloatArray
+                            this.attackFloatArrayMirror = this@run.attackFloatArrayMirror
+                            if (this@run.entityModel == EntityModel.PIG_BOX){
+                                this.image.drawable = TextureRegionDrawable(textureAtlas.findRegion("box/idle"))
+                            }
+                            this.entityModel = this@run.entityModel
+                            this.imageScaling = this@run.attackImageScaling
+                            this.attackImageOffset = this@run.attackImageOffset
+                        }
                     }
                 }
+
                 if (lifeScaling != 0f){
                     add<LifeComponent>{
                         maxLife = DEFAULT_MAX_LIFE * lifeScaling
@@ -177,14 +195,14 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        speedScaling = 1f,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.8f,0.85f),
                         physicOffset = vec2(0.1f,-0.1f),
-                        attackFloatArray = floatArrayOf(-0.5f,0f,1.3f,1f),
+                        attackFloatArray = floatArrayOf(-0.6f,0f,1.3f,1f),
                         attackFloatArrayMirror = floatArrayOf(-0.5f,0f,1.3f,1f),
                         attackScaling = 1.5f,
                         attackRange = 5f,
@@ -192,49 +210,48 @@ class EntitySpawnSystem (
                         critChance  = 30,
                         critDamage  = 2f,
                         lifeScaling = 1f,
-                        regeneration = 1f,
-                        aiCircleRadius = 7f,
+                        aiCircleRadius = 5f,
                         aiTreePath = "ai/pig.tree",
-                        attackBodyImageDrawable = TextureRegionDrawable(textureAtlas.findRegion("box/idle"))
-                    )
+                        aiMoveRadius = 4f,
+                        )
                 }
                 EntityModel.PIG->{
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        speedScaling = 1f,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.4f,0.6f),
                         physicOffset = vec2(0.18f,-0.35f),
-                        attackFloatArray = floatArrayOf(-0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
-                        attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
+                        attackFloatArray = floatArrayOf(-0.6f , -0.3f , -1f , 0f , -1.1f, 0.4f, -1f , 0.8f, -0.7f , 1f,-0.6f , -0.3f),
+                        attackFloatArrayMirror = floatArrayOf(0.6f , -0.3f , 1f , 0f , 1.1f, 0.4f, 1f , 0.8f, 0.7f , 1f,0.6f , -0.3f),
                         attackScaling = 1f,
-                        attackRange = 1f,
+                        attackRange = 1.5f,
                         isRangeAttack = false,
                         critChance  = 10,
                         critDamage  = 1.5f,
                         lifeScaling = 1f,
                         regeneration = 1f,
-                        aiCircleRadius = 4f,
+                        aiCircleRadius = 3f,
+                        aiMoveRadius = 1.5f,
                         aiTreePath = "ai/pig.tree"
-                    )
+                        )
                 }
                 EntityModel.PIG_BOMB->{
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        speedScaling = 1f,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.55f,0.6f),
                         physicOffset = vec2(-0.2f,-0.3f),
-                        attackFloatArray = floatArrayOf(-0.5f,0f,1.3f,1f),
-                        attackBodyImageDrawable = TextureRegionDrawable(textureAtlas.findRegion("bomb/bomb_on")),
+                        attackFloatArray = floatArrayOf(-0.5f,0f,0.9f,0.9f),
                         attackFloatArrayMirror = floatArrayOf(-0.5f,0f,1.3f,1f),
                         attackScaling = 2f,
                         attackRange = 4f,
@@ -243,15 +260,18 @@ class EntitySpawnSystem (
                         critDamage  = 2f,
                         lifeScaling = 1f,
                         regeneration = 1f,
-                        aiCircleRadius = 5f,
-                        aiTreePath = "ai/pig.tree"
-                    )
+                        aiCircleRadius = 4f,
+                        attackImageScaling = vec2(3.8f,3.8f),
+                        attackImageOffset = vec2(0f,0.2f),
+                        aiTreePath = "ai/pig.tree",
+                        aiMoveRadius = 1f
+                        )
                 }
                 EntityModel.PIG_BOX_HIDE->{
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.LOOKING_OUT,
-                        speedScaling = 1f,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
@@ -263,8 +283,6 @@ class EntitySpawnSystem (
                         regeneration = 1f,
                         attackScaling = 1f,
                         frameDurationScaling = 3f,
-                        aiCircleRadius = 4f,
-                        aiTreePath = "ai/pig.tree"
                     )
                 }
                 EntityModel.CANNON->{
@@ -286,23 +304,26 @@ class EntitySpawnSystem (
                 EntityModel.PIG_LIGHT->{
                     SpawnConfig(
                         entityModel = entityModel,
-                        animationType = AnimationType.LIGHT_READY,
-                        speedScaling = 1f,
+                        animationType = AnimationType.READY,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
-                        bodyType = BodyType.DynamicBody,
+                        bodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.5f,0.85f),
                         physicOffset = vec2(0.1f,-0.1f),
-                        attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
-                        attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
+                        attackFloatArray = floatArrayOf(-2.5f,0f,0.7f,0.7f),
+                        attackFloatArrayMirror = floatArrayOf(-2.5f,0f,0.7f,0.7f),
                         attackScaling = 1f,
                         attackRange = 1f,
-                        isRangeAttack = false,
+                        isRangeAttack = true,
+                        attackImageScaling = vec2(4f,2.5f),
                         critChance  = 20,
                         critDamage  = 2f,
                         lifeScaling = 1f,
                         regeneration = 1f,
-                        aiCircleRadius = 4f,
+                        aiMoveRadius = 0f,
+                        aiCircleRadius = 15f,
+                        attackImageOffset = vec2(-0.45f,0.32f),
                         aiTreePath = "ai/pig.tree"
                     )
                 }
@@ -310,22 +331,23 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        speedScaling = 1f,
+                        speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         attackBodyType = BodyType.StaticBody,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.4f,0.7f),
                         physicOffset = vec2(0.05f,-0.25f),
-                        attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
-                        attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
+                        attackFloatArray = floatArrayOf(-0.6f , -0.3f , -1f , 0f , -1.1f, 0.4f, -1f , 0.8f, -0.7f , 1f,-0.6f , -0.3f),
+                        attackFloatArrayMirror = floatArrayOf(0.6f , -0.3f , 1f , 0f , 1.1f, 0.4f, 1f , 0.8f, 0.7f , 1f,0.6f , -0.3f),
                         attackScaling = 2f,
-                        attackRange = 1.5f,
+                        attackRange = 1.8f,
                         isRangeAttack = false,
                         critChance  = 50,
                         critDamage  = 2f,
                         lifeScaling = 2f,
                         regeneration = 2f,
+                        aiMoveRadius = 2.5f,
                         aiCircleRadius = 4f,
                         aiTreePath = "ai/pig.tree"
                     )

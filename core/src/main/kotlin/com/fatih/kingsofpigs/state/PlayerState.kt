@@ -13,6 +13,7 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 entity.isAnimationDone -> entity.changeState(IDLE)
             }
@@ -28,6 +29,7 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 entity.wantsToAttack -> entity.changeState(ATTACK)
                 entity.wantsToRun -> entity.changeState(RUN)
@@ -43,6 +45,7 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 entity.wantsToAttack -> entity.changeState(ATTACK)
                 !entity.wantsToRun -> entity.changeState(IDLE)
@@ -59,6 +62,7 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 !entity.doAttack -> entity.changePreviousState()
             }
@@ -74,6 +78,7 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 entity.wantsToAttack -> entity.changeState(ATTACK)
                 !entity.isFalling -> entity.changeState(IDLE)
@@ -86,10 +91,39 @@ enum class PlayerState : DefaultState{
         }
 
         override fun update(entity: PlayerEntity) {
+            super.update(entity)
             when{
                 entity.wantsToAttack -> entity.changeState(ATTACK)
                 !entity.isJumping -> entity.changeState(IDLE)
             }
+        }
+    },
+    DEATH{
+        override fun enter(entity: PlayerEntity) {
+            entity.animation(AnimationType.DEAD, playMode = PlayMode.NORMAL, DEFAULT_FRAME_DURATION * 2f)
+            entity.root(true)
+        }
+
+        override fun update(entity: PlayerEntity) {
+            when{
+                !entity.isDead  -> entity.changeState(RESURRECT)
+            }
+        }
+
+    },
+    RESURRECT{
+        override fun enter(entity: PlayerEntity) {
+            entity.animation(AnimationType.DEAD, playMode = PlayMode.REVERSED, DEFAULT_FRAME_DURATION * 2f)
+        }
+
+        override fun update(entity: PlayerEntity) {
+            when{
+                entity.isAnimationDone  -> entity.changeState(IDLE)
+            }
+        }
+
+        override fun exit(entity: PlayerEntity) {
+            entity.root(false)
         }
     }
 }

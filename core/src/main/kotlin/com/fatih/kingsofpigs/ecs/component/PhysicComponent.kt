@@ -1,5 +1,6 @@
 package com.fatih.kingsofpigs.ecs.component
 
+import com.badlogic.gdx.math.Circle
 import com.badlogic.gdx.math.Polyline
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Shape2D
@@ -14,6 +15,7 @@ import ktx.app.gdxError
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
+import ktx.box2d.loop
 import ktx.box2d.polygon
 import ktx.math.vec2
 
@@ -46,7 +48,8 @@ class PhysicComponent {
             fixedRotation : Boolean = true,
             isPlatform : Boolean = false,
             aiCircle : Float = 0f,
-            entity: Entity? = null
+            entity: Entity? = null,
+            attackBodyUserData : String = ""
         ) : Body {
             val body = box2dWorld.body(bodyType){
                 linearDamping = 2f
@@ -54,19 +57,32 @@ class PhysicComponent {
                 if (entity != null) userData = entity
                 if (isAttackBody){
                     when(shape){
+                        is Circle ->{
+                            this.position.set(shape.x + shape.radius/2f,shape.y + shape.radius/2f)
+                            circle(shape.radius){
+                                isSensor = false
+                                filter.categoryBits = categoryBit
+                                filter.maskBits = maskBit
+                                density = 15f
+                                friction = 0.1f
+                                restitution = 0.5f
+                                userData = attackBodyUserData
+                            }
+                        }
                         is Rectangle ->{
                             this.position.set(shape.x + shape.width/2f,shape.y + shape.height/2f)
                             box(shape.width,shape.height){
                                 isSensor = false
                                 filter.categoryBits = categoryBit
                                 filter.maskBits = maskBit
-                                density = 10f
-                                userData = DEAL_DAMAGE
+                                density = 6f
+                                userData = attackBodyUserData
                             }
                         }
                         is Polyline ->{
                             polygon(shape.vertices){
-                                isSensor = false
+                                this@body.gravityScale = 0f
+                                isSensor = true
                                 filter.categoryBits = categoryBit
                                 filter.maskBits = maskBit
                                 userData = DEAL_DAMAGE
@@ -79,17 +95,26 @@ class PhysicComponent {
                         is Rectangle ->{
                             this.position.set(shape.x + shape.width/2f,shape.y + shape.height/2f)
                             val size = vec2(shape.width * physicScaling.x ,shape.height * physicScaling.y )
-                            polygon(floatArrayOf(
-                                -size.x/2f + physicOffset.x,-size.y/2f + physicOffset.y,
-                                size.x/2f + physicOffset.x , -size.y/2f+ physicOffset.y,
-                                size.x /2f+ physicOffset.x , size.y/2f + physicOffset.y,
-                                -size.x /2f+ physicOffset.x , size.y/2f + physicOffset.y
-                            )){
-                                isSensor = isPortal
-                                filter.categoryBits = categoryBit
-                                filter.maskBits = maskBit
-                                userData = if (isPlatform) PLATFORM_FIXTURE else ENTITY_COLLISION_FIXTURE
-                                density = 9f
+                            if (isCollision){
+                                box(size.x,size.y){
+                                    isSensor = isPortal
+                                    filter.categoryBits = categoryBit
+                                    filter.maskBits = maskBit
+                                    userData = if (isPlatform) PLATFORM_FIXTURE else ENTITY_COLLISION_FIXTURE
+                                }
+                            }else{
+                                polygon(floatArrayOf(
+                                    -size.x/2f + physicOffset.x,-size.y/2f + physicOffset.y,
+                                    size.x/2f + physicOffset.x , -size.y/2f+ physicOffset.y,
+                                    size.x /2f+ physicOffset.x , size.y/2f + physicOffset.y,
+                                    -size.x /2f+ physicOffset.x , size.y/2f + physicOffset.y
+                                )){
+                                    isSensor = isPortal
+                                    filter.categoryBits = categoryBit
+                                    filter.maskBits = maskBit
+                                    userData = if (isPlatform) PLATFORM_FIXTURE else ENTITY_COLLISION_FIXTURE
+                                    density = if (categoryBit == Constants.KING) 9f else  15f
+                                }
                             }
                             if (aiCircle != 0f){
                                 circle(aiCircle){

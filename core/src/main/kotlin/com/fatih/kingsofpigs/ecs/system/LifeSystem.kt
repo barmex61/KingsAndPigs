@@ -38,8 +38,9 @@ class LifeSystem (
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComps[entity]
         lifeComponent.run {
+
             if (currentLife > 0f){
-                currentLife += (regeneration * deltaTime).coerceAtMost(maxLife)
+                currentLife = (currentLife + regeneration * deltaTime).coerceAtMost(maxLife)
                 if (damageTaken > 0f){
                     createFloatingText(damageTaken.toInt().toString(),isCrit,physicComps[entity].body.position,physicComps[entity].bodyOffset)
                     if (entity in playerComps){
@@ -51,6 +52,7 @@ class LifeSystem (
                     damageTaken = 0f
                 }
             }else{
+                println("deadinsidelife")
                 if (entity !in deadComps){
                     configureEntity(entity){
                         deadComps.add(entity){

@@ -1,27 +1,24 @@
 package com.fatih.kingsofpigs.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.FPSLogger
-import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.graphics.profiling.GLProfiler
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
 import com.fatih.kingsofpigs.ecs.component.AiComponent.Companion.AiComponentListener
-import com.fatih.kingsofpigs.ecs.component.AttackComponent
-import com.fatih.kingsofpigs.ecs.component.AttackComponent.Companion.AttackComponentListener
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
+import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent.Companion.RangeAttackComponentListener
 import com.fatih.kingsofpigs.ecs.component.StateComponent.Companion.StateComponentListener
 import com.fatih.kingsofpigs.ecs.system.AiSystem
 import com.fatih.kingsofpigs.ecs.system.AnimationSystem
-import com.fatih.kingsofpigs.ecs.system.AttackSystem
+import com.fatih.kingsofpigs.ecs.system.MeleeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.AudioSystem
 import com.fatih.kingsofpigs.ecs.system.CameraSystem
 import com.fatih.kingsofpigs.ecs.system.DeadSystem
@@ -32,6 +29,7 @@ import com.fatih.kingsofpigs.ecs.system.LifeSystem
 import com.fatih.kingsofpigs.ecs.system.MoveSystem
 import com.fatih.kingsofpigs.ecs.system.PhysicSystem
 import com.fatih.kingsofpigs.ecs.system.PortalSystem
+import com.fatih.kingsofpigs.ecs.system.RangeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.RenderSystem
 import com.fatih.kingsofpigs.ecs.system.StateSystem
 import com.fatih.kingsofpigs.input.KeyboardInputProcessor
@@ -47,7 +45,7 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
     private val orthographicCamera = OrthographicCamera()
     private val gameViewport = ExtendViewport(16f,9f,orthographicCamera)
     private val uiViewport = ExtendViewport(320f,180f)
-    private val gameStage = Stage(gameViewport,spriteBatch)
+    private val gameStage = Stage(gameViewport,spriteBatch).apply { isDebugAll= true }
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
     private val uiStage = Stage(uiViewport,spriteBatch)
@@ -59,7 +57,7 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
             add<StateComponentListener>()
             add<FloatingTextComponentListener>()
             add<AiComponentListener>()
-            add<AttackComponentListener>()
+            add<RangeAttackComponentListener>()
         }
         injectables {
             add("uiStage",uiStage)
@@ -72,9 +70,10 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
             add<AnimationSystem>()
             add<MoveSystem>()
             add<PhysicSystem>()
-            add<AttackSystem>()
             add<LifeSystem>()
             add<DeadSystem>()
+            add<MeleeAttackSystem>()
+            add<RangeAttackSystem>()
             add<FloatingTextSystem>()
             add<AudioSystem>()
             add<StateSystem>()
@@ -94,7 +93,7 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
 
     override fun render(delta: Float) {
         world.update(delta.coerceAtMost(0.25f))
-    }
+        GdxAI.getTimepiece().update(delta.coerceAtMost(0.25f)) }
 
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width,height,true)

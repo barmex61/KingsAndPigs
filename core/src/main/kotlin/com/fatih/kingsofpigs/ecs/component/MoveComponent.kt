@@ -5,7 +5,8 @@ data class MoveComponent (
     var sin : Float = 0f,
     var speed : Float = DEFAULT_MOVE_SPEED,
     var root : Boolean = false,
-    var jumpTimer : Float = 0.2f,
+    var aiMoveRadius : Float = 3f,
+    var aiCanMove : Boolean = true
 ){
     companion object{
         const val DEFAULT_MOVE_SPEED = 1f

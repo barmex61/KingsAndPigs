@@ -9,7 +9,9 @@ interface DefaultState : State<PlayerEntity> {
     }
 
     override fun update(entity: PlayerEntity) {
-
+        when{
+            entity.isDead -> entity.changeState(PlayerState.DEATH)
+        }
     }
 
     override fun exit(entity: PlayerEntity) {

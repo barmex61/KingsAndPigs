@@ -165,6 +165,13 @@ cannon/shoot
   orig: 44, 28
   offset: 0, 0
   index: 1
+cannon/shoot
+  rotate: false
+  xy: 1866, 226
+  size: 44, 28
+  orig: 44, 28
+  offset: 0, 0
+  index: -1
 door/idle
   rotate: false
   xy: 1586, 198
@@ -1068,6 +1075,48 @@ pig_bomb/idle
   orig: 26, 26
   offset: 0, 0
   index: 0
+pig_bomb/dead
+  rotate: false
+  xy: 1556, 168
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+pig_bomb/dead
+  rotate: false
+  xy: 1180, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+pig_bomb/dead
+  rotate: false
+  xy: 1396, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+pig_bomb/dead
+  rotate: false
+  xy: 1540, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 0
+pig_bomb/fall
+  rotate: false
+  xy: 952, 50
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 0
+pig_bomb/jump
+  rotate: false
+  xy: 952, 50
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 0
 pig_bomb/picking_bomb
   rotate: false
   xy: 924, 46
@@ -1243,6 +1292,34 @@ pig_box/idle
   orig: 26, 30
   offset: 0, 0
   index: 4
+pig_box/dead
+  rotate: false
+  xy: 1556, 168
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+pig_box/dead
+  rotate: false
+  xy: 1180, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+pig_box/dead
+  rotate: false
+  xy: 1396, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+pig_box/dead
+  rotate: false
+  xy: 1540, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 0
 pig_box/picking_box
   rotate: false
   xy: 936, 164
@@ -1313,6 +1390,20 @@ pig_box/run
   orig: 26, 30
   offset: 0, 0
   index: 0
+pig_box/fall
+  rotate: false
+  xy: 2012, 136
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 0
+pig_box/jump
+  rotate: false
+  xy: 2012, 136
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 0
 pig_box/throwing_box
   rotate: false
   xy: 924, 74
@@ -1362,7 +1453,21 @@ pig_box_hide/ground
   orig: 26, 20
   offset: 0, 0
   index: -1
-pig_box_hide/jump
+pig_box_hide/run
+  rotate: false
+  xy: 1016, 116
+  size: 26, 20
+  orig: 26, 20
+  offset: 0, 0
+  index: 1
+pig_box_hide/run
+  rotate: false
+  xy: 1128, 116
+  size: 26, 20
+  orig: 26, 20
+  offset: 0, 0
+  index: 0
+ pig_box_hide/jump
   rotate: false
   xy: 1016, 116
   size: 26, 20
@@ -1411,66 +1516,122 @@ pig_box_hide/looking_out
   orig: 26, 20
   offset: 0, 0
   index: 1
-pig_light/light_attack
+pig_box_hide/idle
+  rotate: false
+  xy: 1184, 116
+  size: 26, 20
+  orig: 26, 20
+  offset: 0, 0
+  index: 1
+pig_light/attack
   rotate: false
   xy: 1240, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 0
-pig_light/light_attack
+pig_light/attack
   rotate: false
   xy: 1296, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 2
-pig_light/light_attack
+pig_light/attack
   rotate: false
   xy: 1380, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 1
-pig_light/light_prepare
+pig_light/prepare
   rotate: false
   xy: 1212, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 2
-pig_light/light_prepare
+pig_light/prepare
   rotate: false
   xy: 1324, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 1
-pig_light/light_prepare
+pig_light/prepare
   rotate: false
   xy: 1408, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 0
-pig_light/light_ready
+pig_light/ready
   rotate: false
   xy: 968, 2
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 1
-pig_light/light_ready
+pig_light/ready
   rotate: false
   xy: 1268, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 0
-pig_light/light_ready
+pig_light/ready
   rotate: false
   xy: 1352, 118
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: 2
+pig_light/idle
+  rotate: false
+  xy: 1352, 118
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+pig_light/jump
+  rotate: false
+  xy: 1352, 118
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+pig_light/fall
+  rotate: false
+  xy: 1352, 118
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+pig_light/dead
+  rotate: false
+  xy: 1556, 168
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+pig_light/dead
+  rotate: false
+  xy: 1180, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+pig_light/dead
+  rotate: false
+  xy: 1396, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+pig_light/dead
+  rotate: false
+  xy: 1540, 138
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 0

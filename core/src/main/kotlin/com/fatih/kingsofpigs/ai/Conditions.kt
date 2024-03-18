@@ -21,7 +21,8 @@ abstract class Conditions : LeafTask<PigEntity>(){
 }
 
 class IsJumping : Conditions(){
-    override fun condition(): Boolean = entity.isJumping
+    override fun condition() = entity.isJumping
+
 }
 
 class IsFalling : Conditions(){
@@ -50,4 +51,20 @@ class IsPigBox : Conditions(){
 
 class IsPigBomb : Conditions(){
     override fun condition() : Boolean = entity.isPigBomb
+}
+
+class CanMove : Conditions(){
+    override fun condition(): Boolean = entity.canMove
+}
+
+class NotInRange : Conditions(){
+    override fun condition(): Boolean = !entity.isEnemyNearby
+}
+
+class IsDead : Conditions(){
+    override fun condition(): Boolean = entity.isDead
+}
+
+class IsPigLight : Conditions(){
+    override fun condition() = entity.isPigLight
 }

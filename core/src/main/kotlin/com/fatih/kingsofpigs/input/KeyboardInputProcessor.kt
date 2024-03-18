@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
-import com.fatih.kingsofpigs.ecs.component.AttackComponent
 import com.fatih.kingsofpigs.ecs.component.AttackState
+import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.github.quillraven.fleks.ComponentMapper
@@ -24,7 +24,7 @@ fun addProcessor(inputProcessor: InputProcessor){
 class KeyboardInputProcessor(
     private val world: World,
     private val moveComps : ComponentMapper<MoveComponent> = world.mapper(),
-    private val attackComps : ComponentMapper<AttackComponent> = world.mapper()
+    private val attackComps : ComponentMapper<MeleeAttackComponent> = world.mapper()
 ) : InputAdapter() {
 
     init {
@@ -32,7 +32,7 @@ class KeyboardInputProcessor(
     }
 
     private var moveComponent : MoveComponent? = null
-    private var attackComponent : AttackComponent? = null
+    private var attackComponent : MeleeAttackComponent? = null
 
     private var playerSin : Float = 0f
     private var playerCos : Float = 0f
@@ -43,9 +43,9 @@ class KeyboardInputProcessor(
     override fun keyDown(keycode: Int): Boolean {
         if (!keycode.isMovementKey() && !keycode.isAttackKey()) return false
         when(keycode){
-            D -> playerCos = 1f
-            A -> playerCos = -1f
-            W -> playerSin = 1f
+            D -> playerCos+=1f
+            A -> playerCos-=1f
+            W -> playerSin+=1f
             SPACE -> updateAttack()
         }
         updateMovement()
@@ -55,9 +55,9 @@ class KeyboardInputProcessor(
     override fun keyUp(keycode: Int): Boolean {
         if(!keycode.isMovementKey() && !keycode.isAttackKey()) return false
         when(keycode){
-            D ->  playerCos = if (Gdx.input.isKeyPressed(A)) -1f else 0f
-            A ->  playerCos = if (Gdx.input.isKeyPressed(D)) 1f else 0f
-            W ->  playerSin = 0f
+            D ->  playerCos-=1f
+            A ->  playerCos+=1f
+            W ->  playerSin-=1f
         }
         updateMovement()
         return true

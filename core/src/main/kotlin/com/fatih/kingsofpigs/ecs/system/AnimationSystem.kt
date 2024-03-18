@@ -36,7 +36,6 @@ class AnimationSystem(
                     this.frameDuration = this@run.frameDuration
                     this.playMode = this@run.playMode
                 }
-                animationTimer = 0f
                 nextAnimation = EMPTY_ANIMATION
             }
             animationTimer += deltaTime
@@ -48,6 +47,7 @@ class AnimationSystem(
     }
 
     private fun getAnimation(animPath : String) : Animation<TextureRegionDrawable>{
+        println(animPath)
         return animationCache.getOrPut(animPath){
             Animation(DEFAULT_FRAME_DURATION,textureAtlas.findRegions(animPath).map {
                 TextureRegionDrawable(it)

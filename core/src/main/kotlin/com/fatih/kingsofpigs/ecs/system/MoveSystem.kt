@@ -32,12 +32,16 @@ class MoveSystem(
             }
             val mass = physicComponent.body.mass
             physicComponent.impulse.set(
-                if (!root) mass * cos - velocity.x else 0f,
-                if (!root) mass * sin * speed * 1/UNIT_SCALE * 2.5F  else 0f
+                if (!root) mass * cos * speed - velocity.x else 0f,
+                if (!root) mass * sin * 1/UNIT_SCALE * 2.5F  else 0f
             )
             if (cos != 0f && !root){
-                imageComponent.image.flipX = cos < 0f
-                if (entity in playerComps)  ImageComponent.playerFlipX = cos < 0f
+                if (entity in playerComps) {
+                    imageComponent.image.flipX = cos < 0f
+                    ImageComponent.playerFlipX = cos < 0f
+                }else{
+                    imageComponent.image.flipX = cos > 0f
+                }
             }
         }
     }

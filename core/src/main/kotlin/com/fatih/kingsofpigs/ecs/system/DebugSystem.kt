@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.fatih.kingsofpigs.ecs.system.AttackSystem.Companion.ATTACK_POLYLINE
-import com.fatih.kingsofpigs.ecs.system.AttackSystem.Companion.ATTACK_RECT
+import com.fatih.kingsofpigs.ecs.system.MeleeAttackSystem.Companion.ATTACK_POLYLINE
+import com.fatih.kingsofpigs.ecs.system.MeleeAttackSystem.Companion.ATTACK_RECT
 import com.github.quillraven.fleks.IntervalSystem
+import ktx.graphics.color
 import ktx.graphics.use
 
 
@@ -23,7 +24,10 @@ class DebugSystem(
 
     init {
         if (enabled){
-            debugRenderer = Box2DDebugRenderer()
+            debugRenderer = Box2DDebugRenderer().apply {
+                this.AABB_COLOR.set(Color.RED)
+                this.SHAPE_AWAKE.set(Color.RED)
+            }
             shapeRenderer = ShapeRenderer().apply { setColor(Color.RED) }
         }
     }
@@ -32,9 +36,9 @@ class DebugSystem(
         debugRenderer?.render(box2dWorld,gameCamera.combined)
         shapeRenderer?.use(ShapeRenderer.ShapeType.Line,gameCamera){
            it.rect(ATTACK_RECT.x, ATTACK_RECT.y, ATTACK_RECT.width, ATTACK_RECT.height)
-           /* if (ATTACK_POLYLINE.vertices.isNotEmpty()){
+            if (ATTACK_POLYLINE.vertices.isNotEmpty()){
                 it.polyline(ATTACK_POLYLINE.vertices)
-            } */
+            }
         }
     }
 }

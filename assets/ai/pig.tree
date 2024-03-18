@@ -5,6 +5,10 @@ import fall:"com.fatih.kingsofpigs.ai.Fall"
 import throwBox:"com.fatih.kingsofpigs.ai.ThrowBox"
 import throwBomb:"com.fatih.kingsofpigs.ai.ThrowBomb"
 import meleeAttack:"com.fatih.kingsofpigs.ai.MeleeAttack"
+import wander:"com.fatih.kingsofpigs.ai.Wander"
+import dead:"com.fatih.kingsofpigs.ai.Dead"
+import focus:"com.fatih.kingsofpigs.ai.Focus"
+import fireCannon:"com.fatih.kingsofpigs.ai.FireCannon"
 
 #Conditions
 import isJumping?:"com.fatih.kingsofpigs.ai.IsJumping"
@@ -15,20 +19,34 @@ import canAttack?:"com.fatih.kingsofpigs.ai.CanAttack"
 import isEnemyNearby?:"com.fatih.kingsofpigs.ai.IsEnemyNearby"
 import isPigBox?:"com.fatih.kingsofpigs.ai.IsPigBox"
 import isPigBomb?:"com.fatih.kingsofpigs.ai.IsPigBomb"
+import canMove?:"com.fatih.kingsofpigs.ai.CanMove"
+import notInRange?:"com.fatih.kingsofpigs.ai.NotInRange"
+import isDead?:"com.fatih.kingsofpigs.ai.IsDead"
+import isPigLight?:"com.fatih.kingsofpigs.ai.IsPigLight"
 
 subtree name : "rangeAttack"
     selector
         (isPigBox?) throwBox
         (isPigBomb?) throwBomb
+        (isPigLight?) fireCannon
+
+subtree name : "meleeAttack"
+    sequence
+        focus
+        meleeAttack
+        wait seconds:"uniform,1.25,2.1"
 
 subtree name : "attack"
     selector
         (isRangeAttack?) $rangeAttack
-        (isMeleeAttack?) meleeAttack
+        (isMeleeAttack?) $meleeAttack
 
 root
     selector
+        (isDead?) dead
         (isJumping?) jump
         (isFalling?) fall
         (isEnemyNearby?)(canAttack?) $attack
-        (random success:0.25) idle duration:"uniform,1.5,2.5"
+        (random success:0.5)(canMove?)(notInRange?) wander
+        idle duration:"uniform,1.5,2.5"
+

@@ -16,16 +16,18 @@ class DeadSystem(
     override fun onTickEntity(entity: Entity) {
         val deadComponent = deadComps[entity]
         deadComponent.run {
-            if (!canResurrect){
+            if (!canResurrect && remove ){
                 world.remove(entity)
                 return
-            }
-            resurrectionTime -= deltaTime
-            if (resurrectionTime <= 0f){
-                configureEntity(entity){
-                    deadComps.remove(it)
-                    lifeComps[entity].apply {
-                        currentLife = maxLife
+            }else if (canResurrect){
+                resurrectionTime -= deltaTime
+                if (resurrectionTime <= 0f ){
+                    configureEntity(entity){
+                        deadComps.remove(it)
+                        lifeComps[entity].apply {
+                            currentLife = maxLife
+                            damageTaken = 0f
+                        }
                     }
                 }
             }

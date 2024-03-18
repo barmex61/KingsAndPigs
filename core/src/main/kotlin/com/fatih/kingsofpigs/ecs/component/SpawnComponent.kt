@@ -37,7 +37,9 @@ class SpawnConfig(
     val aiCircleRadius : Float = 0f,
     val aiTreePath : String = "",
     val frameDurationScaling : Float = 1f,
-    val attackBodyImageDrawable : TextureRegionDrawable? = null
+    val attackImageScaling : Vector2 = vec2(1f,1f),
+    val attackImageOffset : Vector2 = vec2(),
+    val aiMoveRadius : Float = 2f
 )
 
 data class SpawnComponent (
