@@ -1,6 +1,5 @@
 package com.fatih.kingsofpigs.ecs.system
 
-import com.fatih.kingsofpigs.ai.IsDead
 import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper

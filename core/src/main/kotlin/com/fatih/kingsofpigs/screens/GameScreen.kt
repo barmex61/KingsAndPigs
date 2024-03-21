@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
 import com.fatih.kingsofpigs.ecs.component.AiComponent.Companion.AiComponentListener
+import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
+import com.fatih.kingsofpigs.ecs.component.DestroyableComponent.Companion.DestroyableListener
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
@@ -23,8 +25,10 @@ import com.fatih.kingsofpigs.ecs.system.AudioSystem
 import com.fatih.kingsofpigs.ecs.system.CameraSystem
 import com.fatih.kingsofpigs.ecs.system.DeadSystem
 import com.fatih.kingsofpigs.ecs.system.DebugSystem
+import com.fatih.kingsofpigs.ecs.system.DestroyableObjectSystem
 import com.fatih.kingsofpigs.ecs.system.EntitySpawnSystem
 import com.fatih.kingsofpigs.ecs.system.FloatingTextSystem
+import com.fatih.kingsofpigs.ecs.system.ItemSystem
 import com.fatih.kingsofpigs.ecs.system.LifeSystem
 import com.fatih.kingsofpigs.ecs.system.MoveSystem
 import com.fatih.kingsofpigs.ecs.system.PhysicSystem
@@ -58,6 +62,7 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
             add<FloatingTextComponentListener>()
             add<AiComponentListener>()
             add<RangeAttackComponentListener>()
+            add<DestroyableListener>()
         }
         injectables {
             add("uiStage",uiStage)
@@ -72,6 +77,8 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
             add<PhysicSystem>()
             add<LifeSystem>()
             add<DeadSystem>()
+            add<DestroyableObjectSystem>()
+            add<ItemSystem>()
             add<MeleeAttackSystem>()
             add<RangeAttackSystem>()
             add<FloatingTextSystem>()

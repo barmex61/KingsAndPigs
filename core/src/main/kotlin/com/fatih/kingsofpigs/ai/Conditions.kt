@@ -20,15 +20,6 @@ abstract class Conditions : LeafTask<PigEntity>(){
     }
 }
 
-class IsJumping : Conditions(){
-    override fun condition() = entity.isJumping
-
-}
-
-class IsFalling : Conditions(){
-    override fun condition(): Boolean = entity.isFalling
-}
-
 class IsMeleeAttack : Conditions(){
     override fun condition(): Boolean = entity.isMeleeAttack
 }

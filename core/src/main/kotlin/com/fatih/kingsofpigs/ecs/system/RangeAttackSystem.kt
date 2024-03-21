@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Shape2D
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
@@ -24,6 +25,8 @@ import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.DEAL_DAMAGE
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.createBody
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.fatih.kingsofpigs.ecs.system.MeleeAttackSystem.Companion.addPos
+import com.fatih.kingsofpigs.event.RangeAttackEvent
+import com.fatih.kingsofpigs.event.fireEvent
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -44,7 +47,8 @@ class RangeAttackSystem(
     private val box2dWorld : World,
     private val physicComps: ComponentMapper<PhysicComponent>,
     private val animComps : ComponentMapper<AnimationComponent>,
-    private val textureAtlas : TextureAtlas
+    private val textureAtlas : TextureAtlas,
+    private val gameStage : Stage
 ) : IteratingSystem(){
 
     private val rangeAnimationCache = hashMapOf<String,Animation<TextureRegionDrawable>>()
@@ -54,6 +58,8 @@ class RangeAttackSystem(
         rangeAttackComponent.run {
             if (attackBody != null){
                 destroyBodyTime += deltaTime
+                println(destroyBodyTime)
+                println(animationPath)
                 when{
                     destroyBodyTime <= maxDestroyBodyTime/4f && animationPath != startAnimPath->{
                         setAnimation(startAnimPath,animation(startAnimPath, playMode = PlayMode.LOOP))
@@ -62,16 +68,22 @@ class RangeAttackSystem(
                         setAnimation(resumeAnimPath,animation(resumeAnimPath, playMode = PlayMode.LOOP))
                     }
                     destroyBodyTime >= maxDestroyBodyTime*2f/3f && destroyBodyTime <= maxDestroyBodyTime && animationPath != endAnimPath ->{
-                        setAnimation(endAnimPath,animation(endAnimPath, playMode = PlayMode.NORMAL))
+                        setAnimation(endAnimPath,animation(endAnimPath, playMode = PlayMode.NORMAL, frameDuration = DEFAULT_FRAME_DURATION *2f))
                         attackBody!!.destroyFixture(attackBody!!.fixtureList.first())
                         attackBody!!.circle(2f){
                             userData = DEAL_DAMAGE
                             density = 50f
+                            isSensor = true
                             filter.categoryBits = Constants.ATTACK_OBJECT
                             filter.maskBits = Constants.KING
                             filter.groupIndex = 1
                             attackBody!!.gravityScale = 0f
+                            attackBody!!.setLinearVelocity(0f,0f)
                         }
+                        if (entityModel == EntityModel.PIG_LIGHT){
+                            image.setSize(4f,4f)
+                        }
+                        gameStage.fireEvent(RangeAttackEvent(true))
                     }
                 }
 
@@ -104,13 +116,16 @@ class RangeAttackSystem(
                     this[0] = this[0] + pos.x
                     this[1] = this[1] + pos.y
                 }
+                if (entityModel == EntityModel.PIG_LIGHT){
+                    gameStage.fireEvent(RangeAttackEvent())
+                }
                 attackState = AttackState.ATTACK
             }
             if (attackState == AttackState.ATTACK){
                 attackBody = createBody(
                     box2dWorld, getShape(attackPolyLine,entityModel), Constants.ATTACK_OBJECT, attackBodyMaskBit, BodyDef.BodyType.DynamicBody, vec2(1f, 1f),
                     vec2(0f, 0f),fixedRotation = fixedRotation, isAttackBody = true, entity = entity,
-                    attackBodyUserData = if (entityModel == EntityModel.PIG_BOX || entityModel == EntityModel.PIG_LIGHT) DEAL_DAMAGE else CANT_DEAL_DAMAGE
+                    usData = if (entityModel == EntityModel.PIG_BOX) DEAL_DAMAGE else CANT_DEAL_DAMAGE
                 )
 
                 attackBody!!.applyLinearImpulse(attackImpulse,attackBody!!.worldCenter + (-1f..1f).random(),true)

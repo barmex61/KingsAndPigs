@@ -1,6 +1,5 @@
 package com.fatih.kingsofpigs.ecs.system
 
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.MapLayer
@@ -9,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Scaling
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
@@ -17,6 +15,7 @@ import com.fatih.kingsofpigs.actor.FlipImage
 import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationType
+import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
@@ -92,6 +91,14 @@ class EntitySpawnSystem (
                         aiCanMove = this@run.entityModel != EntityModel.PIG_LIGHT
                     }
                 }
+                if (entityModel == EntityModel.BOX){
+                    add<DestroyableComponent>{
+                        val itemList = listOf(EntityModel.DIAMOND,EntityModel.HEART)
+                        (1..(1..5).random()).forEach { _ ->
+                            itemModels.add(itemList[(0..1).random()])
+                        }
+                    }
+                }
                 if (attackScaling != 0f ){
                     if (!isRangeAttack){
                         add<MeleeAttackComponent>{
@@ -153,7 +160,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         speedScaling = 1f,
                         categoryBit = Constants.KING,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.PORTAL or Constants.ATTACK_OBJECT ,
+                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.PORTAL or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.225f,0.45f),
@@ -175,8 +182,8 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        categoryBit = Constants.ITEM,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING ,
+                        categoryBit = Constants.DESTROYABLE,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.StaticBody
                     )
                 }
@@ -184,9 +191,9 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.BOMB_OFF,
-                        categoryBit = Constants.ITEM,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING,
-                        bodyType = BodyType.StaticBody,
+                        categoryBit = Constants.DESTROYABLE,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING,
+                        bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.25f,0.23f),
                         physicOffset = vec2(0f,-0.25f)
                     )
@@ -197,7 +204,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.8f,0.85f),
@@ -221,7 +228,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.4f,0.6f),
@@ -246,7 +253,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.55f,0.6f),
@@ -273,7 +280,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.LOOKING_OUT,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.8f,0.85f),
                         physicOffset = vec2(0f,-0.1f),
@@ -289,8 +296,8 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        categoryBit = Constants.ITEM,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING,
+                        categoryBit = Constants.OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING,
                         bodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.5f,0.65f),
                         physicOffset = vec2(0.4f,-0.1f),
@@ -307,7 +314,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.READY,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.5f,0.85f),
                         physicOffset = vec2(0.1f,-0.1f),
@@ -334,7 +341,7 @@ class EntitySpawnSystem (
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
                         attackBodyType = BodyType.StaticBody,
-                        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.4f,0.7f),
                         physicOffset = vec2(0.05f,-0.25f),
@@ -391,7 +398,7 @@ class EntitySpawnSystem (
                                    setPosition(x * UNIT_SCALE, y * UNIT_SCALE)
                                 },
                                 Constants.OBJECT,
-                                Constants.KING or Constants.PORTAL or Constants.ITEM or Constants.OBJECT or Constants.ENEMY or Constants.ATTACK_OBJECT,BodyType.StaticBody ,
+                                Constants.KING or Constants.PORTAL or Constants.ITEM or Constants.OBJECT or Constants.ENEMY or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,BodyType.StaticBody ,
                                 vec2(1f,1f),
                                 vec2(0f,0f),
                                 isPortal = false,

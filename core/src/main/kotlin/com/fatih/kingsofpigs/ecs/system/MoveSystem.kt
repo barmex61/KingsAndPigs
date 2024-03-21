@@ -1,10 +1,13 @@
 package com.fatih.kingsofpigs.ecs.system
 
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.PlayerComponent
+import com.fatih.kingsofpigs.event.JumpEvent
+import com.fatih.kingsofpigs.event.fireEvent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -15,7 +18,8 @@ class MoveSystem(
     private val moveComps : ComponentMapper<MoveComponent>,
     private val physicComps : ComponentMapper<PhysicComponent>,
     private val imageComps : ComponentMapper<ImageComponent>,
-    private val playerComps : ComponentMapper<PlayerComponent>
+    private val playerComps : ComponentMapper<PlayerComponent>,
+    private val gameStage : Stage
 ) : IteratingSystem(){
 
     override fun onTickEntity(entity: Entity) {
@@ -42,6 +46,10 @@ class MoveSystem(
                 }else{
                     imageComponent.image.flipX = cos > 0f
                 }
+            }
+            if (entity in playerComps && velocity.y == 0f && sin == 1f && !root){
+                gameStage.fireEvent(JumpEvent())
+                sin = 0f
             }
         }
     }

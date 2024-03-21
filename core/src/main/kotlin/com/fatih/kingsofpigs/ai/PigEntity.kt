@@ -1,8 +1,6 @@
 package com.fatih.kingsofpigs.ai
 
-import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
@@ -20,11 +18,7 @@ import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.World
-import ktx.math.component1
-import ktx.math.component2
-import ktx.math.minus
 import ktx.math.plus
-import ktx.math.vec2
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -42,10 +36,6 @@ class PigEntity(
     private val deadComps : ComponentMapper<DeadComponent> = world.mapper()
 ) {
 
-    init {
-        println(entity.id)
-    }
-
     val physicComponent = physicComps[entity]
     val moveComponent = moveComps[entity]
     private val imageComponent = imageComps[entity]
@@ -56,7 +46,6 @@ class PigEntity(
     private val meleeAttackComponent = meleeAttackComps.getOrNull(entity)
     private val rangeAttackComponent = rangeAttackComps.getOrNull(entity)
     private val previousPosition = physicComponent.body.position.cpy()
-    var cannonEntity : Entity? = null
 
     val isPigBomb : Boolean
         get() = entityModel == EntityModel.PIG_BOMB
@@ -66,14 +55,6 @@ class PigEntity(
 
     val isPigLight : Boolean
         get() = entityModel == EntityModel.PIG_LIGHT
-
-    val isJumping : Boolean
-        get()  {
-            return physicComponent.body.linearVelocity.y > 0.2f
-        }
-
-    val isFalling : Boolean
-        get() = physicComponent.body.linearVelocity.y < -0.2f
 
     val isMeleeAttack : Boolean
         get() = meleeAttackComponent != null
@@ -158,7 +139,7 @@ class PigEntity(
 
             rangeAttackComponent!!.attackImpulse.set(
                 (diffX * 100f).coerceIn(-300f,if (entityModel != EntityModel.PIG_LIGHT) 300f else -20f),
-                (diffY * 100f).coerceAtLeast(-3f),
+                (diffY * 100f).coerceAtLeast(-50f),
             )
         }
     }

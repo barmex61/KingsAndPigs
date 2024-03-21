@@ -9,8 +9,10 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.Manifold
 import com.badlogic.gdx.physics.box2d.World
 import com.fatih.kingsofpigs.ecs.component.AiComponent
+import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
+import com.fatih.kingsofpigs.ecs.component.ItemComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
 import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
@@ -36,6 +38,8 @@ class PhysicSystem (
     private val rangeAttackComps : ComponentMapper<RangeAttackComponent>,
     private val lifeComps : ComponentMapper<LifeComponent>,
     private val aiComps : ComponentMapper<AiComponent>,
+    private val destroyableComps : ComponentMapper<DestroyableComponent>,
+    private val itemComps : ComponentMapper<ItemComponent>,
     private val box2dWorld: World,
 ): IteratingSystem(interval = Fixed(1/300f)) , ContactListener{
 
@@ -89,6 +93,8 @@ class PhysicSystem (
     private fun Fixture.canDealDamage() = this.userData == DEAL_DAMAGE
     private fun Fixture.cantDealDamage() = this.userData == CANT_DEAL_DAMAGE
     private fun Fixture.isAiCircle() = this.userData == AI_CIRCLE
+    private fun Fixture.isDestroyable() = this.filterData.categoryBits == Constants.DESTROYABLE
+    private fun Fixture.isItem() = this.filterData.categoryBits == Constants.ITEM
 
     private fun dealDamage(attackEntity: Entity) : Float{
         return if (attackEntity in meleeAttackComps){
@@ -111,6 +117,34 @@ class PhysicSystem (
     override fun beginContact(contact: Contact) {
         val fixtureA = contact.fixtureA
         val fixtureB = contact.fixtureB
+
+        if (fixtureA.isPlayer() && fixtureB.isAttackObject() && fixtureB.cantDealDamage() && fixtureB.entity() in rangeAttackComps && rangeAttackComps[fixtureB.entity()].entityModel == EntityModel.PIG_LIGHT){
+            rangeAttackComps[fixtureB.entity()].destroyBodyTime = rangeAttackComps[fixtureB.entity()].maxDestroyBodyTime*2f/3f
+        }
+        if (fixtureB.isPlayer() && fixtureA.isAttackObject() && fixtureA.cantDealDamage() && fixtureA.entity() in rangeAttackComps && rangeAttackComps[fixtureA.entity()].entityModel == EntityModel.PIG_LIGHT){
+            rangeAttackComps[fixtureA.entity()].destroyBodyTime = rangeAttackComps[fixtureA.entity()].maxDestroyBodyTime*2f/3f
+        }
+
+        if (fixtureA.isPlayer() && fixtureB.isItem()){
+            itemComps[fixtureB.entity()].collideEntity = fixtureA.entity()
+        }
+        if (fixtureB.isPlayer() && fixtureA.isItem()){
+            itemComps[fixtureA.entity()].collideEntity = fixtureB.entity()
+        }
+        if (fixtureA.isAttackObject() && fixtureB.isDestroyable()){
+            destroyableComps[fixtureB.entity()].run {
+                if (!destroy){
+                    createBodies = true
+                }
+            }
+        }
+        if (fixtureB.isAttackObject() && fixtureA.isDestroyable()){
+            destroyableComps[fixtureA.entity()].run {
+                if (!destroy){
+                    createBodies = true
+                }
+            }
+        }
         if (fixtureA.isAiCircle() && fixtureB.filterData.categoryBits == Constants.KING){
             aiComps[fixtureA.entity()].nearbyEntities += fixtureB.entity()
         }

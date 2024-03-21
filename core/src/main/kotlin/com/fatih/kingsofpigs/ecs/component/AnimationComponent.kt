@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 enum class AnimationType{
-    IDLE,READY,LOOKING_OUT,BOMB_OFF,RUN,SHOOT,PREPARE,DEAD,ATTACK,FALL,JUMP,DOOR_OUT,DOOR_IN,OPENING,CLOSING,THROWING_BOX,PICKING_BOX,THROWING_BOMB;
+    IDLE,READY,LOOKING_OUT,HIT,BOMB_OFF,RUN,SHOOT,PREPARE,DEAD,ATTACK,FALL,JUMP,DOOR_OUT,DOOR_IN,OPENING,CLOSING,THROWING_BOX,PICKING_BOX,THROWING_BOMB;
     val animationName = this.name.lowercase()
 }
 

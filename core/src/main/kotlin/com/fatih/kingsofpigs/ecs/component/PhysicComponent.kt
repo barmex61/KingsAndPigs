@@ -49,7 +49,8 @@ class PhysicComponent {
             isPlatform : Boolean = false,
             aiCircle : Float = 0f,
             entity: Entity? = null,
-            attackBodyUserData : String = ""
+            usData : String = "",
+            isItem : Boolean = false
         ) : Body {
             val body = box2dWorld.body(bodyType){
                 linearDamping = 2f
@@ -66,17 +67,17 @@ class PhysicComponent {
                                 density = 15f
                                 friction = 0.1f
                                 restitution = 0.5f
-                                userData = attackBodyUserData
+                                userData = usData
                             }
                         }
                         is Rectangle ->{
                             this.position.set(shape.x + shape.width/2f,shape.y + shape.height/2f)
-                            box(shape.width,shape.height){
+                            box(shape.width,shape.height,physicOffset){
                                 isSensor = false
                                 filter.categoryBits = categoryBit
                                 filter.maskBits = maskBit
                                 density = 6f
-                                userData = attackBodyUserData
+                                userData = usData
                             }
                         }
                         is Polyline ->{
@@ -112,8 +113,10 @@ class PhysicComponent {
                                     isSensor = isPortal
                                     filter.categoryBits = categoryBit
                                     filter.maskBits = maskBit
+                                    restitution = if (isItem) 0.5f else 0f
                                     userData = if (isPlatform) PLATFORM_FIXTURE else ENTITY_COLLISION_FIXTURE
                                     density = if (categoryBit == Constants.KING) 9f else  15f
+
                                 }
                             }
                             if (aiCircle != 0f){

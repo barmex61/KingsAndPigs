@@ -42,10 +42,10 @@ class PlayerEntity(
         get() = attackComponent.doAttack
 
     val isJumping : Boolean
-        get() = physicComponent.body.linearVelocity.y > 0.01f
+        get() = physicComponent.body.linearVelocity.y > 0.5f
 
     val isFalling : Boolean
-        get() = physicComponent.body.linearVelocity.y < -0.01f
+        get() = physicComponent.body.linearVelocity.y < -0.5f
 
     val isAnimationDone : Boolean
         get() = animationComponent.isAnimationDone

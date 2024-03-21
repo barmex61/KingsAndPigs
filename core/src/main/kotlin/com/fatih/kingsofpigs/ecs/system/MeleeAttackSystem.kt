@@ -15,6 +15,8 @@ import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.createBody
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
+import com.fatih.kingsofpigs.event.MeleeAttackEvent
+import com.fatih.kingsofpigs.event.fireEvent
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -32,6 +34,7 @@ class MeleeAttackSystem(
     private val animComps : ComponentMapper<AnimationComponent>,
     private val imageComps : ComponentMapper<ImageComponent>,
     private val box2dWorld : World,
+    private val gameStage : Stage
 ) : IteratingSystem(){
 
     override fun onTickEntity(entity: Entity) {
@@ -62,6 +65,7 @@ class MeleeAttackSystem(
                         }
                     }
                 }
+                gameStage.fireEvent(MeleeAttackEvent(physicComponent.body.linearVelocity.y > 0.1f))
                 //ATTACK_POLYLINE.vertices = attackPolyLine
                 attackState = AttackState.ATTACK
             }

@@ -10,37 +10,37 @@
  <tileset firstgid="513" name="entity" tilewidth="78" tileheight="58" tilecount="11" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image width="52" height="56" source="../graphics/bomb.png"/>
+   <image source="../graphics/bomb.png"/>
   </tile>
   <tile id="1">
-   <image width="22" height="16" source="../graphics/box.png"/>
+   <image source="../graphics/box.png"/>
   </tile>
   <tile id="2">
-   <image width="44" height="28" source="../graphics/cannon.png"/>
+   <image source="../graphics/cannon.png"/>
   </tile>
   <tile id="3">
-   <image width="46" height="56" source="../graphics/door.png"/>
+   <image source="../graphics/door.png"/>
   </tile>
   <tile id="4">
-   <image width="78" height="58" source="../graphics/king.png"/>
+   <image source="../graphics/king.png"/>
   </tile>
   <tile id="5">
-   <image width="34" height="28" source="../graphics/pig.png"/>
+   <image source="../graphics/pig.png"/>
   </tile>
   <tile id="6">
-   <image width="26" height="26" source="../graphics/pig_bomb.png"/>
+   <image source="../graphics/pig_bomb.png"/>
   </tile>
   <tile id="7">
-   <image width="26" height="30" source="../graphics/pig_box.png"/>
+   <image source="../graphics/pig_box.png"/>
   </tile>
   <tile id="8">
-   <image width="26" height="20" source="../graphics/pig_box_hide.png"/>
+   <image source="../graphics/pig_box_hide.png"/>
   </tile>
   <tile id="9">
-   <image width="38" height="28" source="../graphics/pig_king.png"/>
+   <image source="../graphics/pig_king.png"/>
   </tile>
   <tile id="10">
-   <image width="26" height="18" source="../graphics/pig_light.png"/>
+   <image source="../graphics/pig_light.png"/>
   </tile>
  </tileset>
  <layer id="1" name="background" width="16" height="8">

@@ -2,11 +2,10 @@ package com.fatih.kingsofpigs.ecs.component
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import ktx.math.vec2
 
 enum class EntityModel {
-    UNDEFINED,PIG,KING,KING_PIG,PIG_BOX,PIG_BOMB,PIG_BOX_HIDE,PIG_LIGHT,BOX,BOMB,CANNON,DOOR;
+    UNDEFINED,PIG,KING,KING_PIG,PIG_BOX,PIG_BOMB,PIG_BOX_HIDE,PIG_LIGHT,BOX,BOMB,CANNON,DOOR,HEART,DIAMOND;
     val entityName = this.name.lowercase()
 }
 

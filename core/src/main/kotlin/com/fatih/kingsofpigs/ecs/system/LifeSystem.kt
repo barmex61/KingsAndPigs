@@ -2,11 +2,15 @@ package com.fatih.kingsofpigs.ecs.system
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
+import com.fatih.kingsofpigs.ecs.component.AnimationComponent
+import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_FRAME_DURATION
+import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
@@ -29,6 +33,7 @@ class LifeSystem (
     private val deadComps : ComponentMapper<DeadComponent>,
     private val playerComps : ComponentMapper<PlayerComponent>,
     private val physicComps : ComponentMapper<PhysicComponent>,
+    private val animComps : ComponentMapper<AnimationComponent>,
     private val gameStage : Stage
 ): IteratingSystem(){
 
@@ -52,7 +57,6 @@ class LifeSystem (
                     damageTaken = 0f
                 }
             }else{
-                println("deadinsidelife")
                 if (entity !in deadComps){
                     configureEntity(entity){
                         deadComps.add(entity){

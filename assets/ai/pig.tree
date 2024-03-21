@@ -1,7 +1,5 @@
 #Actions
 import idle:"com.fatih.kingsofpigs.ai.Idle"
-import jump:"com.fatih.kingsofpigs.ai.Jump"
-import fall:"com.fatih.kingsofpigs.ai.Fall"
 import throwBox:"com.fatih.kingsofpigs.ai.ThrowBox"
 import throwBomb:"com.fatih.kingsofpigs.ai.ThrowBomb"
 import meleeAttack:"com.fatih.kingsofpigs.ai.MeleeAttack"
@@ -11,8 +9,6 @@ import focus:"com.fatih.kingsofpigs.ai.Focus"
 import fireCannon:"com.fatih.kingsofpigs.ai.FireCannon"
 
 #Conditions
-import isJumping?:"com.fatih.kingsofpigs.ai.IsJumping"
-import isFalling?:"com.fatih.kingsofpigs.ai.IsFalling"
 import isMeleeAttack?:"com.fatih.kingsofpigs.ai.IsMeleeAttack"
 import isRangeAttack?:"com.fatih.kingsofpigs.ai.IsRangeAttack"
 import canAttack?:"com.fatih.kingsofpigs.ai.CanAttack"
@@ -44,8 +40,6 @@ subtree name : "attack"
 root
     selector
         (isDead?) dead
-        (isJumping?) jump
-        (isFalling?) fall
         (isEnemyNearby?)(canAttack?) $attack
         (random success:0.5)(canMove?)(notInRange?) wander
         idle duration:"uniform,1.5,2.5"

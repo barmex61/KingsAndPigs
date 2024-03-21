@@ -53,38 +53,6 @@ class Idle(
     }
 }
 
-class Jump : Actions(){
-    override fun execute(): Status {
-        if (status != Status.RUNNING){
-            entity.animation(AnimationType.JUMP)
-            return Status.RUNNING
-        }
-        if (!entity.isJumping){
-            return Status.FAILED
-        }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
-    }
-}
-class Fall : Actions(){
-
-    override fun execute(): Status {
-
-        if (status != Status.RUNNING){
-            entity.animation(AnimationType.FALL)
-            return Status.RUNNING
-        }
-        if (!entity.isFalling){
-            return Status.FAILED
-        }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
-    }
-}
 
 class ThrowBox : Actions(){
     override fun execute(): Status {

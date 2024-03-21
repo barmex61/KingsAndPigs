@@ -28,7 +28,7 @@ class MeleeAttackComponent (
 
     val attackBodyMaskBit : Short
         get()  {
-            return if (isPlayer) Constants.ENEMY or Constants.ITEM or Constants.ATTACK_OBJECT or Constants.OBJECT
+            return if (isPlayer) Constants.ENEMY or Constants.ITEM or Constants.ATTACK_OBJECT or Constants.OBJECT or Constants.DESTROYABLE
             else Constants.KING or Constants.ATTACK_OBJECT or Constants.OBJECT
         }
 
