@@ -13,7 +13,7 @@ class DestroyableComponent(
     var createBodies : Boolean = false,
     var images : MutableList<Image> = mutableListOf()
 ) {
-    var itemModels : MutableList<EntityModel> = mutableListOf()
+    var items : MutableList<Item> = mutableListOf()
     var bodyList : MutableList<Body> = mutableListOf()
     companion object{
         class DestroyableListener(private val world:World,private val gameStage : Stage) : ComponentListener<DestroyableComponent>{

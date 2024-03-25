@@ -58,8 +58,6 @@ class RangeAttackSystem(
         rangeAttackComponent.run {
             if (attackBody != null){
                 destroyBodyTime += deltaTime
-                println(destroyBodyTime)
-                println(animationPath)
                 when{
                     destroyBodyTime <= maxDestroyBodyTime/4f && animationPath != startAnimPath->{
                         setAnimation(startAnimPath,animation(startAnimPath, playMode = PlayMode.LOOP))

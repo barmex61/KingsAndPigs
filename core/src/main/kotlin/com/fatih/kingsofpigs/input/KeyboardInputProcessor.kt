@@ -17,14 +17,20 @@ fun addProcessor(inputProcessor: InputProcessor){
     if (Gdx.input.inputProcessor == null){
         Gdx.input.inputProcessor = InputMultiplexer(inputProcessor)
     }else{
-        (Gdx.input.inputProcessor as InputMultiplexer).addProcessor(inputProcessor)
+        val multiplexer = (Gdx.input.inputProcessor as InputMultiplexer)
+        val processor = multiplexer.processors.first { it::class.java == inputProcessor::class.java }
+        processor?.let {
+            multiplexer.removeProcessor(it)
+        }
+        multiplexer.addProcessor(inputProcessor)
     }
 }
 
 class KeyboardInputProcessor(
     private val world: World,
     private val moveComps : ComponentMapper<MoveComponent> = world.mapper(),
-    private val attackComps : ComponentMapper<MeleeAttackComponent> = world.mapper()
+    private val attackComps : ComponentMapper<MeleeAttackComponent> = world.mapper(),
+    var changeScreen : () -> Unit
 ) : InputAdapter() {
 
     init {
@@ -39,13 +45,15 @@ class KeyboardInputProcessor(
 
     private fun Int.isMovementKey() = this == W || this == D || this == A
     private fun Int.isAttackKey() = this == SPACE
+    private fun Int.changeScreenKey() = this == C
 
     override fun keyDown(keycode: Int): Boolean {
-        if (!keycode.isMovementKey() && !keycode.isAttackKey()) return false
+        if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
         when(keycode){
             D -> playerCos+=1f
             A -> playerCos-=1f
             W -> playerSin+=1f
+            C -> changeScreen()
             SPACE -> updateAttack()
         }
         updateMovement()
@@ -53,7 +61,7 @@ class KeyboardInputProcessor(
     }
 
     override fun keyUp(keycode: Int): Boolean {
-        if(!keycode.isMovementKey() && !keycode.isAttackKey()) return false
+        if(!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
         when(keycode){
             D ->  playerCos-=1f
             A ->  playerCos+=1f
@@ -70,14 +78,16 @@ class KeyboardInputProcessor(
         if (attackComponent!!.attackState == AttackState.READY && attackComponent!!.attackBody == null) {
             attackComponent!!.doAttack = true
         }
-
     }
 
     private fun updateMovement(){
         if (moveComponent == null){
-            moveComponent = moveComps[world.family(allOf = arrayOf(PlayerComponent::class)).first()]
+            val family = world.family(allOf = arrayOf(PlayerComponent::class))
+            if (family.isNotEmpty){
+                moveComponent = moveComps[world.family(allOf = arrayOf(PlayerComponent::class)).first()]
+            }
         }
-        moveComponent!!.run {
+        moveComponent?.run {
             cos = playerCos
             sin = playerSin
         }

@@ -11,6 +11,7 @@ import com.fatih.kingsofpigs.actor.FlipImage
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
+import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.ItemComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
@@ -69,10 +70,10 @@ class DestroyableObjectSystem(
 
                 destroy = true
                 createBodies = false
-                itemModels.forEachIndexed {i,entityModel->
+                items.forEachIndexed { i, item->
                     world.entity {
                         add<ItemComponent>{
-                            this.itemModel = entityModel
+                            this.item = item
                             this.extraLife = 5f
                         }
                         add<PhysicComponent>{
@@ -90,7 +91,8 @@ class DestroyableObjectSystem(
                             }
                         }
                         add<AnimationComponent>{
-                            this.entityModel = entityModel
+                            println(item.javaClass.simpleName)
+                            this.entityModel = EntityModel.valueOf(item.javaClass.simpleName.uppercase())
                             nextAnimation(AnimationType.IDLE)
                         }
                     }

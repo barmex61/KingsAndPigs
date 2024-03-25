@@ -27,7 +27,7 @@ class DeadSystem(
                     configureEntity(entity){
                         deadComps.remove(it)
                         lifeComps[entity].apply {
-                            currentLife = maxLife
+                            currentHp = maxHp
                             damageTaken = 0f
                         }
                     }

@@ -96,11 +96,12 @@ class PhysicSystem (
     private fun Fixture.isDestroyable() = this.filterData.categoryBits == Constants.DESTROYABLE
     private fun Fixture.isItem() = this.filterData.categoryBits == Constants.ITEM
 
-    private fun dealDamage(attackEntity: Entity) : Float{
-        return if (attackEntity in meleeAttackComps){
+    private fun LifeComponent.dealDamage(attackEntity: Entity) {
+        if (attackEntity in meleeAttackComps){
             meleeAttackComps[attackEntity].run {
                 val isCrit = (1..100).random() <= critChance
-                attackDamage * if (isCrit) critDamage else 1f
+                this@dealDamage.isCrit = isCrit
+                damageTaken =  attackDamage * if (isCrit) critDamage else 1f
             }
         }else {
             rangeAttackComps[attackEntity].run {
@@ -108,7 +109,8 @@ class PhysicSystem (
                     0f
                 }else{
                     val isCrit = (1..100).random() <= critChance
-                    attackDamage * if (isCrit) critDamage else 1f
+                    this@dealDamage.isCrit = isCrit
+                    damageTaken = attackDamage * if (isCrit) critDamage else 1f
                 }
             }
         }
@@ -156,14 +158,14 @@ class PhysicSystem (
             if (fixtureB.isEnemy() || fixtureB.isPlayer()){
                 fixtureA.userData = CANT_DEAL_DAMAGE
                 if (fixtureA.filterData.groupIndex == 1.toShort()) fixtureA.isSensor = true
-                lifeComps[fixtureB.entity()].damageTaken = dealDamage(fixtureA.entity())
+                lifeComps[fixtureB.entity()].dealDamage(fixtureA.entity())
             }
         }
         if (fixtureB.isAttackObject() && fixtureB.canDealDamage()){
             if (fixtureA.isEnemy() || fixtureA.isPlayer()){
                 fixtureB.userData = CANT_DEAL_DAMAGE
                 if (fixtureB.filterData.groupIndex == 1.toShort()) fixtureB.isSensor = true
-                lifeComps[fixtureA.entity()].damageTaken = dealDamage(fixtureB.entity())
+                lifeComps[fixtureA.entity()].dealDamage(fixtureB.entity())
             }
         }
     }

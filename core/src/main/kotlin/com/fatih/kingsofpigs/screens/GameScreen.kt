@@ -16,6 +16,7 @@ import com.fatih.kingsofpigs.ecs.component.DestroyableComponent.Companion.Destro
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
+import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent.Companion.RangeAttackComponentListener
 import com.fatih.kingsofpigs.ecs.component.StateComponent.Companion.StateComponentListener
 import com.fatih.kingsofpigs.ecs.system.AiSystem
@@ -43,8 +44,9 @@ import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.math.div
 import ktx.math.times
+import kotlin.reflect.KClass
 
-class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
+class GameScreen(private val spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
 
     private val orthographicCamera = OrthographicCamera()
     private val gameViewport = ExtendViewport(16f,9f,orthographicCamera)
@@ -53,6 +55,7 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
     private val uiStage = Stage(uiViewport,spriteBatch)
+    private var disposed : Boolean = false
     private val world = world {
 
         components {
@@ -95,12 +98,22 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
     init {
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
         world.system<PortalSystem>().changeMap("map/map1.tmx")
-        KeyboardInputProcessor(world)
+        KeyboardInputProcessor(world, changeScreen = ::changeScreen)
     }
+
+    private fun changeScreen(){
+        changeScreen(UiScreen::class.java)
+        if (!disposed){
+            disposeSafely()
+            disposed = true
+        }
+    }
+
 
     override fun render(delta: Float) {
         world.update(delta.coerceAtMost(0.25f))
-        GdxAI.getTimepiece().update(delta.coerceAtMost(0.25f)) }
+        GdxAI.getTimepiece().update(delta.coerceAtMost(0.25f))
+    }
 
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width,height,true)
@@ -108,8 +121,9 @@ class GameScreen(private val spriteBatch: SpriteBatch) : KtxScreen {
     }
 
     override fun dispose() {
-        spriteBatch.disposeSafely()
+        world.dispose()
         gameStage.disposeSafely()
+        box2dWorld.disposeSafely()
     }
 
 }

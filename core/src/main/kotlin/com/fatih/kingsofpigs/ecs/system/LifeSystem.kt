@@ -1,16 +1,9 @@
 package com.fatih.kingsofpigs.ecs.system
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
-import com.fatih.kingsofpigs.ecs.component.AnimationComponent
-import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_FRAME_DURATION
-import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
@@ -19,12 +12,15 @@ import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.fatih.kingsofpigs.event.PigGetHitEvent
 import com.fatih.kingsofpigs.event.PlayerGetHitEvent
 import com.fatih.kingsofpigs.event.fireEvent
+import com.fatih.kingsofpigs.ui.Fonts
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import com.github.quillraven.fleks.NoneOf
 import ktx.math.plus
+import ktx.scene2d.Scene2DSkin
+import com.fatih.kingsofpigs.ui.get
 
 @AllOf([LifeComponent::class])
 @NoneOf([DeadComponent::class])
@@ -33,27 +29,26 @@ class LifeSystem (
     private val deadComps : ComponentMapper<DeadComponent>,
     private val playerComps : ComponentMapper<PlayerComponent>,
     private val physicComps : ComponentMapper<PhysicComponent>,
-    private val animComps : ComponentMapper<AnimationComponent>,
     private val gameStage : Stage
 ): IteratingSystem(){
 
-    private val bitmapFont = BitmapFont(Gdx.files.internal("ui/damage_font.fnt")).apply { data.setScale(0.4f) }
-    private val damageLabelStyle = LabelStyle(bitmapFont, Color.RED)
+    private val damageLabelStyle = LabelStyle(Scene2DSkin.defaultSkin[Fonts.SEGOE_PRINT_GRADIENT_RED].apply { data.setScale(0.3f) },null)
 
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComps[entity]
         lifeComponent.run {
 
-            if (currentLife > 0f){
-                currentLife = (currentLife + regeneration * deltaTime).coerceAtMost(maxLife)
+            if (currentHp > 0f){
+                currentHp = (currentHp + regeneration * deltaTime).coerceAtMost(maxHp)
                 if (damageTaken > 0f){
                     createFloatingText(damageTaken.toInt().toString(),isCrit,physicComps[entity].body.position,physicComps[entity].bodyOffset)
                     if (entity in playerComps){
                         gameStage.fireEvent(PlayerGetHitEvent())
+                        world.system<CameraSystem>().shakeCamera = true
                     }else{
                         gameStage.fireEvent(PigGetHitEvent())
                     }
-                    currentLife -= damageTaken
+                    currentHp -= damageTaken
                     damageTaken = 0f
                 }
             }else{

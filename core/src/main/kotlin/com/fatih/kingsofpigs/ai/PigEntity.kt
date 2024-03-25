@@ -69,7 +69,7 @@ class PigEntity(
         get() = moveComponent.aiMoveRadius
 
     val isDead : Boolean
-        get() = lifeComponent.currentLife <= 0f
+        get() = lifeComponent.currentHp <= 0f
 
     val canAttack : Boolean
         get()  {

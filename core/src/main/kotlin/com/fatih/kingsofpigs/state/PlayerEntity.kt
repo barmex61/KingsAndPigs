@@ -51,7 +51,7 @@ class PlayerEntity(
         get() = animationComponent.isAnimationDone
 
     val isDead : Boolean
-        get() = lifeComponent.currentLife <= 0f
+        get() = lifeComponent.currentHp <= 0f
 
     fun animation(animationType: AnimationType, playMode: PlayMode = PlayMode.LOOP, frameDuration : Float = DEFAULT_FRAME_DURATION){
         animationComponent.nextAnimation(animationType, playMode, frameDuration)

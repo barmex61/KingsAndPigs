@@ -1,0 +1,104 @@
+
+uiObject.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Icon_Lightning
+  rotate: false
+  xy: 1434, 887
+  size: 149, 235
+  orig: 149, 235
+  offset: 0, 0
+  index: -1
+Icon_Menu
+  rotate: false
+  xy: 0, 0
+  size: 193, 157
+  orig: 193, 157
+  offset: 0, 0
+  index: -1
+big_background
+  rotate: false
+  xy: 0, 332
+  size: 922, 813
+  orig: 922, 813
+  offset: 0, 0
+  index: -1
+blue_background
+  rotate: false
+  xy: 0, 157
+  size: 710, 175
+  orig: 710, 175
+  offset: 0, 0
+  index: -1
+icon_crown
+  rotate: false
+  xy: 1528, 1321
+  size: 251, 188
+  orig: 251, 188
+  offset: 0, 0
+  index: -1
+icon_left
+  rotate: false
+  xy: 1528, 1122
+  size: 228, 199
+  orig: 228, 199
+  offset: 0, 0
+  index: -1
+icon_reward
+  rotate: false
+  xy: 710, 107
+  size: 205, 225
+  orig: 205, 225
+  offset: 0, 0
+  index: -1
+icon_right
+  rotate: false
+  xy: 1779, 1310
+  size: 228, 199
+  orig: 228, 199
+  offset: 0, 0
+  index: -1
+icon_up
+  rotate: false
+  xy: 1756, 1082
+  size: 198, 228
+  orig: 198, 228
+  offset: 0, 0
+  index: -1
+red_background
+  rotate: false
+  xy: 0, 1145
+  size: 1528, 346
+  orig: 1528, 346
+  offset: 0, 0
+  index: -1
+segoe_print_gradient_green
+  rotate: false
+  xy: 1438, 1509
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+segoe_print_gradient_red
+  rotate: false
+  xy: 922, 633
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+sylfaen
+  rotate: false
+  xy: 922, 121
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+title_background
+  rotate: false
+  xy: 0, 1491
+  size: 1438, 530
+  orig: 1438, 530
+  offset: 0, 0
+  index: -1

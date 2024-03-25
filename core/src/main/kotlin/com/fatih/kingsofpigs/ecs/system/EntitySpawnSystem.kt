@@ -18,7 +18,9 @@ import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
+import com.fatih.kingsofpigs.ecs.component.Item
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
+import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_HP
 import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_LIFE
 import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
@@ -93,9 +95,9 @@ class EntitySpawnSystem (
                 }
                 if (entityModel == EntityModel.BOX){
                     add<DestroyableComponent>{
-                        val itemList = listOf(EntityModel.DIAMOND,EntityModel.HEART)
+                        val itemList = listOf(Item.Diamond(),Item.Heart())
                         (1..(1..5).random()).forEach { _ ->
-                            itemModels.add(itemList[(0..1).random()])
+                            items.add(itemList[(0..1).random()])
                         }
                     }
                 }
@@ -131,8 +133,8 @@ class EntitySpawnSystem (
 
                 if (lifeScaling != 0f){
                     add<LifeComponent>{
-                        maxLife = DEFAULT_MAX_LIFE * lifeScaling
-                        currentLife = maxLife
+                        maxHp = DEFAULT_MAX_HP * lifeScaling
+                        currentHp = maxHp
                         canResurrect = this@run.canResurrect
                         resurrectionTime = this@run.resurrectionTime
                         regeneration = this@run.regeneration

@@ -1,8 +1,10 @@
 package com.fatih.kingsofpigs.ecs.component
 
 data class LifeComponent (
-    var maxLife : Float = DEFAULT_MAX_LIFE,
-    var currentLife : Float = maxLife,
+    var maxHp : Float = DEFAULT_MAX_HP,
+    var currentHp : Float = maxHp,
+    val maxLife : Int = DEFAULT_MAX_LIFE,
+    var currentLife : Int = maxLife,
     var regeneration : Float = 1f,
     var damageTaken : Float = 0f,
     var canResurrect : Boolean = false,
@@ -10,6 +12,7 @@ data class LifeComponent (
     var isCrit : Boolean = false
 ){
     companion object{
-        const val DEFAULT_MAX_LIFE = 20f
+        const val DEFAULT_MAX_HP = 30f
+        const val DEFAULT_MAX_LIFE = 3
     }
 }

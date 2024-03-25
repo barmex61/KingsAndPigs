@@ -18,5 +18,5 @@ dependencies {
   api "io.github.libktx:ktx-scene2d:$ktxVersion"
   api "io.github.libktx:ktx-tiled:$ktxVersion"
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-  api "io.github.quillraven.fleks:Fleks:2.6"
+  api "io.github.quillraven.fleks:Fleks:1.6-JVM"
 }
