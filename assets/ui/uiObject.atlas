@@ -4,14 +4,14 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Icon_Lightning
+icon_lightning
   rotate: false
   xy: 1434, 887
   size: 149, 235
   orig: 149, 235
   offset: 0, 0
   index: -1
-Icon_Menu
+icon_menu
   rotate: false
   xy: 0, 0
   size: 193, 157
@@ -46,7 +46,7 @@ icon_left
   orig: 228, 199
   offset: 0, 0
   index: -1
-icon_reward
+icon_score
   rotate: false
   xy: 710, 107
   size: 205, 225

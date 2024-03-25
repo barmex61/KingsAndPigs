@@ -1,7 +1,6 @@
 package com.fatih.kingsofpigs
 
 
-import com.badlogic.gdx.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.fatih.kingsofpigs.screens.GameScreen
 import com.fatih.kingsofpigs.screens.UiScreen
@@ -10,7 +9,6 @@ import com.fatih.kingsofpigs.ui.loadSkin
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.gdxError
-import kotlin.reflect.KClass
 
 
 class KingOfPigs : KtxGame<KtxScreen>() {
@@ -20,8 +18,8 @@ class KingOfPigs : KtxGame<KtxScreen>() {
     }
     override fun create() {
         loadSkin()
-        addScreen(GameScreen(spriteBatch, changeScreen = ::changeScreen))
-        setScreen<GameScreen>()
+        addScreen(UiScreen(spriteBatch, changeScreen = ::changeScreen))
+        setScreen<UiScreen>()
     }
 
     private fun changeScreen(screenType : Class<out KtxScreen>){

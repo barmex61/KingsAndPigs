@@ -18,12 +18,17 @@ fun addProcessor(inputProcessor: InputProcessor){
         Gdx.input.inputProcessor = InputMultiplexer(inputProcessor)
     }else{
         val multiplexer = (Gdx.input.inputProcessor as InputMultiplexer)
-        val processor = multiplexer.processors.first { it::class.java == inputProcessor::class.java }
+        val processor = multiplexer.processors.firstOrNull { it::class.java == inputProcessor::class.java }
         processor?.let {
             multiplexer.removeProcessor(it)
         }
         multiplexer.addProcessor(inputProcessor)
     }
+}
+
+fun removeProcessor(inputProcessor: InputProcessor){
+    val inputMultiplexer = Gdx.input.inputProcessor as InputMultiplexer
+    inputMultiplexer.removeProcessor(inputProcessor)
 }
 
 class KeyboardInputProcessor(
@@ -43,16 +48,16 @@ class KeyboardInputProcessor(
     private var playerSin : Float = 0f
     private var playerCos : Float = 0f
 
-    private fun Int.isMovementKey() = this == W || this == D || this == A
+    private fun Int.isMovementKey() = this == UP || this == RIGHT || this == LEFT
     private fun Int.isAttackKey() = this == SPACE
     private fun Int.changeScreenKey() = this == C
 
     override fun keyDown(keycode: Int): Boolean {
         if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
         when(keycode){
-            D -> playerCos+=1f
-            A -> playerCos-=1f
-            W -> playerSin+=1f
+            RIGHT -> playerCos+=1f
+            LEFT-> playerCos-=1f
+            UP -> playerSin+=1f
             C -> changeScreen()
             SPACE -> updateAttack()
         }
@@ -63,9 +68,9 @@ class KeyboardInputProcessor(
     override fun keyUp(keycode: Int): Boolean {
         if(!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
         when(keycode){
-            D ->  playerCos-=1f
-            A ->  playerCos+=1f
-            W ->  playerSin-=1f
+            RIGHT ->  playerCos-=1f
+            LEFT ->  playerCos+=1f
+            UP ->  playerSin-=1f
         }
         updateMovement()
         return true

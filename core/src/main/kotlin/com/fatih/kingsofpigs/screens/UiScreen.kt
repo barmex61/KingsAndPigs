@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.fatih.kingsofpigs.input.addProcessor
+import com.fatih.kingsofpigs.input.removeProcessor
+import com.fatih.kingsofpigs.ui.view.UiView
 import com.fatih.kingsofpigs.ui.view.uiView
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
@@ -17,12 +20,14 @@ class UiScreen(private val spriteBatch: SpriteBatch,private val changeScreen : (
     private val uiViewPort = ExtendViewport(960f,540f,uiCamera)
     private val uiStage = Stage(uiViewPort,spriteBatch).apply { isDebugAll = true }
     private var disposed : Boolean = false
+    private var uiView : UiView? = null
 
 
     override fun show() {
         uiStage.actors {
-            uiView()
+            uiView = uiView()
         }
+        addProcessor(uiStage)
     }
 
     private fun changeScreen(){
@@ -36,13 +41,19 @@ class UiScreen(private val spriteBatch: SpriteBatch,private val changeScreen : (
     override fun render(delta: Float) {
         uiStage.act(delta)
         uiStage.draw()
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)){
+        if (uiView?.changeScreen == true){
+            uiView?.clearActions()
             changeScreen()
+            uiView?.changeScreen = false
+            removeProcessor(uiStage)
         }
     }
 
     override fun resize(width: Int, height: Int) {
         uiStage.viewport.update(width,height,true)
+        uiView?.clearActions()
+        uiView?.clear()
+        uiView?.initialize()
     }
 
     override fun dispose() {

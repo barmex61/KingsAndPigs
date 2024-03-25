@@ -32,7 +32,7 @@ class LifeSystem (
     private val gameStage : Stage
 ): IteratingSystem(){
 
-    private val damageLabelStyle = LabelStyle(Scene2DSkin.defaultSkin[Fonts.SEGOE_PRINT_GRADIENT_RED].apply { data.setScale(0.3f) },null)
+    private val damageLabelStyle = LabelStyle(Scene2DSkin.defaultSkin[Fonts.SEGOE_PRINT_GRADIENT_RED],null)
 
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComps[entity]

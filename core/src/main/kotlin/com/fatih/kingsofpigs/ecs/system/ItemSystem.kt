@@ -24,7 +24,7 @@ class ItemSystem (
     private val lifeComps : ComponentMapper<LifeComponent>
 ): IteratingSystem(){
 
-    private val hpLabelStyle = LabelStyle(Scene2DSkin.defaultSkin[Fonts.SEGOE_PRINT_GRADIENT_GREEN].apply { data.setScale(0.3f) },null)
+    private val hpLabelStyle = LabelStyle(Scene2DSkin.defaultSkin[Fonts.SEGOE_PRINT_GRADIENT_GREEN],null)
 
     override fun onTickEntity(entity: Entity) {
         val itemComponent = itemComps[entity]
