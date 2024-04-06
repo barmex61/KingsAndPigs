@@ -22,7 +22,6 @@ class AnimationSystem(
     private val animComps : ComponentMapper<AnimationComponent>,
     private val textureAtlas : TextureAtlas,
     private val imageComps : ComponentMapper<ImageComponent>,
-    private val playerComps : ComponentMapper<PlayerComponent>
 ) : IteratingSystem() {
 
     private val animationCache = mutableMapOf<String,Animation<TextureRegionDrawable>>()

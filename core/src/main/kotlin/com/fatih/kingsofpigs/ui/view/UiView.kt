@@ -13,14 +13,18 @@ import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.actor
 import com.fatih.kingsofpigs.ui.get
 import com.fatih.kingsofpigs.ui.widget.BannerHud
+import com.fatih.kingsofpigs.ui.widget.HtpHud
 import com.fatih.kingsofpigs.ui.widget.bannerHud
+import ktx.actors.alpha
+import ktx.actors.plusAssign
 
 
 class UiView(
     val uiSkin : Skin
 ) : KTable, Table(){
 
-    private lateinit var bannerHud : BannerHud
+    lateinit var bannerHud : BannerHud
+    lateinit var htpHud: HtpHud
     var changeScreen : Boolean = false
 
     init {
@@ -30,17 +34,12 @@ class UiView(
     fun initialize(){
         setFillParent(true)
         center()
-        background = uiSkin[Drawables.BIG_BACKGROUND]
+        background = uiSkin[Drawables.RECTANGLE_GRADIENT_BACKGROUND]
         bannerHud =  bannerHud(uiView = this){
             it.padRight(250f).padBottom(215f)
+            this.alpha = 0f
+            this += fadeIn(1f, Interpolation.smooth2)
         }
-        bannerHud.addAction(
-            Actions.sequence(
-                Actions.moveBy(0f,200f,0.05f, Interpolation.pow3OutInverse),
-                fadeIn(1f, Interpolation.smooth2),
-                Actions.moveBy(0f,-200f ,1f, Interpolation.pow3OutInverse),
-            )
-        )
     }
 }
 

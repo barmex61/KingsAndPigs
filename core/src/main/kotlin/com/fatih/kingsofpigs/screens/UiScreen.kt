@@ -1,7 +1,5 @@
 package com.fatih.kingsofpigs.screens
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -14,14 +12,13 @@ import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.scene2d.actors
 
-class UiScreen(private val spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen{
+class UiScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen{
 
     private val uiCamera = OrthographicCamera()
     private val uiViewPort = ExtendViewport(960f,540f,uiCamera)
-    private val uiStage = Stage(uiViewPort,spriteBatch).apply { isDebugAll = true }
+    private val uiStage = Stage(uiViewPort,spriteBatch)
     private var disposed : Boolean = false
     private var uiView : UiView? = null
-
 
     override fun show() {
         uiStage.actors {

@@ -8,6 +8,8 @@ import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.AttackState
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
+import com.fatih.kingsofpigs.ecs.component.DialogComponent
+import com.fatih.kingsofpigs.ecs.component.DialogType
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
@@ -19,12 +21,13 @@ import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.World
 import ktx.math.plus
+import ktx.math.random
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class PigEntity(
     private val world:World,
-    private val entity: Entity,
+    val entity: Entity,
     moveComps : ComponentMapper<MoveComponent> = world.mapper(),
     private val physicComps : ComponentMapper<PhysicComponent> = world.mapper(),
     aiComps : ComponentMapper<AiComponent> = world.mapper(),
@@ -33,11 +36,13 @@ class PigEntity(
     rangeAttackComps : ComponentMapper<RangeAttackComponent> = world.mapper(),
     imageComps : ComponentMapper<ImageComponent> = world.mapper(),
     lifeComps : ComponentMapper<LifeComponent> = world.mapper(),
-    private val deadComps : ComponentMapper<DeadComponent> = world.mapper()
+    private val deadComps : ComponentMapper<DeadComponent> = world.mapper(),
+    private val dialogComps : ComponentMapper<DialogComponent> = world.mapper()
 ) {
 
-    val physicComponent = physicComps[entity]
-    val moveComponent = moveComps[entity]
+    private val physicComponent = physicComps[entity]
+    private val dialogComponent = dialogComps[entity]
+    private val moveComponent = moveComps[entity]
     private val imageComponent = imageComps[entity]
     private val aiComponent = aiComps[entity]
     private val animationComponent = animComps[entity]
@@ -55,6 +60,17 @@ class PigEntity(
 
     val isPigLight : Boolean
         get() = entityModel == EntityModel.PIG_LIGHT
+
+    var isGetHit : Boolean
+        get() {
+            return when(entityModel){
+                EntityModel.PIG_BOMB,EntityModel.PIG_BOX -> false
+                else -> lifeComponent.getHit
+            }
+        }
+        set(value) {
+            lifeComponent.getHit = value
+        }
 
     val isMeleeAttack : Boolean
         get() = meleeAttackComponent != null
@@ -105,6 +121,7 @@ class PigEntity(
         }
     }
 
+
     fun scaleImage(scale : Float){
         imageComponent.image.setSize(imageComponent.image.width*scale,imageComponent.image.height*scale)
     }
@@ -128,6 +145,14 @@ class PigEntity(
 
     private fun turnTowardsThePlayer(diffX : Float){
         imageComponent.image.flipX = diffX > 0f
+    }
+
+    fun showDialog(dialogType: DialogType){
+        val random = (0f..1f).random()
+        if (random <= 0.2f){
+            dialogComponent.showDialog = true
+            dialogComponent.dialogType = dialogType
+        }
     }
 
     fun setRangeAttackImpulse(){

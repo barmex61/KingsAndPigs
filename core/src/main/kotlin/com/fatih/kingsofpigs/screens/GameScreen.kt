@@ -11,12 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
 import com.fatih.kingsofpigs.ecs.component.AiComponent.Companion.AiComponentListener
-import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
 import com.fatih.kingsofpigs.ecs.component.DestroyableComponent.Companion.DestroyableListener
+import com.fatih.kingsofpigs.ecs.component.DialogComponent.Companion.DialogComponentListener
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
-import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent.Companion.RangeAttackComponentListener
 import com.fatih.kingsofpigs.ecs.component.StateComponent.Companion.StateComponentListener
 import com.fatih.kingsofpigs.ecs.system.AiSystem
@@ -27,6 +26,7 @@ import com.fatih.kingsofpigs.ecs.system.CameraSystem
 import com.fatih.kingsofpigs.ecs.system.DeadSystem
 import com.fatih.kingsofpigs.ecs.system.DebugSystem
 import com.fatih.kingsofpigs.ecs.system.DestroyableObjectSystem
+import com.fatih.kingsofpigs.ecs.system.DialogSystem
 import com.fatih.kingsofpigs.ecs.system.EntitySpawnSystem
 import com.fatih.kingsofpigs.ecs.system.FloatingTextSystem
 import com.fatih.kingsofpigs.ecs.system.ItemSystem
@@ -38,23 +38,24 @@ import com.fatih.kingsofpigs.ecs.system.RangeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.RenderSystem
 import com.fatih.kingsofpigs.ecs.system.StateSystem
 import com.fatih.kingsofpigs.input.KeyboardInputProcessor
+import com.fatih.kingsofpigs.ui.view.gameView
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.math.div
 import ktx.math.times
-import kotlin.reflect.KClass
+import ktx.scene2d.actors
 
-class GameScreen(private val spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
+class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
 
     private val orthographicCamera = OrthographicCamera()
     private val gameViewport = ExtendViewport(16f,9f,orthographicCamera)
     private val uiViewport = ExtendViewport(320f,180f)
-    private val gameStage = Stage(gameViewport,spriteBatch).apply { isDebugAll= true }
+    private val gameStage = Stage(gameViewport,spriteBatch)
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
-    private val uiStage = Stage(uiViewport,spriteBatch)
+    private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
     private var disposed : Boolean = false
     private val world = world {
 
@@ -66,6 +67,7 @@ class GameScreen(private val spriteBatch: SpriteBatch,private val changeScreen :
             add<AiComponentListener>()
             add<RangeAttackComponentListener>()
             add<DestroyableListener>()
+            add<DialogComponentListener>()
         }
         injectables {
             add("uiStage",uiStage)
@@ -78,6 +80,7 @@ class GameScreen(private val spriteBatch: SpriteBatch,private val changeScreen :
             add<AnimationSystem>()
             add<MoveSystem>()
             add<PhysicSystem>()
+            add<DialogSystem>()
             add<LifeSystem>()
             add<DeadSystem>()
             add<DestroyableObjectSystem>()
@@ -96,6 +99,11 @@ class GameScreen(private val spriteBatch: SpriteBatch,private val changeScreen :
     }
 
     init {
+        uiStage.actors {
+            gameView{
+                gameStage.addListener(this)
+            }
+        }
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
         world.system<PortalSystem>().changeMap("map/map1.tmx")
         KeyboardInputProcessor(world, changeScreen = ::changeScreen)

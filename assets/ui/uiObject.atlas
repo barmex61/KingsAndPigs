@@ -1,104 +1,71 @@
-
 uiObject.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-icon_lightning
-  rotate: false
-  xy: 1434, 887
-  size: 149, 235
-  orig: 149, 235
-  offset: 0, 0
-  index: -1
-icon_menu
-  rotate: false
-  xy: 0, 0
-  size: 193, 157
-  orig: 193, 157
-  offset: 0, 0
-  index: -1
+size:2048,2048
+repeat:none
 big_background
-  rotate: false
-  xy: 0, 332
-  size: 922, 813
-  orig: 922, 813
-  offset: 0, 0
-  index: -1
+bounds:0,358,922,813
 blue_background
-  rotate: false
-  xy: 0, 157
-  size: 710, 175
-  orig: 710, 175
-  offset: 0, 0
-  index: -1
+bounds:0,183,710,175
+button_down
+bounds:1728,1056,19,21
+button_left
+bounds:313,162,19,21
+button_p
+bounds:1484,1519,17,16
+button_r
+bounds:1632,832,17,16
+button_right
+bounds:1434,1120,19,21
+button_space
+bounds:1950,2026,98,21
+button_up
+bounds:1662,1022,19,21
+circle_gradient_background
+bounds:193,63,120,120
+hearth
+bounds:1514,1160,12,11
+hp_bar
+bounds:1434,412,49,3
 icon_crown
-  rotate: false
-  xy: 1528, 1321
-  size: 251, 188
-  orig: 251, 188
-  offset: 0, 0
-  index: -1
+bounds:1528,1077,251,188
 icon_left
-  rotate: false
-  xy: 1528, 1122
-  size: 228, 199
-  orig: 228, 199
-  offset: 0, 0
-  index: -1
-icon_score
-  rotate: false
-  xy: 710, 107
-  size: 205, 225
-  orig: 205, 225
-  offset: 0, 0
-  index: -1
+bounds:1779,1066,228,199
+icon_lightning
+bounds:1434,415,149,235
+icon_menu
+bounds:0,26,193,157
 icon_right
-  rotate: false
-  xy: 1779, 1310
-  size: 228, 199
-  orig: 228, 199
-  offset: 0, 0
-  index: -1
+bounds:1434,878,228,199
+icon_score
+bounds:710,133,205,225
 icon_up
-  rotate: false
-  xy: 1756, 1082
-  size: 198, 228
-  orig: 198, 228
-  offset: 0, 0
-  index: -1
+bounds:1434,650,198,228
+king
+bounds:193,41,23,22
+king_pig
+bounds:1950,2005,19,21
+life_bar
+bounds:1662,1043,66,34
+mp_bar
+bounds:1583,647,42,3
+pig
+bounds:1464,1517,20,18
+pig_bomb
+bounds:0,0,26,26
+pig_box
+bounds:1632,848,26,30
+pig_light
+bounds:1438,1517,26,18
+rectangle_gradient_background
+bounds:1528,1265,480,270
 red_background
-  rotate: false
-  xy: 0, 1145
-  size: 1528, 346
-  orig: 1528, 346
-  offset: 0, 0
-  index: -1
+bounds:0,1171,1528,346
 segoe_print_gradient_green
-  rotate: false
-  xy: 1438, 1509
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
+bounds:922,659,512,512
 segoe_print_gradient_red
-  rotate: false
-  xy: 922, 633
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
+bounds:922,147,512,512
+status_bar
+bounds:1434,1141,80,30
 sylfaen
-  rotate: false
-  xy: 922, 121
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
+bounds:1438,1535,512,512
 title_background
-  rotate: false
-  xy: 0, 1491
-  size: 1438, 530
-  orig: 1438, 530
-  offset: 0, 0
-  index: -1
+bounds:0,1517,1438,530

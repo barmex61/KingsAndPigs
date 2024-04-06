@@ -1,8 +1,10 @@
 package com.fatih.kingsofpigs.ecs.system
 
-import com.fatih.kingsofpigs.ecs.component.AnimationComponent
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
+import com.fatih.kingsofpigs.event.HpChangeEvent
+import com.fatih.kingsofpigs.event.fireEvent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -12,7 +14,7 @@ import com.github.quillraven.fleks.IteratingSystem
 class DeadSystem(
     private val deadComps : ComponentMapper<DeadComponent>,
     private val lifeComps : ComponentMapper<LifeComponent>,
-    private val animComps : ComponentMapper<AnimationComponent>
+    private val gameStage : Stage
 ) : IteratingSystem(){
 
     override fun onTickEntity(entity: Entity) {
@@ -21,18 +23,28 @@ class DeadSystem(
             if (!canResurrect && remove ){
                 world.remove(entity)
                 return
-            }else if (canResurrect){
+            }
+            if (canResurrect){
                 resurrectionTime -= deltaTime
-                if (resurrectionTime <= 0f ){
-                    configureEntity(entity){
-                        deadComps.remove(it)
-                        lifeComps[entity].apply {
-                            currentHp = maxHp
-                            damageTaken = 0f
+                if (lifeComps[entity].currentLife> 0){
+                    if (resurrectionTime <= 0f ){
+                        configureEntity(entity){
+                            deadComps.remove(it)
+                            lifeComps[entity].apply {
+                                currentHp = maxHp
+                                damageTaken = 0f
+                                gameStage.fireEvent(HpChangeEvent(currentHp/maxHp))
+                            }
                         }
+                    }
+                }else{
+                    if (resurrectionTime <= 0f){
+                        canResurrect = false
+                        remove = true
                     }
                 }
             }
+
         }
     }
 }

@@ -53,6 +53,12 @@ class PlayerEntity(
     val isDead : Boolean
         get() = lifeComponent.currentHp <= 0f
 
+    var getHit : Boolean
+        get() = lifeComponent.getHit
+        set(value) {
+            lifeComponent.getHit = value
+        }
+
     fun animation(animationType: AnimationType, playMode: PlayMode = PlayMode.LOOP, frameDuration : Float = DEFAULT_FRAME_DURATION){
         animationComponent.nextAnimation(animationType, playMode, frameDuration)
     }

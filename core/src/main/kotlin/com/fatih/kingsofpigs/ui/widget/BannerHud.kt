@@ -4,6 +4,7 @@ package com.fatih.kingsofpigs.ui.widget
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
@@ -18,6 +19,8 @@ import ktx.scene2d.actor
 import ktx.scene2d.image
 import com.fatih.kingsofpigs.ui.get
 import com.fatih.kingsofpigs.ui.view.UiView
+import ktx.actors.alpha
+import ktx.actors.minusAssign
 import ktx.actors.onClick
 import ktx.actors.plusAssign
 import ktx.scene2d.label
@@ -29,7 +32,6 @@ class BannerHud(
 ) : KGroup,WidgetGroup() {
 
     init {
-
         image(skin[Drawables.RED_BACKGROUND]).apply {
             setSize(250f,50f)
         }
@@ -53,8 +55,6 @@ class BannerHud(
             setPosition(35f,-80f)
             setAlignment(Align.center)
             setSize(190f,40f)
-            println(this@BannerHud.x)
-            println(this@BannerHud.y)
             onClick {
                 this@BannerHud.apply {
                     this.clearActions()
@@ -82,7 +82,23 @@ class BannerHud(
             setAlignment(Align.center)
             setSize(190f,40f)
             onClick {
-                println("htp")
+                this@BannerHud.apply {
+                    this.clearActions()
+                    this += fadeOut(1f, Interpolation.pow3OutInverse)
+                    this += Actions.sequence(
+                        Actions.moveBy(0f,-400f,1f, Interpolation.pow3OutInverse),
+                        Actions.run {
+                            uiView -= uiView.bannerHud
+                            uiView.apply {
+                                htpHud = htpHud(skin,uiView){
+                                    this.alpha = 0f
+                                    this += fadeIn(1f, Interpolation.pow3OutInverse)
+                                    this += Actions.moveBy(-300f,-110f,1f,Interpolation.pow3OutInverse)
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
         image(skin[Drawables.ICON_LIGHTNING]){
@@ -104,5 +120,5 @@ class BannerHud(
 fun <S>KWidget<S>.bannerHud(
     skin : Skin = Scene2DSkin.defaultSkin,
     uiView: UiView,
-    init : BannerHud.(S) -> Unit
+    init : BannerHud.(S) -> Unit = {}
 ) : BannerHud = actor(BannerHud(skin,uiView),init)

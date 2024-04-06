@@ -11,7 +11,7 @@ import java.io.PrintStream
 fun main() {
     Lwjgl3Application(KingOfPigs(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("KingOfPigs")
-        setWindowedMode(640, 480)
+        setWindowedMode(1080, 720)
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })
 }

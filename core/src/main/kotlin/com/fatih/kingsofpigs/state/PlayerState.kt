@@ -87,12 +87,15 @@ enum class PlayerState : DefaultState{
     },
     HIT{
         override fun enter(entity: PlayerEntity) {
-            entity.animation(AnimationType.HIT, PlayMode.NORMAL, DEFAULT_FRAME_DURATION * 2f)
+            entity.animation(AnimationType.HIT, PlayMode.NORMAL, DEFAULT_FRAME_DURATION * 3f)
         }
 
         override fun update(entity: PlayerEntity) {
             super.update(entity)
-            if(entity.isAnimationDone) entity.changePreviousState()
+            if(entity.isAnimationDone) {
+                entity.changeState(IDLE)
+                entity.getHit = false
+            }
         }
     },
     JUMP{

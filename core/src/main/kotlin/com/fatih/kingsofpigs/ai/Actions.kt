@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_FRAME_DURATION
 import com.fatih.kingsofpigs.ecs.component.AnimationType
+import com.fatih.kingsofpigs.ecs.component.DialogType
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import ktx.math.random
 import ktx.math.vec2
@@ -19,21 +20,26 @@ abstract class Actions : LeafTask<PigEntity>(){
         get() = `object` as PigEntity
 
     override fun copyTo(task: Task<PigEntity>): Task<PigEntity> = task
-
+    override fun execute(): Status {
+        return if (entity.isGetHit){
+            Status.FAILED
+        }else if(entity.isDead){
+            Status.FAILED
+        }else{
+            Status.RUNNING
+        }
+    }
 }
 
 
-class Idle(
-    @JvmField
-    @TaskAttribute(name = "duration")
-    val duration : FloatDistribution? = null
-) : Actions(){
-    private var currentDuration : Float = duration?.nextFloat()?:2f
+class Idle : Actions(){
+    private var currentDuration : Float = (1f..2f).random()
 
     override fun execute(): Status {
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.IDLE)
             entity.root(true)
-            currentDuration = duration?.nextFloat()?:2f
+            currentDuration = (1f..2f).random()
             entity.animation(AnimationType.IDLE)
             return Status.RUNNING
         }
@@ -46,10 +52,7 @@ class Idle(
             entity.root(false)
             return Status.SUCCEEDED
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
+        return super.execute()
     }
 }
 
@@ -57,6 +60,7 @@ class Idle(
 class ThrowBox : Actions(){
     override fun execute(): Status {
         if (status != Status.RUNNING ){
+            entity.showDialog(DialogType.ATTACK)
             entity.setRangeAttackImpulse()
             entity.root(true)
             entity.animation(AnimationType.THROWING_BOX,Animation.PlayMode.NORMAL, DEFAULT_FRAME_DURATION *2f )
@@ -71,15 +75,13 @@ class ThrowBox : Actions(){
             entity.root(false)
             return Status.SUCCEEDED
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
+        return super.execute()
     }
 }
 class ThrowBomb : Actions(){
     override fun execute(): Status {
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.ATTACK)
             entity.root(true)
             entity.setRangeAttackImpulse()
             entity.animation(AnimationType.THROWING_BOMB,Animation.PlayMode.NORMAL, DEFAULT_FRAME_DURATION *3f )
@@ -94,10 +96,7 @@ class ThrowBomb : Actions(){
             entity.root(false)
             return Status.SUCCEEDED
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
+        return super.execute()
     }
 }
 
@@ -105,6 +104,7 @@ class Focus : Actions(){
     private var jumpTimer = 0f
     override fun execute(): Status {
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.ALERT)
             entity.root(false)
             jumpTimer = 0f
             return Status.RUNNING
@@ -125,16 +125,14 @@ class Focus : Actions(){
             jumpTimer = 0f
             entity.jump()
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
+        return super.execute()
     }
 }
 
 class MeleeAttack : Actions(){
     override fun execute(): Status {
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.ATTACK)
             entity.root(true)
             entity.animation(AnimationType.ATTACK, playMode = PlayMode.NORMAL, frameDuration = DEFAULT_FRAME_DURATION *2f)
             entity.startMeleeAttack()
@@ -144,10 +142,7 @@ class MeleeAttack : Actions(){
             entity.animation(AnimationType.IDLE)
             return Status.SUCCEEDED
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
-        return Status.RUNNING
+        return super.execute()
     }
 }
 
@@ -158,6 +153,7 @@ class Wander : Actions(){
     private var jumpTimer = 0f
     override fun execute(): Status {
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.ALERT)
             jumpTimer = 0f
             wanderTimer = 1.5f
             if (spawnPosition.isZero){
@@ -183,11 +179,8 @@ class Wander : Actions(){
             wanderTimer = 1.5f
             return Status.SUCCEEDED
         }
-        if (entity.isDead){
-            return Status.FAILED
-        }
         wanderTimer -= GdxAI.getTimepiece().deltaTime
-        return Status.RUNNING
+        return super.execute()
     }
 }
 
@@ -195,6 +188,7 @@ class FireCannon : Actions(){
     override fun execute(): Status {
 
         if (status != Status.RUNNING){
+            entity.showDialog(DialogType.ATTACK)
             entity.setRangeAttackImpulse()
             entity.animation(AnimationType.PREPARE, playMode = PlayMode.NORMAL, frameDuration = DEFAULT_FRAME_DURATION * 3f)
             return Status.RUNNING
@@ -206,6 +200,39 @@ class FireCannon : Actions(){
         if (entity.animationDone && entity.animationType == AnimationType.ATTACK){
             entity.startRangeAttack()
             entity.startCannonAnimation()
+            return Status.SUCCEEDED
+        }
+        return super.execute()
+    }
+}
+
+class Delay : Actions(){
+    private var duration = (1.5f..2.5f).random()
+    override fun execute(): Status {
+        if (status != Status.RUNNING){
+            duration = (1.5f..2.5f).random()
+            return Status.RUNNING
+        }
+        duration -= GdxAI.getTimepiece().deltaTime
+        if (duration <= 0f){
+            return Status.SUCCEEDED
+        }
+        return super.execute()
+    }
+}
+//22.35
+class Hit : Actions(){
+    override fun execute(): Status {
+
+        if (status != Status.RUNNING){
+            entity.root(true)
+            entity.showDialog(DialogType.HIT)
+            entity.animation(AnimationType.HIT,PlayMode.NORMAL, DEFAULT_FRAME_DURATION * 3f)
+            return Status.RUNNING
+        }
+        if (entity.animationDone){
+            entity.root(false)
+            entity.isGetHit = false
             return Status.SUCCEEDED
         }
         return Status.RUNNING

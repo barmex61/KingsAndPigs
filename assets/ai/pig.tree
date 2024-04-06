@@ -7,6 +7,8 @@ import wander:"com.fatih.kingsofpigs.ai.Wander"
 import dead:"com.fatih.kingsofpigs.ai.Dead"
 import focus:"com.fatih.kingsofpigs.ai.Focus"
 import fireCannon:"com.fatih.kingsofpigs.ai.FireCannon"
+import hit:"com.fatih.kingsofpigs.ai.Hit"
+import delay:"com.fatih.kingsofpigs.ai.Delay"
 
 #Conditions
 import isMeleeAttack?:"com.fatih.kingsofpigs.ai.IsMeleeAttack"
@@ -19,6 +21,7 @@ import canMove?:"com.fatih.kingsofpigs.ai.CanMove"
 import notInRange?:"com.fatih.kingsofpigs.ai.NotInRange"
 import isDead?:"com.fatih.kingsofpigs.ai.IsDead"
 import isPigLight?:"com.fatih.kingsofpigs.ai.IsPigLight"
+import isGetHit?:"com.fatih.kingsofpigs.ai.IsGetHit"
 
 subtree name : "rangeAttack"
     selector
@@ -30,7 +33,7 @@ subtree name : "meleeAttack"
     sequence
         focus
         meleeAttack
-        wait seconds:"uniform,1.25,2.1"
+        delay
 
 subtree name : "attack"
     selector
@@ -39,8 +42,9 @@ subtree name : "attack"
 
 root
     selector
+        (isGetHit?) hit
         (isDead?) dead
         (isEnemyNearby?)(canAttack?) $attack
         (random success:0.5)(canMove?)(notInRange?) wander
-        idle duration:"uniform,1.5,2.5"
+        idle
 

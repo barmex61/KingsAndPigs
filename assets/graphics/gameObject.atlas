@@ -1,1714 +1,751 @@
-
 gameObject.png
-size: 2048, 256
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
+size:2048,256
+repeat:none
 bomb/bomb_explode
-  rotate: false
-  xy: 780, 84
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 0
+index:0
+bounds:780,84,52,56
 bomb/bomb_explode
-  rotate: false
-  xy: 858, 142
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 5
+index:5
+bounds:858,142,52,56
 bomb/bomb_explode
-  rotate: false
-  xy: 780, 28
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 2
+index:2
+bounds:780,28,52,56
 bomb/bomb_explode
-  rotate: false
-  xy: 1092, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1092,200,52,56
 bomb/bomb_explode
-  rotate: false
-  xy: 1196, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1196,200,52,56
 bomb/bomb_explode
-  rotate: false
-  xy: 1248, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1248,200,52,56
 bomb/bomb_off
-  rotate: false
-  xy: 1040, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: -1
+bounds:1040,200,52,56
 bomb/bomb_on
-  rotate: false
-  xy: 936, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 3
+index:3
+bounds:936,200,52,56
 bomb/bomb_on
-  rotate: false
-  xy: 988, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 0
+index:0
+bounds:988,200,52,56
 bomb/bomb_on
-  rotate: false
-  xy: 1144, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1144,200,52,56
 bomb/bomb_on
-  rotate: false
-  xy: 1300, 200
-  size: 52, 56
-  orig: 52, 56
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1300,200,52,56
 box/hit
-  rotate: false
-  xy: 208, 8
-  size: 22, 16
-  orig: 22, 16
-  offset: 0, 0
-  index: -1
+bounds:560,8,22,16
 box/idle
-  rotate: false
-  xy: 1966, 156
-  size: 22, 16
-  orig: 22, 16
-  offset: 0, 0
-  index: -1
+bounds:1954,156,22,16
 box/piece
-  rotate: false
-  xy: 858, 28
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 3
+index:3
+bounds:858,28,10,10
 box/piece
-  rotate: false
-  xy: 230, 0
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 2
+index:2
+bounds:582,0,10,10
 box/piece
-  rotate: false
-  xy: 240, 0
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 4
+index:4
+bounds:592,0,10,10
 box/piece
-  rotate: false
-  xy: 250, 0
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 1
-cannon/idle
-  rotate: false
-  xy: 1672, 228
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: -1
+index:1
+bounds:602,0,10,10
 cannon/cannon_ball
-  rotate: false
-  xy: 1628, 200
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: -1
+bounds:1672,228,44,28
+cannon/idle
+bounds:780,0,44,28
 cannon/shoot
-  rotate: false
-  xy: 780, 0
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: 3
+index:4
+bounds:780,0,44,28
 cannon/shoot
-  rotate: false
-  xy: 824, 0
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: 0
+index:3
+bounds:824,0,44,28
 cannon/shoot
-  rotate: false
-  xy: 1628, 228
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: 2
+index:0
+bounds:1628,228,44,28
 cannon/shoot
-  rotate: false
-  xy: 1672, 200
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: 1
+index:2
+bounds:1628,200,44,28
 cannon/shoot
-  rotate: false
-  xy: 1672, 228
-  size: 44, 28
-  orig: 44, 28
-  offset: 0, 0
-  index: 4
+index:1
+bounds:1672,200,44,28
+dialogs/alert
+index:1
+bounds:136,8,34,16
+dialogs/attack
+index:0
+bounds:1818,156,34,16
+dialogs/boom
+index:0
+bounds:0,8,34,16
+dialogs/dead
+index:0
+bounds:68,8,34,16
+dialogs/hello
+index:0
+bounds:1886,156,34,16
+dialogs/hi
+index:0
+bounds:1920,156,34,16
+dialogs/loser
+index:0
+bounds:34,8,34,16
+dialogs/no
+index:0
+bounds:1784,156,34,16
+dialogs/question
+index:0
+bounds:1852,156,34,16
+dialogs/wtf
+index:0
+bounds:102,8,34,16
 diamond/idle
-  rotate: false
-  xy: 230, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 9
+index:9
+bounds:1976,158,18,14
 diamond/idle
-  rotate: false
-  xy: 266, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 1
+index:1
+bounds:600,10,18,14
 diamond/idle
-  rotate: false
-  xy: 266, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 0
+index:4
+bounds:600,10,18,14
 diamond/idle
-  rotate: false
-  xy: 266, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 3
+index:0
+bounds:600,10,18,14
 diamond/idle
-  rotate: false
-  xy: 266, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 4
+index:2
+bounds:600,10,18,14
 diamond/idle
-  rotate: false
-  xy: 266, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 2
+index:3
+bounds:600,10,18,14
 diamond/idle
-  rotate: false
-  xy: 284, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 6
+index:6
+bounds:618,10,18,14
 diamond/idle
-  rotate: false
-  xy: 320, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 8
+index:8
+bounds:654,10,18,14
 diamond/idle
-  rotate: false
-  xy: 356, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 5
+index:5
+bounds:690,10,18,14
 diamond/idle
-  rotate: false
-  xy: 392, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 7
+index:7
+bounds:726,10,18,14
 door/Idle
-  rotate: false
-  xy: 1536, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: -1
+bounds:1536,200,46,56
 door/closing
-  rotate: false
-  xy: 1352, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1352,200,46,56
 door/opening
-  rotate: false
-  xy: 1352, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1352,200,46,56
 door/closing
-  rotate: false
-  xy: 1444, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1444,200,46,56
 door/opening
-  rotate: false
-  xy: 1444, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1444,200,46,56
 door/opening
-  rotate: false
-  xy: 1398, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1398,200,46,56
 door/opening
-  rotate: false
-  xy: 1490, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1490,200,46,56
 door/closing
-  rotate: false
-  xy: 1490, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1490,200,46,56
 door/opening
-  rotate: false
-  xy: 1582, 200
-  size: 46, 56
-  orig: 46, 56
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1582,200,46,56
 heart/idle
-  rotate: false
-  xy: 248, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 3
+index:3
+bounds:582,10,18,14
 heart/idle
-  rotate: false
-  xy: 248, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 0
+index:1
+bounds:582,10,18,14
 heart/idle
-  rotate: false
-  xy: 248, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 1
+index:6
+bounds:582,10,18,14
 heart/idle
-  rotate: false
-  xy: 248, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 6
+index:2
+bounds:582,10,18,14
 heart/idle
-  rotate: false
-  xy: 248, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 2
+index:0
+bounds:582,10,18,14
 heart/idle
-  rotate: false
-  xy: 302, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 5
+index:5
+bounds:636,10,18,14
 heart/idle
-  rotate: false
-  xy: 338, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 7
+index:7
+bounds:672,10,18,14
 heart/idle
-  rotate: false
-  xy: 374, 10
-  size: 18, 14
-  orig: 18, 14
-  offset: 0, 0
-  index: 4
+index:4
+bounds:708,10,18,14
 king/attack
-  rotate: false
-  xy: 156, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:156,198,78,58
 king/attack
-  rotate: false
-  xy: 468, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:468,198,78,58
 king/attack
-  rotate: false
-  xy: 702, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:702,140,78,58
 king/dead
-  rotate: false
-  xy: 78, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 3
+index:3
+bounds:78,24,78,58
 king/dead
-  rotate: false
-  xy: 312, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:312,140,78,58
 king/dead
-  rotate: false
-  xy: 468, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:468,82,78,58
 king/dead
-  rotate: false
-  xy: 702, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:702,24,78,58
 king/door_in
-  rotate: false
-  xy: 78, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:78,140,78,58
 king/door_in
-  rotate: false
-  xy: 78, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 6
+index:6
+bounds:78,82,78,58
 king/door_in
-  rotate: false
-  xy: 234, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 3
+index:3
+bounds:234,82,78,58
 king/door_in
-  rotate: false
-  xy: 390, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:390,140,78,58
 king/door_in
-  rotate: false
-  xy: 546, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 5
+index:5
+bounds:546,198,78,58
 king/door_in
-  rotate: false
-  xy: 624, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:624,140,78,58
 king/door_in
-  rotate: false
-  xy: 546, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 7
+index:7
+bounds:546,24,78,58
 king/door_in
-  rotate: false
-  xy: 858, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 4
+index:4
+bounds:858,198,78,58
 king/door_out
-  rotate: false
-  xy: 0, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:0,82,78,58
 king/door_out
-  rotate: false
-  xy: 0, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 5
+index:5
+bounds:0,24,78,58
 king/door_out
-  rotate: false
-  xy: 156, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:156,24,78,58
 king/door_out
-  rotate: false
-  xy: 390, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 7
+index:7
+bounds:390,198,78,58
 king/door_out
-  rotate: false
-  xy: 468, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 4
+index:4
+bounds:468,140,78,58
 king/door_out
-  rotate: false
-  xy: 546, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:546,82,78,58
 king/door_out
-  rotate: false
-  xy: 702, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 6
+index:6
+bounds:702,198,78,58
 king/door_out
-  rotate: false
-  xy: 702, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 3
+index:3
+bounds:702,82,78,58
 king/fall
-  rotate: false
-  xy: 780, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: -1
+bounds:780,140,78,58
 king/ground
-  rotate: false
-  xy: 156, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: -1
+bounds:156,140,78,58
 king/hit
-  rotate: false
-  xy: 0, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:0,198,78,58
 king/hit
-  rotate: false
-  xy: 546, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:546,140,78,58
 king/idle
-  rotate: false
-  xy: 78, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 6
+index:6
+bounds:78,198,78,58
 king/idle
-  rotate: false
-  xy: 156, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 3
+index:3
+bounds:156,82,78,58
 king/idle
-  rotate: false
-  xy: 156, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:156,82,78,58
 king/idle
-  rotate: false
-  xy: 156, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:156,82,78,58
 king/idle
-  rotate: false
-  xy: 156, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:156,82,78,58
 king/idle
-  rotate: false
-  xy: 156, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 4
+index:4
+bounds:156,82,78,58
 king/idle
-  rotate: false
-  xy: 312, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 8
+index:8
+bounds:312,198,78,58
 king/idle
-  rotate: false
-  xy: 312, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 5
+index:5
+bounds:312,82,78,58
 king/idle
-  rotate: false
-  xy: 312, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 10
+index:10
+bounds:312,24,78,58
 king/idle
-  rotate: false
-  xy: 468, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 7
+index:7
+bounds:468,24,78,58
 king/idle
-  rotate: false
-  xy: 624, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 9
+index:9
+bounds:624,24,78,58
 king/jump
-  rotate: false
-  xy: 390, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: -1
+bounds:390,24,78,58
 king/run
-  rotate: false
-  xy: 0, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 3
+index:3
+bounds:0,140,78,58
 king/run
-  rotate: false
-  xy: 234, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 0
+index:0
+bounds:234,198,78,58
 king/run
-  rotate: false
-  xy: 234, 140
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 5
+index:5
+bounds:234,140,78,58
 king/run
-  rotate: false
-  xy: 234, 24
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 2
+index:2
+bounds:234,24,78,58
 king/run
-  rotate: false
-  xy: 390, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 7
+index:7
+bounds:390,82,78,58
 king/run
-  rotate: false
-  xy: 624, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 4
+index:4
+bounds:624,198,78,58
 king/run
-  rotate: false
-  xy: 624, 82
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 1
+index:1
+bounds:624,82,78,58
 king/run
-  rotate: false
-  xy: 780, 198
-  size: 78, 58
-  orig: 78, 58
-  offset: 0, 0
-  index: 6
+index:6
+bounds:780,198,78,58
 king_pig/attack
-  rotate: false
-  xy: 1830, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1830,200,38,28
 king_pig/attack
-  rotate: false
-  xy: 1906, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1906,200,38,28
 king_pig/attack
-  rotate: false
-  xy: 936, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:936,172,38,28
 king_pig/attack
-  rotate: false
-  xy: 1164, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1164,172,38,28
 king_pig/attack
-  rotate: false
-  xy: 1278, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1278,172,38,28
 king_pig/dead
-  rotate: false
-  xy: 1716, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1716,228,38,28
 king_pig/dead
-  rotate: false
-  xy: 1792, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1792,200,38,28
 king_pig/dead
-  rotate: false
-  xy: 1906, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1906,228,38,28
 king_pig/dead
-  rotate: false
-  xy: 1088, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1088,172,38,28
 king_pig/fall
-  rotate: false
-  xy: 1944, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: -1
+bounds:1944,228,38,28
 king_pig/ground
-  rotate: false
-  xy: 974, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: -1
+bounds:974,172,38,28
 king_pig/hit
-  rotate: false
-  xy: 1754, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1754,200,38,28
 king_pig/hit
-  rotate: false
-  xy: 1982, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1982,228,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 6
+index:5
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 4
+index:2
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 0
+index:6
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 2
+index:4
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 1
+index:0
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1716, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 5
+index:1
+bounds:1716,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1754, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 8
+index:8
+bounds:1754,228,38,28
 king_pig/idle
-  rotate: false
-  xy: 1868, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 10
+index:10
+bounds:1868,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1944, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 7
+index:7
+bounds:1944,200,38,28
 king_pig/idle
-  rotate: false
-  xy: 1050, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 9
+index:9
+bounds:1050,172,38,28
 king_pig/idle
-  rotate: false
-  xy: 1240, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 11
+index:11
+bounds:1240,172,38,28
 king_pig/jump
-  rotate: false
-  xy: 1792, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: -1
+bounds:1792,228,38,28
 king_pig/run
-  rotate: false
-  xy: 1830, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1830,228,38,28
 king_pig/run
-  rotate: false
-  xy: 1868, 228
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1868,228,38,28
 king_pig/run
-  rotate: false
-  xy: 1982, 200
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1982,200,38,28
 king_pig/run
-  rotate: false
-  xy: 1012, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1012,172,38,28
 king_pig/run
-  rotate: false
-  xy: 1126, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 5
+index:5
+bounds:1126,172,38,28
 king_pig/run
-  rotate: false
-  xy: 1202, 172
-  size: 38, 28
-  orig: 38, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1202,172,38,28
 pig/attack
-  rotate: false
-  xy: 1520, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1520,172,34,28
 pig/attack
-  rotate: false
-  xy: 1690, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1690,172,34,28
 pig/attack
-  rotate: false
-  xy: 1826, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1826,172,34,28
 pig/attack
-  rotate: false
-  xy: 1928, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1928,172,34,28
 pig/attack
-  rotate: false
-  xy: 892, 114
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:892,114,34,28
 pig/fall
-  rotate: false
-  xy: 1622, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: -1
+bounds:1622,172,34,28
 pig/ground
-  rotate: false
-  xy: 858, 114
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: -1
+bounds:858,114,34,28
 pig/hit
-  rotate: false
-  xy: 1656, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1656,172,34,28
 pig/hit
-  rotate: false
-  xy: 1894, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1894,172,34,28
+pig_light/hit
+index:0
+bounds:1894,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 5
+index:5
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:0
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 4
+index:2
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:3
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:1
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1316, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:4
+bounds:1316,172,34,28
 pig/idle
-  rotate: false
-  xy: 1350, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 10
+index:10
+bounds:1350,172,34,28
 pig/idle
-  rotate: false
-  xy: 1554, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 7
+index:7
+bounds:1554,172,34,28
 pig/idle
-  rotate: false
-  xy: 1758, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 9
+index:9
+bounds:1758,172,34,28
 pig/idle
-  rotate: false
-  xy: 1860, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 6
+index:6
+bounds:1860,172,34,28
 pig/idle
-  rotate: false
-  xy: 858, 86
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 8
+index:8
+bounds:858,86,34,28
 pig/jump
-  rotate: false
-  xy: 936, 144
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: -1
+bounds:936,144,34,28
 pig/run
-  rotate: false
-  xy: 1384, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1384,172,34,28
 pig/run
-  rotate: false
-  xy: 1724, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1724,172,34,28
 pig/run
-  rotate: false
-  xy: 1792, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1792,172,34,28
 pig/run
-  rotate: false
-  xy: 1962, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1962,172,34,28
 pig/run
-  rotate: false
-  xy: 858, 58
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:858,58,34,28
 pig/run
-  rotate: false
-  xy: 970, 144
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 5
+index:5
+bounds:970,144,34,28
 pig_bomb/dead
-  rotate: false
-  xy: 1418, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1418,172,34,28
 pig/dead
-  rotate: false
-  xy: 1418, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1418,172,34,28
 pig_box/dead
-  rotate: false
-  xy: 1418, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1418,172,34,28
 pig_light/dead
-  rotate: false
-  xy: 1418, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1418,172,34,28
 pig_bomb/idle
-  rotate: false
-  xy: 1996, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1996,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 2022, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 7
+index:7
+bounds:2022,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 2022, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 9
+index:8
+bounds:2022,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 2022, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 5
+index:5
+bounds:2022,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 2022, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 6
+index:6
+bounds:2022,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 2022, 174
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 8
+index:9
+bounds:2022,174,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 1394, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1394,146,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 1498, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1498,146,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 1602, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1602,146,26,26
 pig_bomb/idle
-  rotate: false
-  xy: 1706, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1706,146,26,26
 pig_bomb/picking_bomb
-  rotate: false
-  xy: 2020, 200
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 2
+index:2
+bounds:2020,200,26,26
 pig_bomb/picking_bomb
-  rotate: false
-  xy: 1446, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1446,146,26,26
 pig_bomb/picking_bomb
-  rotate: false
-  xy: 1576, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1576,146,26,26
 pig_bomb/picking_bomb
-  rotate: false
-  xy: 1654, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1654,146,26,26
 pig_bomb/run
-  rotate: false
-  xy: 910, 142
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 5
+index:5
+bounds:910,142,26,26
 pig_bomb/run
-  rotate: false
-  xy: 892, 58
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 2
+index:2
+bounds:892,58,26,26
 pig_bomb/run
-  rotate: false
-  xy: 1472, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1472,146,26,26
 pig_bomb/run
-  rotate: false
-  xy: 1524, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1524,146,26,26
 pig_bomb/run
-  rotate: false
-  xy: 1628, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1628,146,26,26
 pig_bomb/run
-  rotate: false
-  xy: 1732, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1732,146,26,26
 pig_bomb/throwing_bomb
-  rotate: false
-  xy: 1368, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1368,146,26,26
 pig_bomb/throwing_bomb
-  rotate: false
-  xy: 1420, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1420,146,26,26
 pig_bomb/throwing_bomb
-  rotate: false
-  xy: 1550, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1550,146,26,26
 pig_bomb/throwing_bomb
-  rotate: false
-  xy: 1680, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1680,146,26,26
 pig_bomb/throwing_bomb
-  rotate: false
-  xy: 1758, 146
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1758,146,26,26
 pig_box/dead
-  rotate: false
-  xy: 1452, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1452,172,34,28
 pig/dead
-  rotate: false
-  xy: 1452, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1452,172,34,28
 pig_bomb/dead
-  rotate: false
-  xy: 1452, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1452,172,34,28
 pig_light/dead
-  rotate: false
-  xy: 1452, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1452,172,34,28
 pig_box/idle
-  rotate: false
-  xy: 2020, 226
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 1
+index:1
+bounds:2020,226,26,30
 pig_box/idle
-  rotate: false
-  xy: 1030, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1030,142,26,30
 pig_box/idle
-  rotate: false
-  xy: 1108, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1108,142,26,30
 pig_box/idle
-  rotate: false
-  xy: 1212, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1212,142,26,30
 pig_box/picking_box
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 4
+index:4
+bounds:910,168,26,30
 pig_box/idle
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 7
+index:4
+bounds:910,168,26,30
 pig_box/idle
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 4
+index:5
+bounds:910,168,26,30
 pig_box/idle
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 5
+index:8
+bounds:910,168,26,30
 pig_box/idle
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 6
+index:7
+bounds:910,168,26,30
 pig_box/idle
-  rotate: false
-  xy: 910, 168
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 8
+index:6
+bounds:910,168,26,30
 pig_box/picking_box
-  rotate: false
-  xy: 832, 80
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 1
+index:1
+bounds:832,80,26,30
 pig_box/picking_box
-  rotate: false
-  xy: 1056, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1056,142,26,30
 pig_box/picking_box
-  rotate: false
-  xy: 1134, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1134,142,26,30
 pig_box/picking_box
-  rotate: false
-  xy: 1238, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1238,142,26,30
 pig_box/run
-  rotate: false
-  xy: 832, 110
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 5
+index:5
+bounds:832,110,26,30
 pig_box/run
-  rotate: false
-  xy: 892, 84
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 2
+index:2
+bounds:892,84,26,30
 pig_box/run
-  rotate: false
-  xy: 1082, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1082,142,26,30
 pig_box/run
-  rotate: false
-  xy: 1186, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1186,142,26,30
 pig_box/run
-  rotate: false
-  xy: 1290, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1290,142,26,30
 pig_box/run
-  rotate: false
-  xy: 1342, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1342,142,26,30
 pig_box/throwing_box
-  rotate: false
-  xy: 832, 50
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 3
+index:3
+bounds:832,50,26,30
 pig_box/throwing_box
-  rotate: false
-  xy: 1004, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1004,142,26,30
 pig_box/throwing_box
-  rotate: false
-  xy: 1160, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 2
+index:2
+bounds:1160,142,26,30
 pig_box/throwing_box
-  rotate: false
-  xy: 1264, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 4
+index:4
+bounds:1264,142,26,30
 pig_box/throwing_box
-  rotate: false
-  xy: 1316, 142
-  size: 26, 30
-  orig: 26, 30
-  offset: 0, 0
-  index: 1
+index:1
+bounds:1316,142,26,30
 pig_box_hide/Fall
-  rotate: false
-  xy: 52, 4
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: -1
+bounds:352,4,26,20
 pig_box_hide/Ground
-  rotate: false
-  xy: 0, 4
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: -1
+bounds:832,30,26,20
 pig_box_hide/jump
-  rotate: false
-  xy: 858, 38
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 1
+index:1
+bounds:884,38,26,20
 pig_box_hide/jump
-  rotate: false
-  xy: 1810, 152
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 0
+index:0
+bounds:326,4,26,20
 pig_box_hide/jump_ready
-  rotate: false
-  xy: 832, 30
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 1
+index:1
+bounds:858,38,26,20
 pig_box_hide/jump_ready
-  rotate: false
-  xy: 26, 4
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 0
+index:0
+bounds:274,4,26,20
 pig_box_hide/looking_out
-  rotate: false
-  xy: 1784, 152
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 0
+index:0
+bounds:248,4,26,20
 pig_box_hide/looking_out
-  rotate: false
-  xy: 884, 38
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 2
+index:2
+bounds:300,4,26,20
 pig_box_hide/looking_out
-  rotate: false
-  xy: 1836, 152
-  size: 26, 20
-  orig: 26, 20
-  offset: 0, 0
-  index: 1
+index:1
+bounds:378,4,26,20
+pig_light/attack
+index:2
+bounds:196,6,26,18
+pig_light/attack
+index:1
+bounds:430,6,26,18
+pig_light/attack
+index:0
+bounds:508,6,26,18
 pig_light/dead
-  rotate: false
-  xy: 1486, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1486,172,34,28
 pig/dead
-  rotate: false
-  xy: 1486, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1486,172,34,28
 pig_bomb/dead
-  rotate: false
-  xy: 1486, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1486,172,34,28
 pig_box/dead
-  rotate: false
-  xy: 1486, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 3
+index:3
+bounds:1486,172,34,28
 pig_light/dead
-  rotate: false
-  xy: 1588, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1588,172,34,28
 pig/dead
-  rotate: false
-  xy: 1588, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1588,172,34,28
 pig_bomb/dead
-  rotate: false
-  xy: 1588, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1588,172,34,28
 pig_box/dead
-  rotate: false
-  xy: 1588, 172
-  size: 34, 28
-  orig: 34, 28
-  offset: 0, 0
-  index: 0
-pig_light/attack
-  rotate: false
-  xy: 104, 6
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 0
-pig_light/attack
-  rotate: false
-  xy: 1888, 154
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 2
-pig_light/attack
-  rotate: false
-  xy: 1940, 154
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 1
-pig_light/prepare
-  rotate: false
-  xy: 1862, 154
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 2
-pig_light/prepare
-  rotate: false
-  xy: 1914, 154
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 1
-pig_light/prepare
-  rotate: false
-  xy: 182, 6
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 0
+index:0
+bounds:1588,172,34,28
 pig_light/idle
-    rotate: false
-    xy: 78, 6
-    size: 26, 18
-    orig: 26, 18
-    offset: 0, 0
-    index: 1
+index:3
+bounds:170,6,26,18
+pig_light/ready
+index:1
+bounds:170,6,26,18
 pig_light/idle
-    rotate: false
-    xy: 130, 6
-    size: 26, 18
-    orig: 26, 18
-    offset: 0, 0
-    index: 0
+index:2
+bounds:404,6,26,18
+pig_light/ready
+index:0
+bounds:404,6,26,18
+pig_light/prepare
+index:2
+bounds:222,6,26,18
+pig_light/prepare
+index:1
+bounds:456,6,26,18
+pig_light/prepare
+index:0
+bounds:534,6,26,18
+pig_light/ready
+index:2
+bounds:482,6,26,18
 pig_light/idle
-   rotate: false
-   xy: 156, 6
-   size: 26, 18
-   orig: 26, 18
-   offset: 0, 0
-   index: 2
-pig_light/ready
-  rotate: false
-  xy: 78, 6
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 1
-pig_light/ready
-  rotate: false
-  xy: 130, 6
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 0
-pig_light/ready
-  rotate: false
-  xy: 156, 6
-  size: 26, 18
-  orig: 26, 18
-  offset: 0, 0
-  index: 2
+index:1
+bounds:482,6,26,18

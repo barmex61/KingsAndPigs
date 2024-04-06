@@ -4,13 +4,16 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
+import com.fatih.kingsofpigs.ecs.component.AnimationComponent
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
+import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.PlayerComponent
+import com.fatih.kingsofpigs.event.LifeChangeEvent
 import com.fatih.kingsofpigs.event.PigGetHitEvent
-import com.fatih.kingsofpigs.event.PlayerGetHitEvent
+import com.fatih.kingsofpigs.event.PlayerGitHitEvent
 import com.fatih.kingsofpigs.event.fireEvent
 import com.fatih.kingsofpigs.ui.Fonts
 import com.github.quillraven.fleks.AllOf
@@ -29,6 +32,7 @@ class LifeSystem (
     private val deadComps : ComponentMapper<DeadComponent>,
     private val playerComps : ComponentMapper<PlayerComponent>,
     private val physicComps : ComponentMapper<PhysicComponent>,
+    private val animComps : ComponentMapper<AnimationComponent>,
     private val gameStage : Stage
 ): IteratingSystem(){
 
@@ -39,19 +43,24 @@ class LifeSystem (
         lifeComponent.run {
 
             if (currentHp > 0f){
-                currentHp = (currentHp + regeneration * deltaTime).coerceAtMost(maxHp)
                 if (damageTaken > 0f){
                     createFloatingText(damageTaken.toInt().toString(),isCrit,physicComps[entity].body.position,physicComps[entity].bodyOffset)
-                    if (entity in playerComps){
-                        gameStage.fireEvent(PlayerGetHitEvent())
-                        world.system<CameraSystem>().shakeCamera = true
-                    }else{
-                        gameStage.fireEvent(PigGetHitEvent())
-                    }
+                    getHit = true
                     currentHp -= damageTaken
                     damageTaken = 0f
+                    if (entity in playerComps){
+                        gameStage.fireEvent(PlayerGitHitEvent((currentHp/maxHp).coerceAtLeast(0f)))
+                        world.system<CameraSystem>().shakeCamera = true
+                    }else{
+                        gameStage.fireEvent(PigGetHitEvent((currentHp/maxHp).coerceAtLeast(0f),animComps[entity].entityModel))
+                    }
                 }
             }else{
+                if (currentLife > 0 && animComps[entity].entityModel == EntityModel.KING) {
+                    currentLife -= 1
+                    gameStage.fireEvent(LifeChangeEvent(currentLife))
+                }
+
                 if (entity !in deadComps){
                     configureEntity(entity){
                         deadComps.add(entity){

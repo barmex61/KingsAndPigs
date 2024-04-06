@@ -9,12 +9,9 @@ import com.fatih.kingsofpigs.event.JumpEvent
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.event.MeleeAttackEvent
 import com.fatih.kingsofpigs.event.PigGetHitEvent
-import com.fatih.kingsofpigs.event.PlayerGetHitEvent
+import com.fatih.kingsofpigs.event.PlayerGitHitEvent
 import com.fatih.kingsofpigs.event.RangeAttackEvent
 import com.github.quillraven.fleks.IntervalSystem
-import ktx.math.component1
-import ktx.math.component2
-import ktx.math.vec2
 import ktx.tiled.property
 
 class AudioSystem : IntervalSystem() , EventListener{
@@ -37,7 +34,7 @@ class AudioSystem : IntervalSystem() , EventListener{
                     it.play() }
                 return true
             }
-            is PlayerGetHitEvent ->{
+            is PlayerGitHitEvent ->{
                 val soundPath = "audio/player_hit${(1..2).random()}.wav"
                 playSound(soundPath)
                 return true

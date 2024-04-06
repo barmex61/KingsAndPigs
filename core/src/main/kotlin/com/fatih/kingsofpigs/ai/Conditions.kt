@@ -2,6 +2,7 @@ package com.fatih.kingsofpigs.ai
 
 import com.badlogic.gdx.ai.btree.LeafTask
 import com.badlogic.gdx.ai.btree.Task
+import com.fatih.kingsofpigs.ecs.component.EntityModel
 
 abstract class Conditions : LeafTask<PigEntity>(){
     val entity : PigEntity
@@ -58,4 +59,8 @@ class IsDead : Conditions(){
 
 class IsPigLight : Conditions(){
     override fun condition() = entity.isPigLight
+}
+
+class IsGetHit : Conditions(){
+    override fun condition() = entity.isGetHit
 }

@@ -4,10 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.MapLayer
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Scaling
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
@@ -16,6 +18,7 @@ import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
+import com.fatih.kingsofpigs.ecs.component.DialogComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.Item
@@ -132,12 +135,14 @@ class EntitySpawnSystem (
                 }
 
                 if (lifeScaling != 0f){
+                    if (entityModel != EntityModel.KING){
+                        add<DialogComponent>()
+                    }
                     add<LifeComponent>{
                         maxHp = DEFAULT_MAX_HP * lifeScaling
                         currentHp = maxHp
                         canResurrect = this@run.canResurrect
                         resurrectionTime = this@run.resurrectionTime
-                        regeneration = this@run.regeneration
                     }
                 }
                 if (entityModel == EntityModel.KING){
@@ -175,7 +180,6 @@ class EntitySpawnSystem (
                         attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
                         attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
                         lifeScaling = 2f,
-                        regeneration = 2f,
                         resurrectionTime = 4f,
                         canResurrect = true,
                     )
@@ -243,7 +247,6 @@ class EntitySpawnSystem (
                         critChance  = 10,
                         critDamage  = 1.5f,
                         lifeScaling = 1f,
-                        regeneration = 1f,
                         aiCircleRadius = 3f,
                         aiMoveRadius = 1.5f,
                         aiTreePath = "ai/pig.tree"
@@ -268,7 +271,6 @@ class EntitySpawnSystem (
                         critChance  = 30,
                         critDamage  = 2f,
                         lifeScaling = 1f,
-                        regeneration = 1f,
                         aiCircleRadius = 4f,
                         attackImageScaling = vec2(3.8f,3.8f),
                         attackImageOffset = vec2(0f,0.2f),
@@ -289,7 +291,6 @@ class EntitySpawnSystem (
                         attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
                         attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
                         lifeScaling = 1f,
-                        regeneration = 1f,
                         attackScaling = 1f,
                         frameDurationScaling = 3f,
                     )
@@ -329,7 +330,6 @@ class EntitySpawnSystem (
                         critChance  = 20,
                         critDamage  = 2f,
                         lifeScaling = 1f,
-                        regeneration = 1f,
                         aiMoveRadius = 0f,
                         aiCircleRadius = 15f,
                         attackImageOffset = vec2(-0.45f,0.32f),
@@ -355,7 +355,6 @@ class EntitySpawnSystem (
                         critChance  = 50,
                         critDamage  = 2f,
                         lifeScaling = 2f,
-                        regeneration = 2f,
                         aiMoveRadius = 2.5f,
                         aiCircleRadius = 4f,
                         aiTreePath = "ai/pig.tree"
