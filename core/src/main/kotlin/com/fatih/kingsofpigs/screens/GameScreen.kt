@@ -1,5 +1,6 @@
 package com.fatih.kingsofpigs.screens
 
+import com.badlogic.gdx.Application.ApplicationType
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -38,6 +39,8 @@ import com.fatih.kingsofpigs.ecs.system.RangeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.RenderSystem
 import com.fatih.kingsofpigs.ecs.system.StateSystem
 import com.fatih.kingsofpigs.input.KeyboardInputProcessor
+import com.fatih.kingsofpigs.input.addProcessor
+import com.fatih.kingsofpigs.ui.view.GameView
 import com.fatih.kingsofpigs.ui.view.gameView
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
@@ -57,6 +60,7 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
     private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
     private var disposed : Boolean = false
+    private lateinit var gameView: GameView
     private val world = world {
 
         components {
@@ -100,13 +104,19 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
 
     init {
         uiStage.actors {
-            gameView{
+            gameView =  gameView(isPhone = Gdx.app.type == ApplicationType.Android || Gdx.app.type == ApplicationType.iOS){
                 gameStage.addListener(this)
             }
         }
+        addProcessor(uiStage)
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
-        world.system<PortalSystem>().changeMap("map/map1.tmx")
-        KeyboardInputProcessor(world, changeScreen = ::changeScreen)
+        world.system<PortalSystem>().apply {
+            changeMap = true
+            portalPath = "map/map1.tmx"
+        }
+        val kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen)
+        world.system<PhysicSystem>().inputProcessor = kbInputProcessor
+        gameView.inputProcessor = kbInputProcessor
     }
 
     private fun changeScreen(){

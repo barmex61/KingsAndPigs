@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 import com.fatih.kingsofpigs.ecs.component.AttackState
 import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
@@ -42,8 +44,8 @@ class KeyboardInputProcessor(
         addProcessor(this)
     }
 
-    private var moveComponent : MoveComponent? = null
-    private var attackComponent : MeleeAttackComponent? = null
+    var moveComponent : MoveComponent? = null
+    var attackComponent : MeleeAttackComponent? = null
 
     private var playerSin : Float = 0f
     private var playerCos : Float = 0f
@@ -54,6 +56,7 @@ class KeyboardInputProcessor(
 
     override fun keyDown(keycode: Int): Boolean {
         if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
+        println(keycode)
         when(keycode){
             RIGHT -> playerCos+=1f
             LEFT-> playerCos-=1f
@@ -63,6 +66,12 @@ class KeyboardInputProcessor(
         }
         updateMovement()
         return true
+    }
+
+    fun updatePlayerValues(x : Float,y : Float){
+        playerCos = x
+        playerSin = y
+        updateMovement()
     }
 
     override fun keyUp(keycode: Int): Boolean {

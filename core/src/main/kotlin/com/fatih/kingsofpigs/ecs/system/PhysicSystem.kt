@@ -1,6 +1,5 @@
 package com.fatih.kingsofpigs.ecs.system
 
-import com.badlogic.gdx.math.Ellipse
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -8,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.Manifold
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.fatih.kingsofpigs.ecs.component.AiComponent
 import com.fatih.kingsofpigs.ecs.component.DestroyableComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
@@ -21,6 +21,9 @@ import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.CANT_DEAL_D
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.DEAL_DAMAGE
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PLATFORM_FIXTURE
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
+import com.fatih.kingsofpigs.event.ShowPortalDialogEvent
+import com.fatih.kingsofpigs.event.fireEvent
+import com.fatih.kingsofpigs.input.KeyboardInputProcessor
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -29,6 +32,7 @@ import com.github.quillraven.fleks.Fixed
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.math.component1
 import ktx.math.component2
+import kotlin.math.abs
 
 @AllOf([PhysicComponent::class,ImageComponent::class])
 class PhysicSystem (
@@ -40,12 +44,15 @@ class PhysicSystem (
     private val aiComps : ComponentMapper<AiComponent>,
     private val destroyableComps : ComponentMapper<DestroyableComponent>,
     private val itemComps : ComponentMapper<ItemComponent>,
+    private val gameStage : Stage,
     private val box2dWorld: World,
 ): IteratingSystem(interval = Fixed(1/300f)) , ContactListener{
 
     init {
         box2dWorld.setContactListener(this)
     }
+
+    lateinit var inputProcessor: KeyboardInputProcessor
 
     override fun onUpdate() {
         if (box2dWorld.autoClearForces){
@@ -58,13 +65,13 @@ class PhysicSystem (
     override fun onTick() {
         super.onTick()
         box2dWorld.step(deltaTime,6,2)
-        val shape = Ellipse()
     }
 
     override fun onTickEntity(entity: Entity) {
         physicComps[entity].run {
             previousPos.set(body.position)
             if (!impulse.isZero){
+                if (abs(body.linearVelocity.x) > 6f) impulse.x = 0f
                 body.applyLinearImpulse(impulse,body.worldCenter,true)
                 impulse.setZero()
             }
@@ -95,6 +102,7 @@ class PhysicSystem (
     private fun Fixture.isAiCircle() = this.userData == AI_CIRCLE
     private fun Fixture.isDestroyable() = this.filterData.categoryBits == Constants.DESTROYABLE
     private fun Fixture.isItem() = this.filterData.categoryBits == Constants.ITEM
+    private fun Fixture.isPortal() = this.filterData.categoryBits == Constants.PORTAL
 
     private fun LifeComponent.dealDamage(attackEntity: Entity) {
         if (attackEntity in meleeAttackComps){
@@ -119,6 +127,26 @@ class PhysicSystem (
     override fun beginContact(contact: Contact) {
         val fixtureA = contact.fixtureA
         val fixtureB = contact.fixtureB
+        if (fixtureA.isPortal() && fixtureB.isPlayer()){
+            if (world.family(allOf = arrayOf(LifeComponent::class)).numEntities == 1){
+                inputProcessor.attackComponent = null
+                inputProcessor.moveComponent = null
+                world.system<PortalSystem>().changeMap = true
+                world.system<PortalSystem>().portalPath = (fixtureA.userData as String)
+            }else{
+                gameStage.fireEvent(ShowPortalDialogEvent("You need to kill all enemies first"))
+            }
+        }
+        if (fixtureB.isPortal() && fixtureA.isPlayer()){
+            if (world.family(allOf = arrayOf(LifeComponent::class)).numEntities == 1){
+                inputProcessor.attackComponent = null
+                inputProcessor.moveComponent = null
+                world.system<PortalSystem>().changeMap = true
+                world.system<PortalSystem>().portalPath = (fixtureB.userData as String)
+            }else{
+                gameStage.fireEvent(ShowPortalDialogEvent("You need to kill all enemies first"))
+            }
+        }
 
         if (fixtureA.isPlayer() && fixtureB.isAttackObject() && fixtureB.cantDealDamage() && fixtureB.entity() in rangeAttackComps && rangeAttackComps[fixtureB.entity()].entityModel == EntityModel.PIG_LIGHT){
             rangeAttackComps[fixtureB.entity()].destroyBodyTime = rangeAttackComps[fixtureB.entity()].maxDestroyBodyTime*2f/3f

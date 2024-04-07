@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.MapLayer
 import com.badlogic.gdx.math.Rectangle
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Scaling
 import com.fatih.kingsofpigs.KingOfPigs.Companion.UNIT_SCALE
@@ -24,7 +22,6 @@ import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.Item
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_HP
-import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_LIFE
 import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent.Companion.DEFAULT_MOVE_SPEED
@@ -99,7 +96,7 @@ class EntitySpawnSystem (
                 if (entityModel == EntityModel.BOX){
                     add<DestroyableComponent>{
                         val itemList = listOf(Item.Diamond(),Item.Heart())
-                        (1..(1..5).random()).forEach { _ ->
+                        (0..(0..3).random()).forEach { _ ->
                             items.add(itemList[(0..1).random()])
                         }
                     }
@@ -365,7 +362,7 @@ class EntitySpawnSystem (
                         entityModel = entityModel,
                         animationType = AnimationType.OPENING,
                         speedScaling = 0f,
-                        categoryBit = Constants.PORTAL,
+                        categoryBit = Constants.OBJECT,
                         maskBit = Constants.KING,
                         bodyType = BodyType.StaticBody,
                         isPortal = true,
@@ -382,7 +379,7 @@ class EntitySpawnSystem (
             is MapChangeEvent ->{
                 event.map.forEachLayer<MapLayer> {mapLayer->
                     mapLayer.objects.forEach {mapObject->
-                        if (mapLayer.name != RenderSystem.MapLayerType.COLLISION.layerName){
+                        if (mapLayer.name == RenderSystem.MapLayerType.ENTITY.layerName){
                             val name = mapObject.name ?: gdxError("There is no name for $mapObject")
                             world.entity {
                                 add<SpawnComponent>{
@@ -393,19 +390,28 @@ class EntitySpawnSystem (
                             }
                         }else{
                             val isPlatform = mapObject.name == "platform"
-                            createBody(box2dWorld,
-                                (mapObject.shape as Rectangle).apply {
-                                   setSize(this.width * UNIT_SCALE , this.height * UNIT_SCALE)
-                                   setPosition(x * UNIT_SCALE, y * UNIT_SCALE)
-                                },
-                                Constants.OBJECT,
-                                Constants.KING or Constants.PORTAL or Constants.ITEM or Constants.OBJECT or Constants.ENEMY or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,BodyType.StaticBody ,
-                                vec2(1f,1f),
-                                vec2(0f,0f),
-                                isPortal = false,
-                                isCollision = true,
-                                isPlatform = isPlatform
-                            )
+                            val isPortal = mapObject.name == "portal"
+                            world.entity {
+                                add<PhysicComponent>{
+                                    body = createBody(box2dWorld,
+                                        (mapObject.shape as Rectangle).apply {
+                                            setSize(this.width * UNIT_SCALE , this.height * UNIT_SCALE)
+                                            setPosition(x * UNIT_SCALE, y * UNIT_SCALE)
+                                        },
+                                        if (isPortal) Constants.PORTAL else Constants.OBJECT,
+                                        Constants.KING or Constants.PORTAL or Constants.ITEM or Constants.OBJECT or Constants.ENEMY or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,
+                                        BodyType.StaticBody ,
+                                        vec2(1f,1f),
+                                        vec2(0f,0f),
+                                        isPortal = isPortal,
+                                        isCollision = true,
+                                        isPlatform = isPlatform
+                                    )
+                                    if (isPortal){
+                                        body.fixtureList.first().userData = mapObject.properties.get("toMap",String::class.java)
+                                    }
+                                }
+                            }
                         }
                     }
                 }

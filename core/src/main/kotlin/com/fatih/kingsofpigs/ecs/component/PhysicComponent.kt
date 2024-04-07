@@ -17,6 +17,7 @@ import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.loop
 import ktx.box2d.polygon
+import ktx.math.timesAssign
 import ktx.math.vec2
 
 class PhysicComponent {

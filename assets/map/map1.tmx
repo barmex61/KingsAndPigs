@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="76">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="87">
  <properties>
   <property name="mapMusic" value="audio/mapmusic.mp3"/>
-  <property name="mapPath" value="map/map1.tmx"/>
  </properties>
  <tileset firstgid="1" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
   <image source="../graphics/mapObject.png" width="1024" height="512"/>
@@ -10,37 +9,37 @@
  <tileset firstgid="513" name="entity" tilewidth="78" tileheight="58" tilecount="11" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image source="../graphics/bomb.png"/>
+   <image width="52" height="56" source="../graphics/bomb.png"/>
   </tile>
   <tile id="1">
-   <image source="../graphics/box.png"/>
+   <image width="22" height="16" source="../graphics/box.png"/>
   </tile>
   <tile id="2">
-   <image source="../graphics/cannon.png"/>
+   <image width="44" height="28" source="../graphics/cannon.png"/>
   </tile>
   <tile id="3">
-   <image source="../graphics/door.png"/>
+   <image width="46" height="56" source="../graphics/door.png"/>
   </tile>
   <tile id="4">
-   <image source="../graphics/king.png"/>
+   <image width="78" height="58" source="../graphics/king.png"/>
   </tile>
   <tile id="5">
-   <image source="../graphics/pig.png"/>
+   <image width="34" height="28" source="../graphics/pig.png"/>
   </tile>
   <tile id="6">
-   <image source="../graphics/pig_bomb.png"/>
+   <image width="26" height="26" source="../graphics/pig_bomb.png"/>
   </tile>
   <tile id="7">
-   <image source="../graphics/pig_box.png"/>
+   <image width="26" height="30" source="../graphics/pig_box.png"/>
   </tile>
   <tile id="8">
-   <image source="../graphics/pig_box_hide.png"/>
+   <image width="26" height="20" source="../graphics/pig_box_hide.png"/>
   </tile>
   <tile id="9">
-   <image source="../graphics/pig_king.png"/>
+   <image width="38" height="28" source="../graphics/pig_king.png"/>
   </tile>
   <tile id="10">
-   <image source="../graphics/pig_light.png"/>
+   <image width="26" height="18" source="../graphics/pig_light.png"/>
   </tile>
  </tileset>
  <layer id="1" name="background" width="16" height="8">
@@ -71,10 +70,14 @@
   <object id="74" x="192" y="127.818" width="63.6364" height="11.6364"/>
  </objectgroup>
  <objectgroup id="4" name="portals">
-  <object id="8" name="door" gid="516" x="47.75" y="160" width="46" height="56"/>
+  <object id="86" name="portal" x="429.178" y="131.2" width="7" height="13.9778">
+   <properties>
+    <property name="toMap" value="map/map2.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="entity">
-  <object id="37" name="king" gid="517" x="38.8182" y="173.917" width="78" height="58"/>
+  <object id="37" name="king" gid="517" x="40.0682" y="173.667" width="78" height="58"/>
   <object id="38" name="box" gid="514" x="31.6875" y="160.125" width="22" height="16"/>
   <object id="39" name="bomb" gid="513" x="15.75" y="161.188" width="52" height="56"/>
   <object id="40" name="pig_box" gid="520" x="160" y="224" width="26" height="30"/>
@@ -89,5 +92,7 @@
   <object id="51" name="cannon" gid="515" x="349.25" y="67" width="44" height="28"/>
   <object id="52" name="pig_light" gid="523" x="388.636" y="64.1818" width="26" height="18"/>
   <object id="75" name="box" gid="514" x="324.25" y="224.125" width="22" height="16"/>
+  <object id="84" name="door" gid="516" x="409.182" y="160.182" width="46" height="56"/>
+  <object id="85" name="door" gid="516" x="48.0909" y="160" width="46" height="56"/>
  </objectgroup>
 </map>

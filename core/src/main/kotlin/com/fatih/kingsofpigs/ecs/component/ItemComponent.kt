@@ -4,7 +4,7 @@ import com.github.quillraven.fleks.Entity
 
 sealed class Item {
     data class Diamond(val extraLife: Int = 1) : Item()
-    data class Heart(val hp : Int = 1) : Item()
+    data class Heart(val hp : Int = 5) : Item()
 }
 
 class ItemComponent(

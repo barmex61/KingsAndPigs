@@ -12,6 +12,7 @@ fun main() {
     Lwjgl3Application(KingOfPigs(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("KingOfPigs")
         setWindowedMode(1080, 720)
+        useVsync(true)
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })
 }
