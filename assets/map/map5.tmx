@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="8">
+ <properties>
+  <property name="hasLights" type="bool" value="false"/>
+  <property name="mapMusic" value="audio/mapmusic.mp3"/>
+ </properties>
+ <tileset firstgid="1" name="entityTileset" tilewidth="288" tileheight="160" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="22" height="16" source="../graphics/box.png"/>
+  </tile>
+  <tile id="1">
+   <image width="288" height="160" source="../graphics/demon_idle.png"/>
+  </tile>
+  <tile id="2">
+   <image width="46" height="56" source="../graphics/door.png"/>
+  </tile>
+  <tile id="3">
+   <image width="78" height="58" source="../graphics/king.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
+  <image source="../graphics/mapObject.png" width="1024" height="512"/>
+ </tileset>
+ <layer id="1" name="background" width="16" height="8">
+  <data encoding="base64" compression="zlib">
+   eJzTYWBgSCcT6wKxBxC7k4ndRvVTrN8HiNXJxL5ADAB6EiNX
+  </data>
+ </layer>
+ <layer id="2" name="foreground" width="16" height="8">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIxkAAAIAAAE=
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="4" x="23" y="225" width="465.667" height="8"/>
+  <object id="5" x="480.333" y="23" width="8.66667" height="209.333"/>
+  <object id="6" x="22.3333" y="22.3333" width="468.333" height="8.33333"/>
+  <object id="7" x="21" y="21" width="11.3333" height="212.333"/>
+ </objectgroup>
+ <objectgroup id="4" name="portals"/>
+ <objectgroup id="5" name="entity">
+  <object id="1" name="demon" gid="2" x="256" y="224" width="288" height="160"/>
+  <object id="2" name="door" gid="3" x="64" y="224" width="46" height="56"/>
+  <object id="3" name="king" gid="4" x="55.6364" y="238.364" width="78" height="58"/>
+ </objectgroup>
+</map>

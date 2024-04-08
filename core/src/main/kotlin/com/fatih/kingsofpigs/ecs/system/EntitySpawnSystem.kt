@@ -370,6 +370,29 @@ class EntitySpawnSystem (
                         aiTreePath = "ai/pig.tree"
                     )
                 }
+                EntityModel.DEMON->{
+                    SpawnConfig(
+                        entityModel = entityModel,
+                        animationType = AnimationType.IDLE,
+                        speedScaling = 1f,
+                        categoryBit = Constants.ENEMY,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        bodyType = BodyType.DynamicBody,
+                        physicScaling = vec2(0.15f,0.43f),
+                        physicOffset = vec2(0f,-2.8f),
+                        attackFloatArray = floatArrayOf(-7f , -5f , -5f , -6f , -3f, 0f, -1f , 0.8f, -0.7f , 1f,-0.6f , -0.3f),
+                        attackFloatArrayMirror = floatArrayOf(0.6f , -0.3f , 1f , 0f , 1.1f, 0.4f, 1f , 0.8f, 0.7f , 1f,0.6f , -0.3f),
+                        attackScaling = 5f,
+                        attackRange = 7f,
+                        isRangeAttack = false,
+                        critChance  = 50,
+                        critDamage  = 5f,
+                        lifeScaling = 2f,
+                        aiMoveRadius = 10f,
+                        aiCircleRadius = 7f,
+                        aiTreePath = "ai/pig.tree"
+                    )
+                }
                 EntityModel.DOOR->{
                     SpawnConfig(
                         entityModel = entityModel,

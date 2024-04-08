@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Align
+import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.event.HpChangeEvent
 import com.fatih.kingsofpigs.event.LifeChangeEvent
 import com.fatih.kingsofpigs.event.PigGetHitEvent
@@ -143,7 +144,7 @@ class GameView(
                 return true
             }
             is PigGetHitEvent ->{
-                enemyHud.setCharacterImageDrawable(Drawables.valueOf(event.entityModel.name))
+                enemyHud.setCharacterImageDrawable(Drawables.valueOf(if (event.entityModel == EntityModel.DEMON) EntityModel.KING.name else event.entityModel.name))
                 enemyHud.setHpPercentage(event.hpPercentage,true)
                 return true
             }

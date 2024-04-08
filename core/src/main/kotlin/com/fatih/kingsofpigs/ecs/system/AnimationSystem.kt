@@ -46,6 +46,7 @@ class AnimationSystem(
     }
 
     private fun getAnimation(animPath : String) : Animation<TextureRegionDrawable>{
+        println(animPath)
         return animationCache.getOrPut(animPath){
             Animation(DEFAULT_FRAME_DURATION,textureAtlas.findRegions(animPath).map {
                 TextureRegionDrawable(it)

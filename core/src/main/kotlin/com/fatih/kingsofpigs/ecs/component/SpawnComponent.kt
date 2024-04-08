@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import ktx.math.vec2
 
 enum class EntityModel {
-    UNDEFINED,PIG,KING,KING_PIG,PIG_BOX,PIG_BOMB,PIG_BOX_HIDE,PIG_LIGHT,BOX,BOMB,CANNON,DOOR,HEART,DIAMOND,PORTAL;
+    UNDEFINED,PIG,KING,DEMON,KING_PIG,PIG_BOX,PIG_BOMB,PIG_BOX_HIDE,PIG_LIGHT,BOX,BOMB,CANNON,DOOR,HEART,DIAMOND,PORTAL;
     val entityName = this.name.lowercase()
 }
 

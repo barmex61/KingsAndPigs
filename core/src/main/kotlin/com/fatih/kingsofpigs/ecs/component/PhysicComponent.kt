@@ -121,7 +121,7 @@ class PhysicComponent {
                                 }
                             }
                             if (aiCircle != 0f){
-                                circle(aiCircle){
+                                circle(aiCircle, position = physicOffset){
                                     isSensor = true
                                     userData = AI_CIRCLE
                                     filter.categoryBits = categoryBit

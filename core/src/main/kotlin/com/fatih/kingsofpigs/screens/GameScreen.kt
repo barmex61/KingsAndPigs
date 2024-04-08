@@ -65,14 +65,13 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     private val gameStage = Stage(gameViewport,spriteBatch)
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
-    private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
+    private val uiStage = Stage(uiViewport,spriteBatch)
     private var disposed : Boolean = false
     private var gameView: GameView
     private var rayHandler = RayHandler(box2dWorld).apply {
         RayHandler.useDiffuseLight(true)
         Light.setGlobalContactFilter(Constants.LIGHT,-1,Constants.OBJECT)
-        setAmbientLight(Color.BLACK)
-
+        setAmbientLight(Color.WHITE)
     }
     private val world = world {
 
@@ -128,7 +127,7 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map1.tmx"
+            portalPath = "map/map5.tmx"
         }
         val kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor

@@ -127,6 +127,11 @@ class PigEntity(
     }
 
     fun startMeleeAttack(){
+        val playerEntity = aiComponent.nearbyEntities.firstOrNull()
+        playerEntity?.let {
+            val diffX = physicComps[it].body.position.x - physicComponent.body.position.x
+            turnTowardsThePlayer(diffX)
+        }
         meleeAttackComponent!!.doAttack = true
         meleeAttackComponent.startAttack()
     }
