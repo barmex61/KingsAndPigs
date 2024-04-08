@@ -1,9 +1,12 @@
 package com.fatih.kingsofpigs.ecs.system
 
+import box2dLight.PointLight
+import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.MapLayer
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
@@ -22,6 +25,7 @@ import com.fatih.kingsofpigs.ecs.component.ImageComponent
 import com.fatih.kingsofpigs.ecs.component.Item
 import com.fatih.kingsofpigs.ecs.component.LifeComponent
 import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.DEFAULT_MAX_HP
+import com.fatih.kingsofpigs.ecs.component.LightComponent
 import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent.Companion.DEFAULT_MOVE_SPEED
@@ -32,6 +36,7 @@ import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
 import com.fatih.kingsofpigs.ecs.component.StateComponent
+import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.isLightsOn
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.AllOf
@@ -42,6 +47,7 @@ import ktx.app.gdxError
 import ktx.math.vec2
 import ktx.tiled.forEachLayer
 import ktx.tiled.height
+import ktx.tiled.property
 import ktx.tiled.shape
 import ktx.tiled.width
 import ktx.tiled.x
@@ -52,7 +58,8 @@ import kotlin.experimental.or
 class EntitySpawnSystem (
     private val spawnComps : ComponentMapper<SpawnComponent>,
     private val box2dWorld : World,
-    private val textureAtlas : TextureAtlas
+    private val textureAtlas : TextureAtlas,
+    private val rayHandler: RayHandler
 ): IteratingSystem() , EventListener {
 
     private val spawnConfigCache = mutableMapOf<EntityModel,SpawnConfig>()
@@ -79,13 +86,15 @@ class EntitySpawnSystem (
                     this.durationScaling = this@run.frameDurationScaling
                     nextAnimation(this@run.animationType,if (entityModel == EntityModel.DOOR) Animation.PlayMode.NORMAL else Animation.PlayMode.LOOP)
                 }
-                add<PhysicComponent>{
+
+                val physicComponent = add<PhysicComponent>{
                     val shape = Rectangle(
                         position.x , position.y  ,size.x  , size.y
                     )
                     this.body = createBody(box2dWorld,shape,categoryBit,maskBit,bodyType,physicScaling,physicOffset, isPortal = isPortal, aiCircle = aiCircleRadius)
                     this.bodyOffset.set(physicOffset)
                 }
+
                 if (speedScaling != 0f){
                     add<MoveComponent>{
                         speed = DEFAULT_MOVE_SPEED * speedScaling
@@ -151,6 +160,14 @@ class EntitySpawnSystem (
                         this.treePath = aiTreePath
                     }
                 }
+                if (isLightsOn && entityModel == EntityModel.KING){
+                    add<LightComponent>{
+                        distance = 2f..6f
+                        light = PointLight(rayHandler,64,LightComponent.lightColor,distance.endInclusive,0f,0f).apply {
+                            attachToBody(physicComponent.body,physicComponent.bodyOffset.x,physicComponent.bodyOffset.y )
+                        }
+                    }
+                }
             }
         }
         world.remove(entity)
@@ -166,7 +183,6 @@ class EntitySpawnSystem (
                         categoryBit = Constants.KING,
                         maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.PORTAL or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,
                         bodyType = BodyType.DynamicBody,
-                        attackBodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.225f,0.45f),
                         physicOffset = vec2(-0.45f,-0.1f),
                         attackScaling = 2f,
@@ -179,6 +195,7 @@ class EntitySpawnSystem (
                         lifeScaling = 2f,
                         resurrectionTime = 4f,
                         canResurrect = true,
+
                     )
                 }
                 EntityModel.BOX ->{
@@ -209,7 +226,6 @@ class EntitySpawnSystem (
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
-                        attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.8f,0.85f),
                         physicOffset = vec2(0.1f,-0.1f),
                         attackFloatArray = floatArrayOf(-0.6f,0f,1.3f,1f),
@@ -233,7 +249,6 @@ class EntitySpawnSystem (
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING  or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
-                        attackBodyType = BodyType.StaticBody,
                         physicScaling = vec2(0.4f,0.6f),
                         physicOffset = vec2(0.18f,-0.35f),
                         attackFloatArray = floatArrayOf(-0.6f , -0.3f , -1f , 0f , -1.1f, 0.4f, -1f , 0.8f, -0.7f , 1f,-0.6f , -0.3f),
@@ -257,7 +272,6 @@ class EntitySpawnSystem (
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
-                        attackBodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.55f,0.6f),
                         physicOffset = vec2(-0.2f,-0.3f),
                         attackFloatArray = floatArrayOf(-0.5f,0f,0.9f,0.9f),
@@ -339,7 +353,6 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         speedScaling = 0.8f,
                         categoryBit = Constants.ENEMY,
-                        attackBodyType = BodyType.StaticBody,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.4f,0.7f),
@@ -378,6 +391,7 @@ class EntitySpawnSystem (
         when(event){
             is MapChangeEvent ->{
                 event.map.forEachLayer<MapLayer> {mapLayer->
+                    isLightsOn = event.map.property<Boolean>("hasLights")
                     mapLayer.objects.forEach {mapObject->
                         if (mapLayer.name == RenderSystem.MapLayerType.ENTITY.layerName){
                             val name = mapObject.name ?: gdxError("There is no name for $mapObject")

@@ -23,8 +23,6 @@ import kotlin.experimental.or
 
 class PortalSystem (
     private val gameStage : Stage,
-    private val physicComps : ComponentMapper<PhysicComponent>,
-    private val box2dWorld : World
 ): IntervalSystem() {
 
     private val tmxMapLoader = TmxMapLoader()
@@ -46,27 +44,4 @@ class PortalSystem (
         }
     }
 
-    companion object{
-        val playerConfig = SpawnConfig(
-        entityModel = EntityModel.KING,
-        animationType = AnimationType.IDLE,
-        speedScaling = 1f,
-        categoryBit = Constants.KING,
-        maskBit = Constants.ENEMY or Constants.ITEM or Constants.OBJECT or Constants.PORTAL or Constants.ATTACK_OBJECT or Constants.DESTROYABLE,
-        bodyType = BodyDef.BodyType.DynamicBody,
-        attackBodyType = BodyDef.BodyType.StaticBody,
-        physicScaling = vec2(0.225f,0.45f),
-        physicOffset = vec2(-0.45f,-0.1f),
-        attackScaling = 2f,
-        attackRange = 1.1f,
-        isRangeAttack = false,
-        critChance  = 50,
-        critDamage  = 2f,
-        attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
-        attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
-        lifeScaling = 2f,
-        resurrectionTime = 4f,
-        canResurrect = true,
-        )
-    }
 }

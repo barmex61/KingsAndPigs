@@ -3,6 +3,7 @@ package com.fatih.kingsofpigs.ui.view
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut
@@ -10,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Align
 import com.fatih.kingsofpigs.event.HpChangeEvent
 import com.fatih.kingsofpigs.event.LifeChangeEvent
@@ -81,42 +84,55 @@ class GameView(
             touchPad = touchpad(10f,skin = skin){
                 this.setSize(60f,60f)
                 this.alpha = 0.25f
-                it.padLeft(10f).expandX().bottom().colspan(1)
-                onTouchEvent { event, x, y ->
-                   this@GameView.inputProcessor.updatePlayerValues(
-                       this@GameView.scaleValue(x,false),
-                       this@GameView.scaleValue(y,true)
-                   )
-                }
-                onTouchUp {
-                    this@GameView.inputProcessor.updatePlayerValues(
-                        0f,
-                        0f
-                    )
-                    this.alpha = 0.25f
-                }
-                onTouchDown {
-                    this.alpha = 1f
-                }
+                it.expandX().left().padLeft(30f).bottom().colspan(1)
+                this.addListener(object : DragListener(){
+
+                    override fun touchDragged(
+                        event: InputEvent?,
+                        x: Float,
+                        y: Float,
+                        pointer: Int
+                    ) {
+                        val posX = if (knobPercentX > 0.5f) 1f else if (knobPercentX < -0.5f) -1f else 0f
+                        val posY = if (knobPercentY > 0.7f) 1f else 0f
+                        this@GameView.inputProcessor.updatePlayerValues(
+                           posX,posY
+                        )
+                        super.touchDragged(event, x, y, pointer)
+                    }
+
+                    override fun dragStart(event: InputEvent?, x: Float, y: Float, pointer: Int) {
+                        this@touchpad.alpha = 1f
+                        super.dragStart(event, x, y, pointer)
+                    }
+
+                    override fun dragStop(event: InputEvent?, x: Float, y: Float, pointer: Int) {
+                        this@GameView.inputProcessor.updatePlayerValues(
+                            0f,
+                            0f
+                        )
+                        this@touchpad.alpha = 0.25f
+                        super.dragStop(event, x, y, pointer)
+                    }
+                })
+
             }
             attackHud = attackHud{
-                it.padRight(10f).expandX().bottom().colspan(1)
-                onTouchDown {
-                    this.alpha = 1f
-                }
-                onTouchUp {
-                    this.alpha = 0.25f
-                }
-            }
-        }
-    }
+                it.expandX().right().padRight(90f).bottom().colspan(1)
+                this.alpha = 0.25f
+                addListener(object : ClickListener(){
+                    override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                        this@attackHud.alpha = 1f
+                        this@GameView.inputProcessor.updateAttack()
+                        return super.touchDown(event, x, y, pointer, button)
+                    }
 
-    private fun scaleValue(value: Float,sin:Boolean): Float {
-        val clampedValue = value.coerceIn(0.6f, 2.5f)
-        return if (sin) {
-            if (clampedValue == 2.5f) 1f else 0f
-        } else {
-            2f * (clampedValue - 0.6f) / (2.5f - 0.6f) - 1f
+                    override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
+                        this@attackHud.alpha = 0.25f
+                        super.touchUp(event, x, y, pointer, button)
+                    }
+                })
+            }
         }
     }
 
@@ -140,6 +156,7 @@ class GameView(
             }
             is ShowPortalDialogEvent ->{
                 dialogLabel.clearActions()
+                dialogLabel.setText(event.dialog)
                 dialogLabel.addAction(
                     Actions.sequence(
                         fadeIn(2f, Interpolation.pow3Out),

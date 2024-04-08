@@ -9,4 +9,5 @@ object Constants {
     const val ITEM : Short = 8
     const val ATTACK_OBJECT : Short = 64
     const val DESTROYABLE : Short = 128
+    const val LIGHT : Short = 256
 }

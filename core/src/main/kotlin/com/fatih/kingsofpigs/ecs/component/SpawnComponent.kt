@@ -28,9 +28,7 @@ class SpawnConfig(
     val critDamage : Float = 1f,
     var attackFloatArray : FloatArray = floatArrayOf(),
     var attackFloatArrayMirror: FloatArray = floatArrayOf(),
-    val attackBodyType: BodyType = BodyType.StaticBody,
     val lifeScaling : Float = 0f,
-    val regeneration : Float = 1f,
     val resurrectionTime : Float = 0f,
     val canResurrect : Boolean = false,
     val aiCircleRadius : Float = 0f,
@@ -38,7 +36,7 @@ class SpawnConfig(
     val frameDurationScaling : Float = 1f,
     val attackImageScaling : Vector2 = vec2(1f,1f),
     val attackImageOffset : Vector2 = vec2(),
-    val aiMoveRadius : Float = 2f
+    val aiMoveRadius : Float = 2f,
 )
 
 data class SpawnComponent (

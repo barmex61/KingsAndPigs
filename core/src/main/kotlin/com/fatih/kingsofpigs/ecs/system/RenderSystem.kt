@@ -1,5 +1,6 @@
 package com.fatih.kingsofpigs.ecs.system
 
+import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
@@ -16,7 +17,8 @@ import ktx.tiled.forEachLayer
 
 class RenderSystem (
     private val gameStage : Stage,
-    @Qualifier("uiStage") private val uiStage: Stage
+    @Qualifier("uiStage") private val uiStage: Stage,
+    private val rayHandler: RayHandler
 ) : IntervalSystem() , EventListener {
 
     private val tiledMapTiledLayers = mutableListOf<TiledMapTileLayer>()
@@ -35,6 +37,8 @@ class RenderSystem (
         }
         gameStage.draw()
         gameStage.batch.color = Color.WHITE
+        rayHandler.setCombinedMatrix(gameCamera)
+        rayHandler.updateAndRender()
         uiStage.draw()
     }
 

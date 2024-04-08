@@ -1,8 +1,11 @@
 package com.fatih.kingsofpigs.screens
 
+import box2dLight.Light
+import box2dLight.RayHandler
 import com.badlogic.gdx.Application.ApplicationType
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.GdxAI
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -16,6 +19,8 @@ import com.fatih.kingsofpigs.ecs.component.DestroyableComponent.Companion.Destro
 import com.fatih.kingsofpigs.ecs.component.DialogComponent.Companion.DialogComponentListener
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
+import com.fatih.kingsofpigs.ecs.component.LightComponent
+import com.fatih.kingsofpigs.ecs.component.LightComponent.Companion.LightComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent.Companion.RangeAttackComponentListener
 import com.fatih.kingsofpigs.ecs.component.StateComponent.Companion.StateComponentListener
@@ -32,6 +37,7 @@ import com.fatih.kingsofpigs.ecs.system.EntitySpawnSystem
 import com.fatih.kingsofpigs.ecs.system.FloatingTextSystem
 import com.fatih.kingsofpigs.ecs.system.ItemSystem
 import com.fatih.kingsofpigs.ecs.system.LifeSystem
+import com.fatih.kingsofpigs.ecs.system.LightSystem
 import com.fatih.kingsofpigs.ecs.system.MoveSystem
 import com.fatih.kingsofpigs.ecs.system.PhysicSystem
 import com.fatih.kingsofpigs.ecs.system.PortalSystem
@@ -42,6 +48,7 @@ import com.fatih.kingsofpigs.input.KeyboardInputProcessor
 import com.fatih.kingsofpigs.input.addProcessor
 import com.fatih.kingsofpigs.ui.view.GameView
 import com.fatih.kingsofpigs.ui.view.gameView
+import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
@@ -60,7 +67,13 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
     private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
     private var disposed : Boolean = false
-    private lateinit var gameView: GameView
+    private var gameView: GameView
+    private var rayHandler = RayHandler(box2dWorld).apply {
+        RayHandler.useDiffuseLight(true)
+        Light.setGlobalContactFilter(Constants.LIGHT,-1,Constants.OBJECT)
+        setAmbientLight(Color.BLACK)
+
+    }
     private val world = world {
 
         components {
@@ -72,18 +85,21 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
             add<RangeAttackComponentListener>()
             add<DestroyableListener>()
             add<DialogComponentListener>()
+            add<LightComponentListener>()
         }
         injectables {
             add("uiStage",uiStage)
             add(gameStage)
             add(box2dWorld)
             add(textureAtlas)
+            add(rayHandler)
         }
         systems {
             add<EntitySpawnSystem>()
             add<AnimationSystem>()
             add<MoveSystem>()
             add<PhysicSystem>()
+            add<LightSystem>()
             add<DialogSystem>()
             add<LifeSystem>()
             add<DeadSystem>()
@@ -136,12 +152,15 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width,height,true)
         uiStage.viewport.update(width,height,true)
+        rayHandler.useCustomViewport(gameStage.viewport.screenX,gameStage.viewport.screenY,gameStage.viewport.screenWidth,gameStage.viewport.screenHeight)
     }
 
     override fun dispose() {
         world.dispose()
         gameStage.disposeSafely()
         box2dWorld.disposeSafely()
+        rayHandler.disposeSafely()
+        textureAtlas.disposeSafely()
     }
 
 }

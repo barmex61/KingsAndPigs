@@ -30,7 +30,7 @@ class AudioSystem : IntervalSystem() , EventListener{
                 musicCache.getOrPut(musicPath){
                     Gdx.audio.newMusic(Gdx.files.internal(musicPath))
                 }.also {
-                    it.volume = 0.5f
+                    it.volume = 0.35f
                     it.play() }
                 return true
             }

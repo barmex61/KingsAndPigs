@@ -21,12 +21,10 @@ class AttackHud(
 
     private val imageBg = Image(skin[Drawables.TOUCHPAD_BG]).apply {
         this.setSize(60f,60f)
-        this.alpha = 0.25f
     }
     private val imageButton = ImageButton(skin,ImageButtons.ATTACK.skinKey).apply {
         this.setPosition(15f,9f)
         this.setSize(30f,42f)
-        this.alpha = 0.25f
     }
 
     fun setAlpha(alpha:Float){

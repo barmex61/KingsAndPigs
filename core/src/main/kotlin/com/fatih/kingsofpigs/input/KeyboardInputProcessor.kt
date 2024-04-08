@@ -85,7 +85,7 @@ class KeyboardInputProcessor(
         return true
     }
 
-    private fun updateAttack(){
+    fun updateAttack(){
         if (attackComponent == null){
             attackComponent = attackComps[world.family(allOf = arrayOf(PlayerComponent::class)).first()]
         }
