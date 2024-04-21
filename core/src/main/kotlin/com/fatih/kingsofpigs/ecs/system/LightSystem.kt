@@ -20,7 +20,7 @@ class LightSystem(
 ) : IteratingSystem(){
 
     private var ambientTransitionTime = 0f
-    private var ambientColor = Color(1f,1f,1f,1f)
+    private var ambientColor = Color(32/255f,195/255f,208/255f,1f)
     private var ambientColorFrom = dayAmbientLight
     private var ambientColorTo = nightAmbientLight
 
@@ -28,6 +28,7 @@ class LightSystem(
     override fun onTick() {
         super.onTick()
         if (isLightsOn){
+            /*
             if (ambientTransitionTime >= 1f){
                 ambientTransitionTime = 0f
                 if (ambientColorFrom == dayAmbientLight){
@@ -40,7 +41,7 @@ class LightSystem(
             }else{
                 setAmbientColor()
                 ambientTransitionTime += deltaTime * 0.6f
-            }
+            } */
             rayHandler.setAmbientLight(ambientColor)
         }
     }

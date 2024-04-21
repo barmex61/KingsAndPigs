@@ -135,8 +135,12 @@ class MeleeAttack : Actions(){
             entity.showDialog(DialogType.ATTACK)
             entity.root(true)
             entity.animation(AnimationType.ATTACK, playMode = PlayMode.NORMAL, frameDuration = DEFAULT_FRAME_DURATION *2f)
-            entity.startMeleeAttack()
+            if (entity.entityModel != EntityModel.DEMON)
+                entity.startMeleeAttack()
             return Status.RUNNING
+        }
+        if (entity.entityModel == EntityModel.DEMON && entity.animKeyFrame == 9){
+            entity.startMeleeAttack()
         }
         if (entity.animationDone){
             entity.animation(AnimationType.IDLE)
@@ -207,10 +211,10 @@ class FireCannon : Actions(){
 }
 
 class Delay : Actions(){
-    private var duration = (1.5f..2.5f).random()
+    private var duration = (1f..2f).random()
     override fun execute(): Status {
         if (status != Status.RUNNING){
-            duration = (1.5f..2.5f).random()
+            duration = (1f..2f).random()
             return Status.RUNNING
         }
         duration -= GdxAI.getTimepiece().deltaTime
@@ -227,7 +231,11 @@ class Hit : Actions(){
         if (status != Status.RUNNING){
             entity.root(true)
             entity.showDialog(DialogType.HIT)
-            entity.animation(AnimationType.HIT,PlayMode.NORMAL, DEFAULT_FRAME_DURATION * 3f)
+            var frameDuration = DEFAULT_FRAME_DURATION * 2.5f
+            if (entity.entityModel == EntityModel.DEMON){
+                frameDuration = DEFAULT_FRAME_DURATION * 1.5f
+            }
+            entity.animation(AnimationType.HIT,PlayMode.NORMAL, frameDuration)
             return Status.RUNNING
         }
         if (entity.animationDone){
@@ -243,7 +251,7 @@ class Dead : Actions(){
     override fun execute(): Status {
 
         if (status != Status.RUNNING){
-            if (entity.entityModel != EntityModel.KING_PIG && entity.entityModel != EntityModel.PIG_BOX && entity.entityModel != EntityModel.PIG){
+            if (entity.entityModel != EntityModel.KING_PIG && entity.entityModel != EntityModel.PIG_BOX && entity.entityModel != EntityModel.PIG && entity.entityModel != EntityModel.DEMON){
                 entity.scaleImage(1.15f)
             }
             entity.root(true)

@@ -33,7 +33,7 @@ class DebugSystem(
     }
 
     override fun onTick() {
-        debugRenderer?.render(box2dWorld,gameCamera.combined)
+        //debugRenderer?.render(box2dWorld,gameCamera.combined)
         shapeRenderer?.use(ShapeRenderer.ShapeType.Line,gameCamera){
            it.rect(ATTACK_RECT.x, ATTACK_RECT.y, ATTACK_RECT.width, ATTACK_RECT.height)
             if (ATTACK_POLYLINE.vertices.isNotEmpty()){

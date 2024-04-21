@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
+import com.badlogic.gdx.utils.Scaling
 import com.fatih.kingsofpigs.ui.Drawables
 import ktx.scene2d.KGroup
 import ktx.scene2d.KWidget
@@ -37,12 +38,12 @@ class CharacterHud (
         charImage = image(skin[Drawables.KING]){
             setPosition(5f,6f)
             setSize(20f,20f)
+            setScaling(Scaling.stretch)
         }
     }
 
     fun setCharacterImageDrawable(drawables: Drawables){
         charImage.drawable = skin[drawables]
-
     }
 
 

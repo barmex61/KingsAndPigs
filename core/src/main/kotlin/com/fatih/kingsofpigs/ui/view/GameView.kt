@@ -144,7 +144,7 @@ class GameView(
                 return true
             }
             is PigGetHitEvent ->{
-                enemyHud.setCharacterImageDrawable(Drawables.valueOf(if (event.entityModel == EntityModel.DEMON) EntityModel.KING.name else event.entityModel.name))
+                enemyHud.setCharacterImageDrawable(Drawables.valueOf(event.entityModel.name))
                 enemyHud.setHpPercentage(event.hpPercentage,true)
                 return true
             }

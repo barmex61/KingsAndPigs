@@ -18,6 +18,29 @@ class AudioSystem : IntervalSystem() , EventListener{
 
     private val musicCache = mutableMapOf<String,Music>()
     private val soundCache = mutableMapOf<String,Sound>()
+    private val soundPaths = listOf(
+        "audio/bomb.ogg",
+        "audio/cannon_explosion.ogg",
+        "audio/cannon_fire.ogg",
+        "audio/flyattack.ogg",
+        "audio/giant1.wav",
+        "audio/giant2.wav",
+        "audio/giant3.wav",
+        "audio/giant4.wav",
+        "audio/giant5.wav",
+        "audio/groundattack.ogg",
+        "audio/jump1.wav",
+        "audio/jump2.wav",
+        "audio/player_hit1.wav",
+        "audio/player_hit2.wav",
+        "audio/demon_laught.mp3"
+    )
+
+    init {
+        soundPaths.forEach {
+            soundCache[it] = Gdx.audio.newSound(Gdx.files.internal(it))
+        }
+    }
 
     override fun onTick() {
 
@@ -32,6 +55,9 @@ class AudioSystem : IntervalSystem() , EventListener{
                 }.also {
                     it.volume = 0.35f
                     it.play() }
+                if (musicPath == "audio/demon_boss.mp3") {
+                    soundCache["audio/demon_laught.mp3"]!!.play(0.8f)
+                }
                 return true
             }
             is PlayerGitHitEvent ->{

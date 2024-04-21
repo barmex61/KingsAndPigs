@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.fatih.kingsofpigs.ecs.component.AnimationComponent
+import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DeadComponent
 import com.fatih.kingsofpigs.ecs.component.EntityModel
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent
@@ -45,7 +46,7 @@ class LifeSystem (
             if (currentHp > 0f){
                 if (damageTaken > 0f){
                     createFloatingText(damageTaken.toInt().toString(),isCrit,physicComps[entity].body.position,physicComps[entity].bodyOffset)
-                    getHit = true
+                    if (animComps[entity].animationType != AnimationType.ATTACK) getHit = true
                     currentHp -= damageTaken
                     damageTaken = 0f
                     if (entity in playerComps){

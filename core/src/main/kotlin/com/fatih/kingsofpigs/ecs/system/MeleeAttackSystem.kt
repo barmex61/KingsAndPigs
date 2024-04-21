@@ -37,6 +37,7 @@ class MeleeAttackSystem(
     private val gameStage : Stage
 ) : IteratingSystem(){
 
+
     override fun onTickEntity(entity: Entity) {
         val attackComponent = attackComps[entity]
         attackComponent.run {
@@ -66,7 +67,7 @@ class MeleeAttackSystem(
                     }
                 }
                 gameStage.fireEvent(MeleeAttackEvent(physicComponent.body.linearVelocity.y > 0.1f))
-                //ATTACK_POLYLINE.vertices = attackPolyLine
+                //WATTACK_POLYLINE.vertices = attackPolyLine
                 attackState = AttackState.ATTACK
             }
             if (attackState == AttackState.ATTACK ){

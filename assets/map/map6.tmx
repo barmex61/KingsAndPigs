@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="24">
+ <properties>
+  <property name="hasLights" type="bool" value="true"/>
+  <property name="mapMusic" value="audio/demon_boss.mp3"/>
+ </properties>
+ <tileset firstgid="1" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
+  <image source="../graphics/mapObject.png" width="1024" height="512"/>
+ </tileset>
+ <tileset firstgid="513" name="entityTileset" tilewidth="192" tileheight="128" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="192" height="128" source="../graphics/idle_1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="22" height="16" source="../graphics/box.png"/>
+  </tile>
+  <tile id="2">
+   <image width="46" height="56" source="../graphics/door.png"/>
+  </tile>
+  <tile id="3">
+   <image width="78" height="58" source="../graphics/king.png"/>
+  </tile>
+ </tileset>
+ <layer id="1" name="background" width="32" height="12">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBgSB4grAnELkD8CIgf0xk/AWInqP1MjAwMzHTGLIyj9hNj/zIG/PzB4H9y3DRUwp/a4U5L/5PiRmT7lYBsZTpjFaj9HkCsPEDYE4gB4Hw7jw==
+  </data>
+ </layer>
+ <layer id="2" name="foreground" width="32" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDDUgyTjQLhgFwwEAAEFPABs=
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="15" x="320.545" y="256.727" width="31.0909" height="31.0909"/>
+  <object id="16" x="256.545" y="160.545" width="30.9091" height="30.7273"/>
+  <object id="17" x="384.727" y="161" width="30.9091" height="30.7273"/>
+  <object id="18" x="544.909" y="193" width="30.9091" height="30.7273"/>
+  <object id="19" x="608.364" y="288.636" width="30.9091" height="30.7273"/>
+  <object id="20" x="23.25" y="23.25" width="976.75" height="9"/>
+  <object id="21" x="22.875" y="352.25" width="976.75" height="9"/>
+  <object id="22" x="22" y="23.5" width="11" height="335.5"/>
+  <object id="23" x="991.167" y="22.5833" width="11" height="335.5"/>
+ </objectgroup>
+ <objectgroup id="4" name="portals"/>
+ <objectgroup id="5" name="entity">
+  <object id="8" name="golem" gid="513" x="773" y="369" width="192" height="128"/>
+  <object id="9" name="king" gid="516" x="120" y="365.5" width="78" height="58"/>
+  <object id="10" name="door" gid="515" x="128" y="352" width="46" height="56"/>
+  <object id="11" name="box" gid="514" x="544" y="192" width="22" height="16"/>
+  <object id="12" name="box" gid="514" x="384" y="160" width="22" height="16"/>
+  <object id="13" name="box" gid="514" x="387" y="144.5" width="22" height="16"/>
+  <object id="14" name="box" gid="514" x="334" y="255.75" width="22" height="16"/>
+ </objectgroup>
+</map>

@@ -15,7 +15,7 @@ class MeleeAttackComponent (
     var critDamage : Float = 2f,
     var attackState: AttackState = AttackState.READY,
     var doAttack : Boolean = false,
-    val maxDestroyBodyTime : Float = MAX_DESTROY_DELAY,
+    val maxDestroyBodyTime : Float = 0.15f,
     var destroyBodyTime : Float = maxDestroyBodyTime,
     var attackPolyLine : FloatArray = floatArrayOf(),
     var attackFloatArray : FloatArray = floatArrayOf(),
@@ -41,7 +41,6 @@ class MeleeAttackComponent (
     companion object{
         const val DEFAULT_ATTACK_RANGE = 1f
         const val DEFAULT_ATTACK_DAMAGE = 4
-        const val MAX_DESTROY_DELAY = 0.15f
     }
 
 }

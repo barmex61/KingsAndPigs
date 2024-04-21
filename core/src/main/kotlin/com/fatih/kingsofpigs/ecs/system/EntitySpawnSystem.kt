@@ -121,6 +121,7 @@ class EntitySpawnSystem (
                             this.attackFloatArrayMirror = this@run.attackFloatArrayMirror
                             this.entityModel = this@run.entityModel
                             this.isPlayer = entityModel == EntityModel.KING
+                            this.destroyBodyTime = 0.15f
                         }
                     }else{
                         add<RangeAttackComponent>{
@@ -374,22 +375,47 @@ class EntitySpawnSystem (
                     SpawnConfig(
                         entityModel = entityModel,
                         animationType = AnimationType.IDLE,
-                        speedScaling = 1f,
+                        speedScaling = 0.85f,
                         categoryBit = Constants.ENEMY,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.15f,0.43f),
                         physicOffset = vec2(0f,-2.8f),
-                        attackFloatArray = floatArrayOf(-7f , -5f , -5f , -6f , -3f, 0f, -1f , 0.8f, -0.7f , 1f,-0.6f , -0.3f),
-                        attackFloatArrayMirror = floatArrayOf(0.6f , -0.3f , 1f , 0f , 1.1f, 0.4f, 1f , 0.8f, 0.7f , 1f,0.6f , -0.3f),
-                        attackScaling = 5f,
+                        attackFloatArray = floatArrayOf(-7f , 0f , -6f , -3f ,0.6f,-1.5f,0.6f,3f),
+                        attackFloatArrayMirror = floatArrayOf(7f , 0f , 6f , -3f ,-0.6f,-1.5f,-0.6f,3f),
+                        attackScaling = 4f,
                         attackRange = 7f,
                         isRangeAttack = false,
-                        critChance  = 50,
-                        critDamage  = 5f,
+                        critChance  = 40,
+                        critDamage  = 4f,
                         lifeScaling = 2f,
-                        aiMoveRadius = 10f,
-                        aiCircleRadius = 7f,
+                        frameDurationScaling = 0.8f,
+                        aiMoveRadius = 20f,
+                        aiCircleRadius = 20f,
+                        aiTreePath = "ai/pig.tree"
+                    )
+                }
+                EntityModel.GOLEM->{
+                    SpawnConfig(
+                        entityModel = entityModel,
+                        animationType = AnimationType.IDLE,
+                        speedScaling = 0.85f,
+                        categoryBit = Constants.ENEMY,
+                        maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
+                        bodyType = BodyType.DynamicBody,
+                        physicScaling = vec2(0.15f,0.43f),
+                        physicOffset = vec2(0f,-2.8f),
+                        attackFloatArray = floatArrayOf(-7f , 0f , -6f , -3f ,0.6f,-1.5f,0.6f,3f),
+                        attackFloatArrayMirror = floatArrayOf(7f , 0f , 6f , -3f ,-0.6f,-1.5f,-0.6f,3f),
+                        attackScaling = 4f,
+                        attackRange = 7f,
+                        isRangeAttack = false,
+                        critChance  = 40,
+                        critDamage  = 4f,
+                        lifeScaling = 2f,
+                        frameDurationScaling = 0.8f,
+                        aiMoveRadius = 20f,
+                        aiCircleRadius = 20f,
                         aiTreePath = "ai/pig.tree"
                     )
                 }

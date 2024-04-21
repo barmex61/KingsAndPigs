@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="8">
  <properties>
-  <property name="hasLights" type="bool" value="false"/>
-  <property name="mapMusic" value="audio/mapmusic.mp3"/>
+  <property name="hasLights" type="bool" value="true"/>
+  <property name="mapMusic" value="audio/demon_boss.mp3"/>
  </properties>
  <tileset firstgid="1" name="entityTileset" tilewidth="288" tileheight="160" tilecount="4" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
