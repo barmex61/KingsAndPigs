@@ -135,13 +135,20 @@ class MeleeAttack : Actions(){
             entity.showDialog(DialogType.ATTACK)
             entity.root(true)
             entity.animation(AnimationType.ATTACK, playMode = PlayMode.NORMAL, frameDuration = DEFAULT_FRAME_DURATION *2f)
-            if (entity.entityModel != EntityModel.DEMON)
+            if (entity.entityModel != EntityModel.DEMON && entity.entityModel != EntityModel.GOLEM)
                 entity.startMeleeAttack()
             return Status.RUNNING
         }
-        if (entity.entityModel == EntityModel.DEMON && entity.animKeyFrame == 9){
-            entity.startMeleeAttack()
+        when(entity.entityModel){
+            EntityModel.DEMON ->{
+                if (entity.animKeyFrame == 9) entity.startMeleeAttack()
+            }
+            EntityModel.GOLEM ->{
+                if (entity.animKeyFrame == 6) entity.startMeleeAttack()
+            }
+            else -> Unit
         }
+
         if (entity.animationDone){
             entity.animation(AnimationType.IDLE)
             return Status.SUCCEEDED
@@ -214,7 +221,11 @@ class Delay : Actions(){
     private var duration = (1f..2f).random()
     override fun execute(): Status {
         if (status != Status.RUNNING){
-            duration = (1f..2f).random()
+            if (entity.entityModel == EntityModel.GOLEM || entity.entityModel == EntityModel.DEMON){
+                duration = (0.35f..0.7f).random()
+            }else{
+                duration = (1f..2f).random()
+            }
             return Status.RUNNING
         }
         duration -= GdxAI.getTimepiece().deltaTime
