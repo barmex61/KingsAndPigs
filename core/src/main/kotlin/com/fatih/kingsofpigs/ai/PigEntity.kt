@@ -166,9 +166,8 @@ class PigEntity(
             val diffX = physicComps[playerEntity].body.position.x - physicComponent.body.position.x
             val diffY = physicComps[playerEntity].body.position.y - physicComponent.body.position.y
             if (entityModel != EntityModel.PIG_LIGHT) turnTowardsThePlayer(diffX)
-
             rangeAttackComponent!!.attackImpulse.set(
-                (diffX * 100f).coerceIn(-300f,if (entityModel != EntityModel.PIG_LIGHT) 300f else -20f),
+                (diffX * 100f).coerceIn(-300f,300f ),
                 (diffY * 100f).coerceAtLeast(-50f),
             )
         }

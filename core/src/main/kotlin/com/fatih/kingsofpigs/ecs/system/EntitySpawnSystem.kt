@@ -2,6 +2,7 @@ package com.fatih.kingsofpigs.ecs.system
 
 import box2dLight.PointLight
 import box2dLight.RayHandler
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.MapLayer
@@ -36,6 +37,7 @@ import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
 import com.fatih.kingsofpigs.ecs.component.StateComponent
+import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.ambientColor
 import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.isLightsOn
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.utils.Constants
@@ -79,6 +81,7 @@ class EntitySpawnSystem (
                         setPosition(position.x,position.y)
                         setScaling(Scaling.fill)
                         setZ = entityModel == EntityModel.DOOR
+                        this.flipX = spawnComponent.isFlipX
                     }
                 }
                 add<AnimationComponent>{
@@ -205,7 +208,7 @@ class EntitySpawnSystem (
                         animationType = AnimationType.IDLE,
                         categoryBit = Constants.DESTROYABLE,
                         maskBit = Constants.ENEMY or Constants.DESTROYABLE or Constants.OBJECT or Constants.KING or Constants.ATTACK_OBJECT,
-                        bodyType = BodyType.StaticBody
+                        bodyType = BodyType.DynamicBody
                     )
                 }
                 EntityModel.BOMB ->{
@@ -441,14 +444,19 @@ class EntitySpawnSystem (
             is MapChangeEvent ->{
                 event.map.forEachLayer<MapLayer> {mapLayer->
                     isLightsOn = event.map.property<Boolean>("hasLights")
+                    if (isLightsOn){
+                        ambientColor = event.map.property<Color>("lightColor")
+                    }
                     mapLayer.objects.forEach {mapObject->
                         if (mapLayer.name == RenderSystem.MapLayerType.ENTITY.layerName){
                             val name = mapObject.name ?: gdxError("There is no name for $mapObject")
+                            val flipX = mapObject.properties.get("isFlipX",Boolean::class.java)?:false
                             world.entity {
                                 add<SpawnComponent>{
                                     entityModel = EntityModel.valueOf(name.uppercase())
                                     position.set(mapObject.x * UNIT_SCALE , mapObject.y * UNIT_SCALE)
                                     size.set(mapObject.width * UNIT_SCALE , mapObject.height * UNIT_SCALE)
+                                    isFlipX = flipX
                                 }
                             }
                         }else{

@@ -42,9 +42,8 @@ class MoveSystem(
             if (cos != 0f && !root){
                 if (entity in playerComps) {
                     imageComponent.image.flipX = cos < 0f
-                    ImageComponent.playerFlipX = cos < 0f
                 }else{
-                    imageComponent.image.flipX = cos > 0f
+                    imageComponent.image.flipX = cos >= 0f
                 }
             }
             if (entity in playerComps && velocity.y == 0f && sin == 1f && !root){

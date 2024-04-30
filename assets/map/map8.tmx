@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="89">
+ <properties>
+  <property name="hasLights" type="bool" value="false"/>
+  <property name="mapMusic" value="audio/mapmusic.mp3"/>
+ </properties>
+ <tileset firstgid="1" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
+  <image source="../graphics/mapObject.png" width="1024" height="512"/>
+ </tileset>
+ <tileset firstgid="513" name="entityTileset" tilewidth="78" tileheight="58" tilecount="10" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="52" height="56" source="../graphics/bomb.png"/>
+  </tile>
+  <tile id="1">
+   <image width="22" height="16" source="../graphics/box.png"/>
+  </tile>
+  <tile id="2">
+   <image width="44" height="28" source="../graphics/cannon.png"/>
+  </tile>
+  <tile id="3">
+   <image width="46" height="56" source="../graphics/door.png"/>
+  </tile>
+  <tile id="4">
+   <image width="78" height="58" source="../graphics/king.png"/>
+  </tile>
+  <tile id="5">
+   <image width="34" height="28" source="../graphics/pig.png"/>
+  </tile>
+  <tile id="6">
+   <image width="26" height="26" source="../graphics/pig_bomb.png"/>
+  </tile>
+  <tile id="7">
+   <image width="26" height="30" source="../graphics/pig_box.png"/>
+  </tile>
+  <tile id="8">
+   <image width="38" height="28" source="../graphics/pig_king.png"/>
+  </tile>
+  <tile id="9">
+   <image width="26" height="18" source="../graphics/pig_light.png"/>
+  </tile>
+ </tileset>
+ <layer id="1" name="background" width="20" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBgSKYS1gRiFyBmZqQOdqKDeUpAvjKRWIWBsHkgMWciMTa96GJJJIR/ChHmDfb4GDVveJu3CMhfDMRLGIhj09u8wR5+MIxebqGXTdjUeuIxD73cwucPJyLUDVfzPLDUC7CwdSZCHbpaAMdsPHU=
+  </data>
+ </layer>
+ <layer id="2" name="foreground" width="20" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFlAJJRtqYQY651DKHFmbQ0mx6uo+YMCZGD7XAUHMftcwYKfmDWLto5TdSwaj7iAcAIbwDWw==
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="43" x="22.9167" y="24" width="8.83333" height="720.625"/>
+  <object id="44" x="607.583" y="22.6875" width="8.83333" height="561.625"/>
+  <object id="45" x="128" y="448.667" width="384" height="63.3333"/>
+  <object id="46" x="23.3333" y="736.333" width="176" height="8.33333"/>
+  <object id="47" x="193.333" y="576.97" width="8" height="167.03"/>
+  <object id="48" x="192.364" y="576.636" width="159.636" height="8.45455"/>
+  <object id="49" x="343.25" y="577.5" width="8.75" height="166.75"/>
+  <object id="50" x="343.091" y="736.545" width="209.636" height="8.63636"/>
+  <object id="51" x="544.182" y="577" width="10.3182" height="167.727"/>
+  <object id="52" x="543.75" y="576" width="73.5" height="8.875"/>
+  <object id="53" x="128" y="96" width="384" height="96"/>
+  <object id="54" x="23.0909" y="23.0909" width="593.636" height="8.36364"/>
+  <object id="55" name="platform" x="576.091" y="128.364" width="31.3636" height="4.18182"/>
+  <object id="56" name="platform" x="576.227" y="192.545" width="31.3636" height="4.18182"/>
+  <object id="57" name="platform" x="576.227" y="256.455" width="31.3636" height="4.18182"/>
+  <object id="58" name="platform" x="576.243" y="320.419" width="31.3636" height="4.18182"/>
+  <object id="59" name="platform" x="576.318" y="384.284" width="31.3636" height="4.18182"/>
+  <object id="60" name="platform" x="576.068" y="448.347" width="31.3636" height="4.18182"/>
+  <object id="61" name="platform" x="576.256" y="512.284" width="31.3636" height="4.18182"/>
+  <object id="62" name="platform" x="512.443" y="480.284" width="31.3636" height="4.18182"/>
+  <object id="63" name="platform" x="511.818" y="576.159" width="31.3636" height="4.18182"/>
+  <object id="64" name="platform" x="512.443" y="640.222" width="31.3636" height="4.18182"/>
+  <object id="65" name="platform" x="512.631" y="704.534" width="31.3636" height="4.18182"/>
+  <object id="66" name="platform" x="352.136" y="704.455" width="31.3636" height="4.18182"/>
+  <object id="67" name="platform" x="352.136" y="640.091" width="31.3636" height="4.18182"/>
+  <object id="68" name="platform" x="352.256" y="576.597" width="31.3636" height="4.18182"/>
+  <object id="69" name="platform" x="160.682" y="576.545" width="31.3636" height="4.18182"/>
+  <object id="70" name="platform" x="160.409" y="640.091" width="31.3636" height="4.18182"/>
+  <object id="71" name="platform" x="160.409" y="704.273" width="31.3636" height="4.18182"/>
+  <object id="72" name="platform" x="96.3182" y="480.273" width="31.3636" height="4.18182"/>
+  <object id="73" name="platform" x="31.9432" y="512.347" width="31.3636" height="4.18182"/>
+  <object id="74" name="platform" x="32.2273" y="448.364" width="31.3636" height="4.18182"/>
+  <object id="75" name="platform" x="32.4546" y="384.693" width="31.3636" height="4.18182"/>
+  <object id="76" name="platform" x="160.045" y="384.545" width="31.3636" height="4.18182"/>
+  <object id="77" name="platform" x="319.955" y="384.545" width="31.3636" height="4.18182"/>
+  <object id="78" name="platform" x="320.068" y="320.659" width="31.3636" height="4.18182"/>
+  <object id="79" name="platform" x="160.318" y="320.273" width="31.3636" height="4.18182"/>
+  <object id="80" name="platform" x="32.0682" y="320.659" width="31.3636" height="4.18182"/>
+  <object id="81" name="platform" x="32.3182" y="256.597" width="31.3636" height="4.18182"/>
+  <object id="82" name="platform" x="32.0455" y="192.364" width="31.3636" height="4.18182"/>
+  <object id="83" name="platform" x="31.9546" y="128.545" width="31.3636" height="4.18182"/>
+  <object id="84" name="platform" x="96.5" y="160.455" width="31.3636" height="4.18182"/>
+  <object id="85" name="platform" x="512.068" y="160.409" width="31.3636" height="4.18182"/>
+  <object id="86" name="platform" x="447.773" y="320.545" width="31.3636" height="4.18182"/>
+  <object id="87" name="platform" x="447.682" y="384.273" width="31.3636" height="4.18182"/>
+ </objectgroup>
+ <objectgroup id="4" name="portals">
+  <object id="42" name="portal" x="308.375" y="67.25" width="6.125" height="14.25"/>
+ </objectgroup>
+ <objectgroup id="5" name="entity">
+  <object id="2" name="box" gid="514" x="184.333" y="265.333" width="22" height="16"/>
+  <object id="3" name="box" gid="514" x="137" y="253.333" width="22" height="16"/>
+  <object id="4" name="box" gid="514" x="269.333" y="264" width="22" height="16"/>
+  <object id="5" name="box" gid="514" x="387.667" y="252.333" width="22" height="16"/>
+  <object id="6" name="box" gid="514" x="524.292" y="191.083" width="22" height="16"/>
+  <object id="7" name="box" gid="514" x="118" y="285.667" width="22" height="16"/>
+  <object id="8" name="box" gid="514" x="449.667" y="228.667" width="22" height="16"/>
+  <object id="9" name="box" gid="514" x="500.667" y="227" width="22" height="16"/>
+  <object id="10" name="box" gid="514" x="330.333" y="268.667" width="22" height="16"/>
+  <object id="11" name="box" gid="514" x="138" y="213.667" width="22" height="16"/>
+  <object id="12" name="box" gid="514" x="267.333" y="224.333" width="22" height="16"/>
+  <object id="13" name="box" gid="514" x="322" y="224.667" width="22" height="16"/>
+  <object id="14" name="box" gid="514" x="380.667" y="212.667" width="22" height="16"/>
+  <object id="15" name="box" gid="514" x="448.333" y="264" width="22" height="16"/>
+  <object id="16" name="box" gid="514" x="198" y="236" width="22" height="16"/>
+  <object id="17" name="box" gid="514" x="65.3333" y="194.667" width="22" height="16"/>
+  <object id="18" name="box" gid="514" x="91" y="237" width="22" height="16"/>
+  <object id="19" name="door" gid="516" x="64" y="736" width="46" height="56"/>
+  <object id="20" name="box" gid="514" x="384" y="736" width="22" height="16"/>
+  <object id="21" name="box" gid="514" x="389.5" y="719.5" width="22" height="16"/>
+  <object id="22" name="box" gid="514" x="462" y="737.5" width="22" height="16"/>
+  <object id="23" name="box" gid="514" x="457.5" y="721" width="22" height="16"/>
+  <object id="24" name="box" gid="514" x="511.5" y="735.5" width="22" height="16"/>
+  <object id="25" name="king_pig" gid="521" x="417.5" y="736" width="38" height="28"/>
+  <object id="26" name="king_pig" gid="521" x="380" y="703" width="38" height="28"/>
+  <object id="27" name="pig_bomb" gid="519" x="508.5" y="719" width="26" height="26"/>
+  <object id="30" name="pig" gid="518" x="450.5" y="703.5" width="34" height="28"/>
+  <object id="31" name="pig_light" gid="522" x="456.667" y="447.333" width="26" height="18"/>
+  <object id="32" name="cannon" gid="515" x="416.5" y="451" width="44" height="28"/>
+  <object id="33" name="pig_light" gid="2147484170" x="167" y="447" width="26" height="18">
+   <properties>
+    <property name="isFLipX" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="34" name="cannon" gid="2147484163" x="179.333" y="451.333" width="44" height="28">
+   <properties>
+    <property name="isFlipX" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="35" name="king_pig" gid="521" x="259" y="447.333" width="38" height="28"/>
+  <object id="36" name="king_pig" gid="521" x="339.667" y="446.667" width="38" height="28"/>
+  <object id="37" name="king_pig" gid="521" x="379" y="95.3333" width="38" height="28"/>
+  <object id="38" name="king_pig" gid="521" x="226.333" y="94.6667" width="38" height="28"/>
+  <object id="40" name="pig" gid="518" x="256.333" y="576" width="34" height="28"/>
+  <object id="41" name="door" gid="516" x="288" y="96" width="46" height="56"/>
+  <object id="88" name="king" gid="517" x="55.6667" y="749.667" width="78" height="58"/>
+ </objectgroup>
+</map>

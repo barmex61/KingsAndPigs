@@ -42,6 +42,7 @@ class SpawnConfig(
 data class SpawnComponent (
     val size : Vector2 = vec2(),
     val position : Vector2 = vec2(),
-    var entityModel : EntityModel = EntityModel.UNDEFINED
+    var entityModel : EntityModel = EntityModel.UNDEFINED,
+    var isFlipX : Boolean = false
 )
 

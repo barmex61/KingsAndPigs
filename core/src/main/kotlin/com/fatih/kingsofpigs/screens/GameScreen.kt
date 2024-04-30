@@ -127,7 +127,7 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map6.tmx"
+            portalPath = "map/map1.tmx"
         }
         val kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor

@@ -15,7 +15,7 @@ data class LightComponent(
 
     companion object{
 
-        val lightColor = Color(1f,1f,1f,0.7f)
+        val lightColor = Color(1f,1f,1f,1f)
         class LightComponentListener : ComponentListener<LightComponent>{
             override fun onComponentAdded(entity: Entity, component: LightComponent) {
 

@@ -48,7 +48,8 @@ class RangeAttackSystem(
     private val physicComps: ComponentMapper<PhysicComponent>,
     private val animComps : ComponentMapper<AnimationComponent>,
     private val textureAtlas : TextureAtlas,
-    private val gameStage : Stage
+    private val gameStage : Stage,
+    private val imageComps : ComponentMapper<ImageComponent>
 ) : IteratingSystem(){
 
     private val rangeAnimationCache = hashMapOf<String,Animation<TextureRegionDrawable>>()
@@ -109,7 +110,7 @@ class RangeAttackSystem(
                 val physicComponent = physicComps[entity]
                 val (posX,posY) = physicComponent.body.position
                 val (offX,offY) = physicComponent.bodyOffset
-                val pos = vec2(posX + offX,posY + offY)
+                val pos = vec2(posX + offX + if(entityModel == EntityModel.PIG_LIGHT && imageComps[entity].image.flipX) 5f else 0f,posY + offY)
                 attackPolyLine = attackFloatArray.copyOf().apply {
                     this[0] = this[0] + pos.x
                     this[1] = this[1] + pos.y

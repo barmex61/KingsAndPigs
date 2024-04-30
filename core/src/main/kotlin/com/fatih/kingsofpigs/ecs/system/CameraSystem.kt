@@ -14,6 +14,7 @@ import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.math.random
 import ktx.tiled.height
+import ktx.tiled.totalHeight
 import ktx.tiled.width
 
 @AllOf([PlayerComponent::class])
@@ -43,14 +44,17 @@ class CameraSystem (
         gameCamera.position.set(
             posX.coerceIn(
                 MathUtils.lerp(gameCamera.position.x,gameCamera.viewportWidth/2f,deltaTime ),
-                MathUtils.lerp(gameCamera.position.x,maxWidth + gameCamera.viewportWidth/2f,deltaTime ),
+                MathUtils.lerp(gameCamera.position.x,posX + 1f + gameCamera.viewportWidth/2f,deltaTime ),
             ),
             posY.coerceIn(
                MathUtils.lerp(gameCamera.position.y,gameCamera.viewportHeight/2f,deltaTime *2F),
-                MathUtils.lerp(gameCamera.position.y,maxHeight+gameCamera.viewportHeight/2f,deltaTime*2f),
+                MathUtils.lerp(gameCamera.position.y,posY + 1f + gameCamera.viewportHeight/2f,deltaTime*2f),
             ),
             gameCamera.position.z
         )
+        println(maxHeight)
+        println(gameCamera.viewportHeight)
+        println(imageComponent.image.y)
         gameCamera.update()
     }
 

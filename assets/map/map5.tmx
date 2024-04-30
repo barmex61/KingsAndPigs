@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="37">
+ <properties>
+  <property name="hasLights" type="bool" value="true"/>
+  <property name="lightColor" type="color" value="#ff622eff"/>
+  <property name="mapMusic" value="audio/demon_boss.mp3"/>
+ </properties>
+ <tileset firstgid="1" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
+  <image source="../graphics/mapObject.png" width="1024" height="512"/>
+ </tileset>
+ <tileset firstgid="513" name="entityTileset" tilewidth="192" tileheight="128" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="192" height="128" source="../graphics/idle_1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="22" height="16" source="../graphics/box.png"/>
+  </tile>
+  <tile id="2">
+   <image width="46" height="56" source="../graphics/door.png"/>
+  </tile>
+  <tile id="3">
+   <image width="78" height="58" source="../graphics/king.png"/>
+  </tile>
+ </tileset>
+ <layer id="1" name="background" width="32" height="12">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBgSB4grAnELkD8CIgf0xk/AWInqP1MjAwMzHTGLIyj9o/aP2r/YLBfCchWpjNWgdrvAcTKA4Q9gRgA/A84ZQ==
+  </data>
+ </layer>
+ <layer id="2" name="foreground" width="32" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFowATiDEyMEgwDrQrEADkHnECbpIcIPdis5fW4UcvvxIKd5C8GRCbA7EFjf1MTBoYBaQBAF0uAl8=
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="20" x="23.25" y="23.25" width="976.75" height="9"/>
+  <object id="21" x="22.875" y="352.25" width="976.75" height="9"/>
+  <object id="22" x="22" y="23.5" width="11" height="335.5"/>
+  <object id="23" x="991.167" y="22.5833" width="11" height="335.5"/>
+  <object id="24" x="544" y="256.75" width="95.75" height="11.25"/>
+  <object id="25" name="platform" x="512.5" y="256.5" width="31.5" height="3.75"/>
+  <object id="26" name="platform" x="640" y="256.75" width="31.75" height="4.25"/>
+  <object id="27" name="platform" x="608.5" y="160.5" width="31" height="3.25"/>
+  <object id="28" name="platform" x="704.25" y="192.75" width="63.5" height="3.75"/>
+  <object id="29" name="platform" x="544.75" y="193" width="31" height="3.75"/>
+  <object id="30" name="platform" x="448.25" y="224.375" width="31" height="3.75"/>
+  <object id="31" name="platform" x="351.5" y="288.25" width="96.25" height="5"/>
+  <object id="32" name="platform" x="255.375" y="256.5" width="96.25" height="5"/>
+  <object id="33" name="platform" x="319.375" y="160.5" width="96.25" height="5"/>
+  <object id="34" name="platform" x="192.727" y="128.364" width="62.9091" height="4.72727"/>
+ </objectgroup>
+ <objectgroup id="4" name="portals">
+  <object id="36" name="portal" x="934.75" y="321.875" width="5.875" height="14.375">
+   <properties>
+    <property name="toMap" value="map/map6.tmx"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="entity">
+  <object id="8" name="golem" gid="513" x="704.333" y="369" width="192" height="128"/>
+  <object id="9" name="king" gid="516" x="120" y="365.5" width="78" height="58"/>
+  <object id="10" name="door" gid="515" x="128" y="352" width="46" height="56"/>
+  <object id="11" name="box" gid="514" x="544" y="192" width="22" height="16"/>
+  <object id="12" name="box" gid="514" x="384" y="160" width="22" height="16"/>
+  <object id="13" name="box" gid="514" x="387" y="144.5" width="22" height="16"/>
+  <object id="14" name="box" gid="514" x="334" y="255.75" width="22" height="16"/>
+  <object id="35" name="door" gid="515" x="914" y="350.5" width="46" height="56"/>
+ </objectgroup>
+</map>

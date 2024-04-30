@@ -11,7 +11,6 @@ class ImageComponent {
     var entityModel = EntityModel.UNDEFINED
 
     companion object{
-        var playerFlipX : Boolean = false
         class ImageComponentListener(private val gameStage : Stage) : ComponentListener<ImageComponent>{
             override fun onComponentAdded(entity: Entity, component: ImageComponent) {
                 gameStage.addActor(component.image)

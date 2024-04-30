@@ -58,8 +58,8 @@ class PlayerLifeHud(
                 this += fadeIn(1f, Interpolation.pow3OutInverse)
             }
             hearts.add(image)
-
         }
+        this.extraLife = extraLife
     }
 }
 fun <S>KWidget<S>.playerLifeHud(
