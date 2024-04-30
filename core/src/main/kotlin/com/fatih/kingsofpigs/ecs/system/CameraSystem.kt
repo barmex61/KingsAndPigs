@@ -52,9 +52,6 @@ class CameraSystem (
             ),
             gameCamera.position.z
         )
-        println(maxHeight)
-        println(gameCamera.viewportHeight)
-        println(imageComponent.image.y)
         gameCamera.update()
     }
 

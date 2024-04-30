@@ -11,6 +11,7 @@ import com.fatih.kingsofpigs.event.MeleeAttackEvent
 import com.fatih.kingsofpigs.event.PigGetHitEvent
 import com.fatih.kingsofpigs.event.PlayerGitHitEvent
 import com.fatih.kingsofpigs.event.RangeAttackEvent
+import com.fatih.kingsofpigs.event.StopAudioEvent
 import com.github.quillraven.fleks.IntervalSystem
 import ktx.tiled.property
 
@@ -48,8 +49,16 @@ class AudioSystem : IntervalSystem() , EventListener{
 
     override fun handle(event: Event): Boolean {
         when(event){
+            is StopAudioEvent ->{
+                musicCache.values.forEach {
+                    it.stop()
+                }
+            }
             is MapChangeEvent ->{
                 val musicPath = event.map.property<String>("mapMusic")
+                musicCache.values.forEach {
+                    it.stop()
+                }
                 musicCache.getOrPut(musicPath){
                     Gdx.audio.newMusic(Gdx.files.internal(musicPath))
                 }.also {

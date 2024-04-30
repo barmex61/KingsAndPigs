@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="53">
+ <properties>
+  <property name="hasLights" type="bool" value="false"/>
+  <property name="mapMusic" value="audio/mapmusic.mp3"/>
+ </properties>
+ <tileset firstgid="1" name="mapTileset" tilewidth="32" tileheight="32" tilecount="512" columns="32">
+  <image source="../graphics/mapObject.png" width="1024" height="512"/>
+ </tileset>
+ <tileset firstgid="513" name="entityTileset" tilewidth="78" tileheight="58" tilecount="10" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="52" height="56" source="../graphics/bomb.png"/>
+  </tile>
+  <tile id="1">
+   <image width="22" height="16" source="../graphics/box.png"/>
+  </tile>
+  <tile id="2">
+   <image width="44" height="28" source="../graphics/cannon.png"/>
+  </tile>
+  <tile id="3">
+   <image width="46" height="56" source="../graphics/door.png"/>
+  </tile>
+  <tile id="4">
+   <image width="78" height="58" source="../graphics/king.png"/>
+  </tile>
+  <tile id="5">
+   <image width="34" height="28" source="../graphics/pig.png"/>
+  </tile>
+  <tile id="6">
+   <image width="26" height="26" source="../graphics/pig_bomb.png"/>
+  </tile>
+  <tile id="7">
+   <image width="26" height="30" source="../graphics/pig_box.png"/>
+  </tile>
+  <tile id="8">
+   <image width="38" height="28" source="../graphics/pig_king.png"/>
+  </tile>
+  <tile id="9">
+   <image width="26" height="18" source="../graphics/pig_light.png"/>
+  </tile>
+ </tileset>
+ <layer id="1" name="background" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBgSCYTazJAADMjedhpVP+w168ElFcGYhUs6gjpB+n1BGJnIPbAYgY+/ch6nXGYgUs/Nr3YzMCmH59eZDOUoeqQ9ROjF5dZymToBWEAtZgarA==
+  </data>
+ </layer>
+ <layer id="2" name="foreground" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAMuAwi/WGMDAzhjOTrLwPqLUfSb4mDjUs/LiCJx02E9JsB9ZoDsQUJ9uNyKzY5fPajuxubP6gZfzC34QsvWto/FPVTCgDHVweJ
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision">
+  <object id="18" x="23.75" y="480.5" width="81" height="7.75"/>
+  <object id="19" x="96.75" y="448.25" width="7.75" height="38.75"/>
+  <object id="20" x="96.125" y="447.5" width="40.375" height="10"/>
+  <object id="21" x="128" y="416.25" width="10" height="40.75"/>
+  <object id="22" x="127.625" y="416" width="42.375" height="9"/>
+  <object id="23" x="160" y="384.5" width="9.5" height="39.5"/>
+  <object id="24" x="160.25" y="384.375" width="40.5" height="8.75"/>
+  <object id="25" x="192.375" y="352.5" width="9.375" height="39.375"/>
+  <object id="26" x="192.375" y="352.375" width="40.25" height="8.25"/>
+  <object id="27" x="224.75" y="320.75" width="8.625" height="38.75"/>
+  <object id="28" x="224.375" y="320.75" width="40.375" height="8.375"/>
+  <object id="29" x="256.125" y="288.625" width="8.625" height="39.875"/>
+  <object id="30" x="255.875" y="288.25" width="95.75" height="9.625"/>
+  <object id="31" x="342.875" y="288.875" width="9" height="39.25"/>
+  <object id="32" x="343.25" y="320.75" width="40.5" height="8.875"/>
+  <object id="33" x="374.75" y="320.875" width="9.25" height="40.375"/>
+  <object id="34" x="375.25" y="352.75" width="40.75" height="8.375"/>
+  <object id="35" x="406.875" y="353.125" width="9.25" height="38.75"/>
+  <object id="36" x="407.125" y="384.875" width="40.625" height="9.125"/>
+  <object id="37" x="439" y="385.25" width="9.25" height="39.125"/>
+  <object id="38" x="438.875" y="416.75" width="49.5" height="8.125"/>
+  <object id="39" x="480.125" y="23.3333" width="9.375" height="401.667"/>
+  <object id="40" x="23.25" y="23" width="466.5" height="8.75"/>
+  <object id="41" x="22" y="22.7273" width="10.25" height="465.773"/>
+  <object id="42" x="96.3636" y="320.909" width="31.4545" height="10"/>
+  <object id="43" x="160.455" y="225.182" width="31.4545" height="10"/>
+  <object id="44" x="223.727" y="129.364" width="31.4545" height="10"/>
+  <object id="45" x="320.091" y="129.364" width="31.4545" height="10"/>
+  <object id="46" x="384.818" y="225.091" width="31.4545" height="10"/>
+  <object id="47" x="256.545" y="192.909" width="95.4545" height="11.2727"/>
+  <object id="48" name="platform" x="160.364" y="320.727" width="31.6364" height="4.36364"/>
+  <object id="51" name="platform" x="224.432" y="256.568" width="31.6364" height="4.36364"/>
+  <object id="52" name="platform" x="352.432" y="256.193" width="31.6364" height="4.36364"/>
+ </objectgroup>
+ <objectgroup id="4" name="portals">
+  <object id="6" name="portal" x="301" y="259.75" width="7.25" height="14.25">
+   <properties>
+    <property name="toMap" value="map/map10.tmx"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="entity">
+  <object id="1" name="door" gid="516" x="281" y="288.167" width="46" height="56"/>
+  <object id="2" name="door" gid="516" x="32" y="480" width="46" height="56"/>
+  <object id="3" name="king" gid="517" x="23" y="494.25" width="78" height="58"/>
+  <object id="7" name="pig_box" gid="520" x="160" y="224" width="26" height="30"/>
+  <object id="8" name="pig_box" gid="520" x="96" y="320" width="26" height="30"/>
+  <object id="9" name="pig_box" gid="520" x="224" y="128" width="26" height="30"/>
+  <object id="10" name="pig_box" gid="520" x="320" y="128" width="26" height="30"/>
+  <object id="11" name="pig_box" gid="520" x="384" y="224" width="26" height="30"/>
+  <object id="13" name="king_pig" gid="521" x="384" y="352" width="38" height="28"/>
+  <object id="15" name="king_pig" gid="521" x="192" y="352" width="38" height="28"/>
+  <object id="16" name="cannon" gid="515" x="254" y="195" width="44" height="28"/>
+  <object id="17" name="pig_light" gid="522" x="293.909" y="191.545" width="26" height="18"/>
+ </objectgroup>
+</map>

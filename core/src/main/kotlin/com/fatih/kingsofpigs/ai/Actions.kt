@@ -11,6 +11,7 @@ import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DialogType
 import com.fatih.kingsofpigs.ecs.component.EntityModel
+import com.fatih.kingsofpigs.screens.GameScreen.Companion.gameEnd
 import ktx.math.random
 import ktx.math.vec2
 
@@ -271,6 +272,9 @@ class Dead : Actions(){
         }
         if (entity.animationDone){
             entity.remove(true)
+            if (entity.entityModel == EntityModel.DEMON){
+                gameEnd = true
+            }
             return Status.SUCCEEDED
         }
         return Status.RUNNING

@@ -44,10 +44,14 @@ import com.fatih.kingsofpigs.ecs.system.PortalSystem
 import com.fatih.kingsofpigs.ecs.system.RangeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.RenderSystem
 import com.fatih.kingsofpigs.ecs.system.StateSystem
+import com.fatih.kingsofpigs.event.StopAudioEvent
+import com.fatih.kingsofpigs.event.fireEvent
 import com.fatih.kingsofpigs.input.KeyboardInputProcessor
 import com.fatih.kingsofpigs.input.addProcessor
 import com.fatih.kingsofpigs.ui.view.GameView
+import com.fatih.kingsofpigs.ui.view.PauseView
 import com.fatih.kingsofpigs.ui.view.gameView
+import com.fatih.kingsofpigs.ui.view.pauseView
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
@@ -65,9 +69,10 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     private val gameStage = Stage(gameViewport,spriteBatch)
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
-    private val uiStage = Stage(uiViewport,spriteBatch)
+    private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
     private var disposed : Boolean = false
     private var gameView: GameView
+    private var kbInputProcessor: KeyboardInputProcessor
     private var rayHandler = RayHandler(box2dWorld).apply {
         RayHandler.useDiffuseLight(true)
         Light.setGlobalContactFilter(Constants.LIGHT,-1,Constants.OBJECT)
@@ -122,19 +127,35 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
             gameView =  gameView(isPhone = Gdx.app.type == ApplicationType.Android || Gdx.app.type == ApplicationType.iOS){
                 gameStage.addListener(this)
             }
+            pauseView().apply { isVisible = false }
         }
         addProcessor(uiStage)
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map1.tmx"
+            portalPath = "map/map10.tmx"
         }
-        val kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen)
+        kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen, pauseScreen = ::pause)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor
         gameView.inputProcessor = kbInputProcessor
     }
 
+    companion object{
+        val mandatorySystems = setOf(
+            CameraSystem::class,
+            RenderSystem::class,
+            DebugSystem::class
+        )
+        var gameEnd : Boolean = false
+    }
+
+    override fun pause() {
+        uiStage.actors.filterIsInstance<PauseView>().first().isVisible = kbInputProcessor.pause
+        world.systems.filter { it::class !in mandatorySystems }.forEach { it.enabled = !kbInputProcessor.pause }
+    }
+
     private fun changeScreen(){
+        gameStage.fireEvent(StopAudioEvent())
         changeScreen(UiScreen::class.java)
         if (!disposed){
             disposeSafely()
@@ -144,6 +165,16 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
 
 
     override fun render(delta: Float) {
+        if (gameEnd){
+            gameStage.fireEvent(StopAudioEvent())
+            kbInputProcessor.pause = true
+            uiStage.actors.filterIsInstance<PauseView>().first().apply {
+                textField.style.fontColor = Color.GREEN
+                textField.text = "Victory"
+            }
+            pause()
+            gameEnd = false
+        }
         world.update(delta.coerceAtMost(0.25f))
         GdxAI.getTimepiece().update(delta.coerceAtMost(0.25f))
     }

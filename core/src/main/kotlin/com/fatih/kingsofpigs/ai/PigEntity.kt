@@ -17,6 +17,7 @@ import com.fatih.kingsofpigs.ecs.component.MeleeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.MoveComponent
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
+import com.fatih.kingsofpigs.screens.GameScreen
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.World
@@ -114,6 +115,7 @@ class PigEntity(
     val animationType : AnimationType
         get() = animationComponent.animationType
 
+
     fun startRangeAttack(){
         rangeAttackComponent!!.run {
             doAttack = true
@@ -167,7 +169,7 @@ class PigEntity(
             val diffY = physicComps[playerEntity].body.position.y - physicComponent.body.position.y
             if (entityModel != EntityModel.PIG_LIGHT) turnTowardsThePlayer(diffX)
             rangeAttackComponent!!.attackImpulse.set(
-                (diffX * 100f).coerceIn(-300f,300f ),
+                (diffX * 100f).coerceIn(-300f,if (entityModel != EntityModel.PIG_LIGHT) 300f else {if (imageComponent.image.flipX) 300f else -300f} ),
                 (diffY * 100f).coerceAtLeast(-50f),
             )
         }

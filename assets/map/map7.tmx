@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="53">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="54">
  <properties>
   <property name="hasLights" type="bool" value="true"/>
   <property name="lightColor" type="color" value="#ff000000"/>
@@ -43,7 +43,7 @@
  </tileset>
  <layer id="1" name="background" width="10" height="20">
   <data encoding="base64" compression="zlib">
-   eJzTYGBgSCaANYHYBYiZGfFjJzLULcOiHiQGwtjMg8nRyl5c5hGyF5s8IffB9KD7F5c5+MwjJlzQ5dH9iy9M8NmLzsdnL7I7qRFvhNyHyzwPIFYmgD2BGADS5SMZ
+   eJzTYGBgSCaANYHYBYgfAfFjHPgJEDtB1TExMjAwo+EXQHFlIK3CiKpuGQOqOhao2DIc5sHkOBiJsxfZXHz2wsxGV4duLz7zQBjmTxhG9y82f6L7F9kemD8JhTMh9zFj8TO6f3GFCS7zcJmJz16YO3GZR2q8YXOfEiNqHGCLDw9QPBHAnkAMAC/dMt4=
   </data>
  </layer>
  <layer id="2" name="foreground" width="10" height="20">

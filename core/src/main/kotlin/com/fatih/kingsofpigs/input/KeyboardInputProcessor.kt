@@ -37,7 +37,8 @@ class KeyboardInputProcessor(
     private val world: World,
     private val moveComps : ComponentMapper<MoveComponent> = world.mapper(),
     private val attackComps : ComponentMapper<MeleeAttackComponent> = world.mapper(),
-    var changeScreen : () -> Unit
+    var changeScreen : () -> Unit,
+    var pauseScreen : () -> Unit
 ) : InputAdapter() {
 
     init {
@@ -46,6 +47,7 @@ class KeyboardInputProcessor(
 
     var moveComponent : MoveComponent? = null
     var attackComponent : MeleeAttackComponent? = null
+    var pause : Boolean = false
 
     private var playerSin : Float = 0f
     private var playerCos : Float = 0f
@@ -53,15 +55,20 @@ class KeyboardInputProcessor(
     private fun Int.isMovementKey() = this == UP || this == RIGHT || this == LEFT
     private fun Int.isAttackKey() = this == SPACE
     private fun Int.changeScreenKey() = this == C
+    private fun Int.isPauseKey() = this == P
+    private fun Int.isRestartKey() = this == R
 
     override fun keyDown(keycode: Int): Boolean {
-        if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey()) return false
-        println(keycode)
+        if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey() && !keycode.isPauseKey() && !keycode.isRestartKey()) return false
         when(keycode){
             RIGHT -> playerCos+=1f
             LEFT-> playerCos-=1f
             UP -> playerSin+=1f
-            C -> changeScreen()
+            P -> {
+                pause = !pause
+                pauseScreen.invoke()
+            }
+            R -> changeScreen()
             SPACE -> updateAttack()
         }
         updateMovement()

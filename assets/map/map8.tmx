@@ -42,7 +42,7 @@
  </tileset>
  <layer id="1" name="background" width="20" height="24">
   <data encoding="base64" compression="zlib">
-   eJzTYGBgSKYS1gRiFyBmZqQOdqKDeUpAvjKRWIWBsHkgMWciMTa96GJJJIR/ChHmDfb4GDVveJu3CMhfDMRLGIhj09u8wR5+MIxebqGXTdjUeuIxD73cwucPJyLUDVfzPLDUC7CwdSZCHbpaAMdsPHU=
+   eJzTYGBgSKYS1gRiFyB+BMSPKcRPgNgJah4TIwMDMxC/ALKVGUnDLxkgelkYMc0DiSmBzCQSq6DpxWYeSMyZSIxNL7pYEgnhn0LAPA5G0uOBE495lOBR8wa/ebTIb4uA/MVAvISBODah/EFN82iVP3CFIyyssKlVwWMetnJLBYs6dLWeeMxDL7dwpSt0tUPBPCW0cFfBYR66OmxqPdDCHYY90czDpQ5dLQAZl2yg
   </data>
  </layer>
  <layer id="2" name="foreground" width="20" height="24">
@@ -98,7 +98,11 @@
   <object id="87" name="platform" x="447.682" y="384.273" width="31.3636" height="4.18182"/>
  </objectgroup>
  <objectgroup id="4" name="portals">
-  <object id="42" name="portal" x="308.375" y="67.25" width="6.125" height="14.25"/>
+  <object id="42" name="portal" x="308.375" y="67.25" width="6.125" height="14.25">
+   <properties>
+    <property name="toMap" value="map/map9.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="entity">
   <object id="2" name="box" gid="514" x="184.333" y="265.333" width="22" height="16"/>
