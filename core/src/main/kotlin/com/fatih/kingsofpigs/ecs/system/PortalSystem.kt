@@ -9,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.EntityModel
+import com.fatih.kingsofpigs.ecs.component.LifeComponent
+import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.playerHp
+import com.fatih.kingsofpigs.ecs.component.LifeComponent.Companion.playerLife
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent
 import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
@@ -23,6 +26,7 @@ import kotlin.experimental.or
 
 class PortalSystem (
     private val gameStage : Stage,
+    private val lifeComps : ComponentMapper<LifeComponent>
 ): IntervalSystem() {
 
     private val tmxMapLoader = TmxMapLoader()
@@ -31,6 +35,11 @@ class PortalSystem (
     var portalPath : String = ""
 
     private fun changeMap(mapPath : String){
+        val playerEntity = world.family(anyOf = arrayOf(PlayerComponent::class)).firstOrNull()
+        playerEntity?.let {
+            playerLife = lifeComps[it].currentLife
+            playerHp = lifeComps[it].currentHp
+        }
         world.removeAll()
         currentMap?.disposeSafely()
         currentMap = tmxMapLoader.load(mapPath)

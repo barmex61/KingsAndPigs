@@ -19,7 +19,6 @@ import com.fatih.kingsofpigs.ecs.component.DestroyableComponent.Companion.Destro
 import com.fatih.kingsofpigs.ecs.component.DialogComponent.Companion.DialogComponentListener
 import com.fatih.kingsofpigs.ecs.component.FloatingTextComponent.Companion.FloatingTextComponentListener
 import com.fatih.kingsofpigs.ecs.component.ImageComponent.Companion.ImageComponentListener
-import com.fatih.kingsofpigs.ecs.component.LightComponent
 import com.fatih.kingsofpigs.ecs.component.LightComponent.Companion.LightComponentListener
 import com.fatih.kingsofpigs.ecs.component.PhysicComponent.Companion.PhysicComponentListener
 import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent.Companion.RangeAttackComponentListener
@@ -44,6 +43,7 @@ import com.fatih.kingsofpigs.ecs.system.PortalSystem
 import com.fatih.kingsofpigs.ecs.system.RangeAttackSystem
 import com.fatih.kingsofpigs.ecs.system.RenderSystem
 import com.fatih.kingsofpigs.ecs.system.StateSystem
+import com.fatih.kingsofpigs.event.VictoryEvent
 import com.fatih.kingsofpigs.event.StopAudioEvent
 import com.fatih.kingsofpigs.event.fireEvent
 import com.fatih.kingsofpigs.input.KeyboardInputProcessor
@@ -69,7 +69,7 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
     private val gameStage = Stage(gameViewport,spriteBatch)
     private val box2dWorld = createWorld(Vector2(0f,-9.8f) * 1/UNIT_SCALE * 0.7f,false)
     private val textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObject.atlas"))
-    private val uiStage = Stage(uiViewport,spriteBatch).apply { isDebugAll = true }
+    private val uiStage = Stage(uiViewport,spriteBatch)
     private var disposed : Boolean = false
     private var gameView: GameView
     private var kbInputProcessor: KeyboardInputProcessor
@@ -127,17 +127,22 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
             gameView =  gameView(isPhone = Gdx.app.type == ApplicationType.Android || Gdx.app.type == ApplicationType.iOS){
                 gameStage.addListener(this)
             }
-            pauseView().apply { isVisible = false }
+            pauseView().apply {
+                isVisible = false
+                gameStage.addListener(this)
+            }
         }
         addProcessor(uiStage)
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
+
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map10.tmx"
+            portalPath = "map/map1.tmx"
         }
         kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen, pauseScreen = ::pause)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor
         gameView.inputProcessor = kbInputProcessor
+        world.system<AudioSystem>().changeScreen = ::changeScreen
     }
 
     companion object{
@@ -166,12 +171,8 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
 
     override fun render(delta: Float) {
         if (gameEnd){
-            gameStage.fireEvent(StopAudioEvent())
+            gameStage.fireEvent(VictoryEvent())
             kbInputProcessor.pause = true
-            uiStage.actors.filterIsInstance<PauseView>().first().apply {
-                textField.style.fontColor = Color.GREEN
-                textField.text = "Victory"
-            }
             pause()
             gameEnd = false
         }

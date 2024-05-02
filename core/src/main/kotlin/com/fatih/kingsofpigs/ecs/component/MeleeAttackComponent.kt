@@ -40,7 +40,7 @@ class MeleeAttackComponent (
 
     companion object{
         const val DEFAULT_ATTACK_RANGE = 1f
-        const val DEFAULT_ATTACK_DAMAGE = 4
+        const val DEFAULT_ATTACK_DAMAGE = 10
     }
 
 }

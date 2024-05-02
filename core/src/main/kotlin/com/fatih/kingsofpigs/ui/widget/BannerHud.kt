@@ -42,6 +42,7 @@ class BannerHud(
         textField("Kings And Pigs",TextFields.TITLE.name){
             setPosition(51f,38f)
             alignment = Align.center
+            style.fontColor =  Color(63f/255f,63f/255f,63/255f,1f)
         }
         image(skin[Drawables.ICON_CROWN]){
             setSize(35f,30f)
@@ -52,7 +53,7 @@ class BannerHud(
             setSize(250f,200f)
         }
         label("PLAY",Labels.COLUMN.name){
-            setPosition(35f,-80f)
+            setPosition(35f,-100f)
             setAlignment(Align.center)
             setSize(190f,40f)
             onClick {
@@ -69,16 +70,8 @@ class BannerHud(
                 }
             }
         }
-        label("SCORE",Labels.COLUMN.name){
-            setPosition(35f,-130f)
-            setAlignment(Align.center)
-            setSize(190f,40f)
-            onClick {
-
-            }
-        }
         label("HOW TO PLAY",Labels.COLUMN.name){
-            setPosition(35f,-180f)
+            setPosition(35f,-158f)
             setAlignment(Align.center)
             setSize(190f,40f)
             onClick {
@@ -103,15 +96,12 @@ class BannerHud(
         }
         image(skin[Drawables.ICON_LIGHTNING]){
             setSize(25f,30f)
-            setPosition(25f,-75f)
+            setPosition(25f,-96f)
         }
-        image(skin[Drawables.ICON_SCORE]){
-            setSize(25f,30f)
-            setPosition(25f,-125f)
-        }
+
         image(skin[Drawables.ICON_MENU]){
             setSize(23f,25f)
-            setPosition(25f,-172f)
+            setPosition(25f,-150f)
         }
     }
 }

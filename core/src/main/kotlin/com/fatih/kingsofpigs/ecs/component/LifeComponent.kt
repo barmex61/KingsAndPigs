@@ -12,7 +12,9 @@ data class LifeComponent (
     var getHit : Boolean = false
 ){
     companion object{
-        const val DEFAULT_MAX_HP = 30f
+        const val DEFAULT_MAX_HP = 50f
         const val DEFAULT_MAX_LIFE = 3
+        var playerLife = 3
+        var playerHp = 100f
     }
 }

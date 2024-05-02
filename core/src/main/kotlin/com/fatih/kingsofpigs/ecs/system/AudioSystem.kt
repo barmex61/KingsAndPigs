@@ -5,6 +5,8 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.fatih.kingsofpigs.event.GameOverEvent
+import com.fatih.kingsofpigs.event.VictoryEvent
 import com.fatih.kingsofpigs.event.JumpEvent
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.event.MeleeAttackEvent
@@ -36,6 +38,7 @@ class AudioSystem : IntervalSystem() , EventListener{
         "audio/player_hit2.wav",
         "audio/demon_laught.mp3"
     )
+    var changeScreen : () -> Unit = {}
 
     init {
         soundPaths.forEach {
@@ -46,19 +49,42 @@ class AudioSystem : IntervalSystem() , EventListener{
     override fun onTick() {
 
     }
+    private fun stopMusic(){
+        musicCache.values.forEach {
+            it.stop()
+        }
+    }
 
     override fun handle(event: Event): Boolean {
         when(event){
             is StopAudioEvent ->{
-                musicCache.values.forEach {
-                    it.stop()
+                stopMusic()
+            }
+            is VictoryEvent ->{
+                stopMusic()
+                musicCache.getOrPut("audio/victory.mp3") {
+                    Gdx.audio.newMusic(Gdx.files.internal("audio/victory.mp3"))
+                }.apply {
+                    play()
+                    setOnCompletionListener {
+                        changeScreen()
+                    }
+                }
+            }
+            is GameOverEvent -> {
+                stopMusic()
+                musicCache.getOrPut("audio/gameover.mp3") {
+                    Gdx.audio.newMusic(Gdx.files.internal("audio/gameover.mp3"))
+                }.apply {
+                    play()
+                    setOnCompletionListener {
+                        changeScreen()
+                    }
                 }
             }
             is MapChangeEvent ->{
+                stopMusic()
                 val musicPath = event.map.property<String>("mapMusic")
-                musicCache.values.forEach {
-                    it.stop()
-                }
                 musicCache.getOrPut(musicPath){
                     Gdx.audio.newMusic(Gdx.files.internal(musicPath))
                 }.also {

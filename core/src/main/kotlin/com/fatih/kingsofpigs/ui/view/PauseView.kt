@@ -3,11 +3,16 @@ package com.fatih.kingsofpigs.ui.view
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.scenes.scene2d.Event
+import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
+import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.isLightsOn
+import com.fatih.kingsofpigs.event.GameOverEvent
+import com.fatih.kingsofpigs.event.VictoryEvent
 import com.fatih.kingsofpigs.ui.Labels
 import com.fatih.kingsofpigs.ui.TextFields
 import ktx.actors.plusAssign
@@ -21,7 +26,7 @@ import ktx.scene2d.textField
 
 class PauseView(
     skin : Skin
-) : KTable, Table(){
+) : KTable, Table(),EventListener{
 
     var textField : TextField
 
@@ -38,6 +43,25 @@ class PauseView(
             this.style.fontColor = Color.RED
             this.alignment = Align.center
         }
+    }
+
+    override fun handle(event: Event): Boolean {
+        when(event){
+            is VictoryEvent ->{
+                isLightsOn = false
+                textField.style.fontColor = Color.GREEN
+                textField.text = "Victory"
+                this.isVisible = true
+            }
+            is GameOverEvent ->{
+                isLightsOn = false
+                textField.style.fontColor = Color.RED
+                textField.text = "Game Over!"
+                this.isVisible = true
+            }
+            else -> Unit
+        }
+        return false
     }
 }
 

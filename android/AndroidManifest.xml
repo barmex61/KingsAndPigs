@@ -11,6 +11,9 @@
       android:label="@string/app_name"
       tools:ignore="UnusedAttribute"
       android:theme="@style/GdxTheme">
+      <meta-data
+          android:name="com.google.android.gms.ads.APPLICATION_ID"
+          android:value="ca-app-pub-7923951045985903~8192222650"/>
     <activity
         android:name="com.fatih.kingsofpigs.android.AndroidLauncher"
         android:label="@string/app_name"
