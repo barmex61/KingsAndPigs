@@ -78,9 +78,13 @@
   <object id="52" x="23.25" y="23.75" width="273.5" height="8"/>
  </objectgroup>
  <objectgroup id="4" name="portals">
-  <object id="28" name="portal" x="253.636" y="66.3636" width="7.45455" height="14.9091"/>
+  <object id="28" name="portal" x="253.636" y="66.3636" width="7.45455" height="14.9091">
+   <properties>
+    <property name="toMap" value="map/map8.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="5" name="entity">
+ <objectgroup id="5" name="entity" visible="0">
   <object id="1" name="door" gid="516" x="233.667" y="95.6667" width="46" height="56"/>
   <object id="2" name="door" gid="516" x="123" y="608" width="46" height="56"/>
   <object id="3" name="pig_box" gid="520" x="192" y="480" width="26" height="30"/>

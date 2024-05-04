@@ -11,6 +11,7 @@ import com.fatih.kingsofpigs.ecs.component.AnimationComponent.Companion.DEFAULT_
 import com.fatih.kingsofpigs.ecs.component.AnimationType
 import com.fatih.kingsofpigs.ecs.component.DialogType
 import com.fatih.kingsofpigs.ecs.component.EntityModel
+import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.isLightsOn
 import com.fatih.kingsofpigs.screens.GameScreen.Companion.gameEnd
 import ktx.math.random
 import ktx.math.vec2
@@ -263,6 +264,9 @@ class Dead : Actions(){
     override fun execute(): Status {
 
         if (status != Status.RUNNING){
+            if (entity.entityModel == EntityModel.DEMON || entity.entityModel == EntityModel.GOLEM){
+                isLightsOn = false
+            }
             if (entity.entityModel != EntityModel.KING_PIG && entity.entityModel != EntityModel.PIG_BOX && entity.entityModel != EntityModel.PIG && entity.entityModel != EntityModel.DEMON){
                 entity.scaleImage(1.15f)
             }

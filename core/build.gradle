@@ -19,4 +19,5 @@ dependencies {
   api "io.github.libktx:ktx-tiled:$ktxVersion"
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   api "io.github.quillraven.fleks:Fleks:1.6-JVM"
+
 }

@@ -33,7 +33,7 @@ android {
   }
   defaultConfig {
     applicationId 'com.fatih.kingofpigs'
-    minSdkVersion 19
+    minSdkVersion 21
     targetSdkVersion 34
     versionCode 1
     versionName "1.0"
@@ -63,7 +63,7 @@ repositories {
 configurations { natives }
 
 dependencies {
-  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
   implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
   implementation project(':core')
 
@@ -75,14 +75,14 @@ dependencies {
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-  natives "com.google.android.gms:play-services-ads:23.0.0"
+  implementation 'com.google.android.gms:play-services-ads:23.0.0'
 
 }
 
 // Called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
-task copyAndroidNatives() {
+tasks.register('copyAndroidNatives') {
   doFirst {
     file("libs/armeabi-v7a/").mkdirs()
     file("libs/arm64-v8a/").mkdirs()
@@ -91,11 +91,11 @@ task copyAndroidNatives() {
 
     configurations.getByName("natives").copy().files.each { jar ->
       def outputDir = null
-      if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-      if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-      if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-      if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-      if(outputDir != null) {
+      if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+      if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+      if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+      if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+      if (outputDir != null) {
         copy {
           from zipTree(jar)
           into outputDir
@@ -109,7 +109,7 @@ tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") 
   packageTask.dependsOn 'copyAndroidNatives'
 }
 
-task run(type: Exec) {
+tasks.register('run', Exec) {
   def path
   def localProperties = project.file("../local.properties")
   if (localProperties.exists()) {

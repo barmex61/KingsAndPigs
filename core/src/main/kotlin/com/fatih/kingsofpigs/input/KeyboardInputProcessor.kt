@@ -57,9 +57,10 @@ class KeyboardInputProcessor(
     private fun Int.changeScreenKey() = this == C
     private fun Int.isPauseKey() = this == P
     private fun Int.isRestartKey() = this == R
+    private fun Int.changeAdVisibility() = this == M
 
     override fun keyDown(keycode: Int): Boolean {
-        if (!keycode.isMovementKey() && !keycode.isAttackKey() && !keycode.changeScreenKey() && !keycode.isPauseKey() && !keycode.isRestartKey()) return false
+        if (!keycode.isMovementKey() && !keycode.changeAdVisibility() && !keycode.isAttackKey() && !keycode.changeScreenKey() && !keycode.isPauseKey() && !keycode.isRestartKey()) return false
         when(keycode){
             RIGHT -> playerCos+=1f
             LEFT-> playerCos-=1f

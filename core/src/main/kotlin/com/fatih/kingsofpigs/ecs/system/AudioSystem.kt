@@ -21,6 +21,7 @@ class AudioSystem : IntervalSystem() , EventListener{
 
     private val musicCache = mutableMapOf<String,Music>()
     private val soundCache = mutableMapOf<String,Sound>()
+    private var lastAudioPath = "audio/mapmusic.mp3"
     private val soundPaths = listOf(
         "audio/bomb.ogg",
         "audio/cannon_explosion.ogg",
@@ -83,8 +84,9 @@ class AudioSystem : IntervalSystem() , EventListener{
                 }
             }
             is MapChangeEvent ->{
-                stopMusic()
                 val musicPath = event.map.property<String>("mapMusic")
+                if(lastAudioPath != musicPath) stopMusic()
+                lastAudioPath = musicPath
                 musicCache.getOrPut(musicPath){
                     Gdx.audio.newMusic(Gdx.files.internal(musicPath))
                 }.also {

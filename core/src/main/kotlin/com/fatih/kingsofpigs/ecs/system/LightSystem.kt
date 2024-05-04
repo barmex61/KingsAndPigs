@@ -22,12 +22,15 @@ class LightSystem(
     private var ambientTransitionTime = 0f
     private var ambientColorFrom = dayAmbientLight
     private var ambientColorTo = nightAmbientLight
-
+    var ambientColor = Color(0f,0f,0f,0f)
+    var currentNightAmbient = nightAmbientLight
+    private var alreadySet = false
 
     override fun onTick() {
         super.onTick()
         if (isLightsOn){
-            if (ambientTransitionTime >= 2f){
+            alreadySet = false
+            if (ambientTransitionTime >= 1f){
                 ambientTransitionTime = 0f
                 if (ambientColorFrom == dayAmbientLight){
                     ambientColorFrom = nightAmbientLight
@@ -37,12 +40,22 @@ class LightSystem(
                     ambientColorTo = nightAmbientLight
                 }
             }else{
+                if (currentNightAmbient != nightAmbientLight){
+                    ambientColorTo = nightAmbientLight
+                    currentNightAmbient = nightAmbientLight
+                }
                 setAmbientColor()
-                ambientTransitionTime += deltaTime * 0.6f
+                ambientTransitionTime += deltaTime * 0.5F
             }
             rayHandler.setAmbientLight(ambientColor)
+        }else{
+            if (!alreadySet){
+                rayHandler.setAmbientLight(Color.WHITE)
+                alreadySet = true
+            }
         }
     }
+
 
     override fun onTickEntity(entity: Entity) {
         val lightComponent = lightComps[entity]
@@ -67,9 +80,7 @@ class LightSystem(
     companion object{
         private val interpolation = Interpolation.smoother
         private val dayAmbientLight = Color.WHITE
-        private val nightAmbientLight = Color.BLACK
+        var nightAmbientLight = Color.WHITE
         var isLightsOn : Boolean = false
-        var ambientColor = Color.WHITE
-
     }
 }

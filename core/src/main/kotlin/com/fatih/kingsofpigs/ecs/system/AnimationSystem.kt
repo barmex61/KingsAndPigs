@@ -38,7 +38,7 @@ class AnimationSystem(
                 nextAnimation = EMPTY_ANIMATION
             }
             animationTimer += deltaTime
-            imageComponent.image.drawable = animation.getKeyFrame(animationTimer)
+            imageComponent.image.drawable = animation.getKeyFrame(animationTimer.coerceAtLeast(0f))
             if (entityModel == EntityModel.DOOR && animationType == AnimationType.OPENING && isAnimationDone){
                 nextAnimation(AnimationType.CLOSING,PlayMode.NORMAL, DEFAULT_FRAME_DURATION )
             }

@@ -8,11 +8,12 @@ import com.fatih.kingsofpigs.input.addProcessor
 import com.fatih.kingsofpigs.input.removeProcessor
 import com.fatih.kingsofpigs.ui.view.UiView
 import com.fatih.kingsofpigs.ui.view.uiView
+import com.fatih.kingsofpigs.utils.AdVisibilityListener
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.scene2d.actors
 
-class UiScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen{
+class UiScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibilityListener?,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen{
 
     private val uiCamera = OrthographicCamera()
     private val uiViewPort = ExtendViewport(960f,540f,uiCamera)

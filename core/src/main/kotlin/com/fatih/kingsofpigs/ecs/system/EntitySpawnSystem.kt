@@ -37,8 +37,8 @@ import com.fatih.kingsofpigs.ecs.component.RangeAttackComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
 import com.fatih.kingsofpigs.ecs.component.StateComponent
-import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.ambientColor
 import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.isLightsOn
+import com.fatih.kingsofpigs.ecs.system.LightSystem.Companion.nightAmbientLight
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.AllOf
@@ -449,7 +449,7 @@ class EntitySpawnSystem (
                 event.map.forEachLayer<MapLayer> {mapLayer->
                     isLightsOn = event.map.property<Boolean>("hasLights")
                     if (isLightsOn){
-                        ambientColor = event.map.property<Color>("lightColor")
+                        nightAmbientLight = event.map.property<Color>("lightColor")
                     }
                     mapLayer.objects.forEach {mapObject->
                         if (mapLayer.name == RenderSystem.MapLayerType.ENTITY.layerName){

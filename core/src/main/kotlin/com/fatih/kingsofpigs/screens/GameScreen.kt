@@ -52,6 +52,7 @@ import com.fatih.kingsofpigs.ui.view.GameView
 import com.fatih.kingsofpigs.ui.view.PauseView
 import com.fatih.kingsofpigs.ui.view.gameView
 import com.fatih.kingsofpigs.ui.view.pauseView
+import com.fatih.kingsofpigs.utils.AdVisibilityListener
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
@@ -61,8 +62,9 @@ import ktx.math.div
 import ktx.math.times
 import ktx.scene2d.actors
 
-class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
+class GameScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibilityListener?,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
 
+    private var timer = 0f
     private val orthographicCamera = OrthographicCamera()
     private val gameViewport = ExtendViewport(16f,9f,orthographicCamera)
     private val uiViewport = ExtendViewport(320f,180f)
@@ -137,7 +139,7 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
 
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map1.tmx"
+            portalPath = "map/map8.tmx"
         }
         kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen, pauseScreen = ::pause)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor
@@ -170,6 +172,11 @@ class GameScreen(spriteBatch: SpriteBatch,private val changeScreen : (Class<out 
 
 
     override fun render(delta: Float) {
+        timer += delta
+        if (timer >= 10f){
+            adVisibilityListener?.setVisibility(true)
+            timer = -100f
+        }
         if (gameEnd){
             gameStage.fireEvent(VictoryEvent())
             kbInputProcessor.pause = true

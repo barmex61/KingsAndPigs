@@ -121,7 +121,7 @@
   <object id="15" name="box" gid="514" x="448.333" y="264" width="22" height="16"/>
   <object id="16" name="box" gid="514" x="198" y="236" width="22" height="16"/>
   <object id="17" name="box" gid="514" x="65.3333" y="194.667" width="22" height="16"/>
-  <object id="18" name="box" gid="514" x="91" y="237" width="22" height="16"/>
+  <object id="18" name="box" gid="514" x="244.333" y="281.667" width="22" height="16"/>
   <object id="19" name="door" gid="516" x="64" y="736" width="46" height="56"/>
   <object id="20" name="box" gid="514" x="384" y="736" width="22" height="16"/>
   <object id="21" name="box" gid="514" x="389.5" y="719.5" width="22" height="16"/>
@@ -134,16 +134,8 @@
   <object id="30" name="pig" gid="518" x="450.5" y="703.5" width="34" height="28"/>
   <object id="31" name="pig_light" gid="522" x="456.667" y="447.333" width="26" height="18"/>
   <object id="32" name="cannon" gid="515" x="416.5" y="451" width="44" height="28"/>
-  <object id="33" name="pig_light" gid="2147484170" x="167" y="447" width="26" height="18">
-   <properties>
-    <property name="isFLipX" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="34" name="cannon" gid="2147484163" x="179.333" y="451.333" width="44" height="28">
-   <properties>
-    <property name="isFlipX" type="bool" value="true"/>
-   </properties>
-  </object>
+  <object id="33" name="pig_light" gid="522" x="227.364" y="447.909" width="26" height="18"/>
+  <object id="34" name="cannon" gid="515" x="188.333" y="451.333" width="44" height="28"/>
   <object id="35" name="king_pig" gid="521" x="259" y="447.333" width="38" height="28"/>
   <object id="36" name="king_pig" gid="521" x="339.667" y="446.667" width="38" height="28"/>
   <object id="37" name="king_pig" gid="521" x="379" y="95.3333" width="38" height="28"/>

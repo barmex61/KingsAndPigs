@@ -14,6 +14,7 @@ class IOSLauncher : IOSApplication.Delegate() {
     override fun createApplication(): IOSApplication {
         return IOSApplication(KingOfPigs(), IOSApplicationConfiguration().apply {
             // Configure your application here.
+
         })
     }
 

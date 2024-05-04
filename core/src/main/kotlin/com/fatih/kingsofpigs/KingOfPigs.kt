@@ -6,19 +6,20 @@ import com.fatih.kingsofpigs.screens.GameScreen
 import com.fatih.kingsofpigs.screens.UiScreen
 import com.fatih.kingsofpigs.ui.disposeSkin
 import com.fatih.kingsofpigs.ui.loadSkin
+import com.fatih.kingsofpigs.utils.AdVisibilityListener
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.gdxError
 
 
-class KingOfPigs : KtxGame<KtxScreen>() {
+class KingOfPigs(val adVisibilityListener: AdVisibilityListener? = null) : KtxGame<KtxScreen>() {
 
     private val spriteBatch by lazy {
         SpriteBatch()
     }
     override fun create() {
         loadSkin()
-        addScreen(UiScreen(spriteBatch, changeScreen = ::changeScreen))
+        addScreen(UiScreen(spriteBatch,adVisibilityListener, changeScreen = ::changeScreen))
         setScreen<UiScreen>()
     }
 
@@ -26,11 +27,11 @@ class KingOfPigs : KtxGame<KtxScreen>() {
         removeScreen((currentScreen as KtxScreen)::class.java)
         when(screenType){
             UiScreen::class.java ->{
-                addScreen(UiScreen(spriteBatch, ::changeScreen))
+                addScreen(UiScreen(spriteBatch,adVisibilityListener, ::changeScreen))
                 setScreen<UiScreen>()
             }
             GameScreen::class.java ->{
-                addScreen(GameScreen(spriteBatch,::changeScreen))
+                addScreen(GameScreen(spriteBatch,adVisibilityListener,::changeScreen))
                 setScreen<GameScreen>()
             }
             else -> gdxError("No screen type $screenType found in game")
