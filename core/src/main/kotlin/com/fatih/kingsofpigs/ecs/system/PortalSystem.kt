@@ -17,6 +17,7 @@ import com.fatih.kingsofpigs.ecs.component.PlayerComponent
 import com.fatih.kingsofpigs.ecs.component.SpawnConfig
 import com.fatih.kingsofpigs.event.MapChangeEvent
 import com.fatih.kingsofpigs.event.fireEvent
+import com.fatih.kingsofpigs.utils.AdVisibilityListener
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.IntervalSystem
@@ -26,15 +27,18 @@ import kotlin.experimental.or
 
 class PortalSystem (
     private val gameStage : Stage,
-    private val lifeComps : ComponentMapper<LifeComponent>
+    private val lifeComps : ComponentMapper<LifeComponent>,
 ): IntervalSystem() {
 
     private val tmxMapLoader = TmxMapLoader()
     private var currentMap : TiledMap? = null
+    var adVisibilityListener : AdVisibilityListener? = null
     var changeMap : Boolean = false
     var portalPath : String = ""
 
     private fun changeMap(mapPath : String){
+        println(mapPath)
+        if (mapPath != "map/map1.tmx") adVisibilityListener?.showInterstitialAd(true)
         val playerEntity = world.family(anyOf = arrayOf(PlayerComponent::class)).firstOrNull()
         playerEntity?.let {
             playerLife = lifeComps[it].currentLife

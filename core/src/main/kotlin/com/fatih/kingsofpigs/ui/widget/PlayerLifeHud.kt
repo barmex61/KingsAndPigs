@@ -50,7 +50,7 @@ class PlayerLifeHud(
                 )
             )
         }else{
-            val lastPositionX = hearts.last().x
+            val lastPositionX = hearts.lastOrNull()?.x ?:4.5f
             val image = image(skin[Drawables.HEARTH]){
                 alpha = 0f
                 setPosition(lastPositionX + 8.5f,9.2f)

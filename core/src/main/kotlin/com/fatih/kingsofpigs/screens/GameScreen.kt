@@ -52,6 +52,7 @@ import com.fatih.kingsofpigs.ui.view.GameView
 import com.fatih.kingsofpigs.ui.view.PauseView
 import com.fatih.kingsofpigs.ui.view.gameView
 import com.fatih.kingsofpigs.ui.view.pauseView
+import com.fatih.kingsofpigs.ui.view.rewardedAdView
 import com.fatih.kingsofpigs.utils.AdVisibilityListener
 import com.fatih.kingsofpigs.utils.Constants
 import com.github.quillraven.fleks.world
@@ -64,7 +65,6 @@ import ktx.scene2d.actors
 
 class GameScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibilityListener?,private val changeScreen : (Class<out KtxScreen>) -> Unit) : KtxScreen {
 
-    private var timer = 0f
     private val orthographicCamera = OrthographicCamera()
     private val gameViewport = ExtendViewport(16f,9f,orthographicCamera)
     private val uiViewport = ExtendViewport(320f,180f)
@@ -99,6 +99,7 @@ class GameScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibility
             add(box2dWorld)
             add(textureAtlas)
             add(rayHandler)
+
         }
         systems {
             add<EntitySpawnSystem>()
@@ -133,16 +134,24 @@ class GameScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibility
                 isVisible = false
                 gameStage.addListener(this)
             }
+            adVisibilityListener?.let {
+                rewardedAdView(adVisibilityListener = it, gameStage = gameStage).apply{
+                    gameStage.addListener(this)
+                }
+            }
+
         }
         addProcessor(uiStage)
         world.systems.filterIsInstance<EventListener>().forEach { gameStage.addListener(it) }
 
         world.system<PortalSystem>().apply {
             changeMap = true
-            portalPath = "map/map8.tmx"
+            portalPath = "map/map1.tmx"
         }
         kbInputProcessor = KeyboardInputProcessor(world, changeScreen = ::changeScreen, pauseScreen = ::pause)
         world.system<PhysicSystem>().inputProcessor = kbInputProcessor
+        world.system<PortalSystem>().adVisibilityListener = this.adVisibilityListener
+        world.system<DeadSystem>().adVisibilityListener = this.adVisibilityListener
         gameView.inputProcessor = kbInputProcessor
         world.system<AudioSystem>().changeScreen = ::changeScreen
     }
@@ -172,11 +181,7 @@ class GameScreen(spriteBatch: SpriteBatch,val adVisibilityListener: AdVisibility
 
 
     override fun render(delta: Float) {
-        timer += delta
-        if (timer >= 10f){
-            adVisibilityListener?.setVisibility(true)
-            timer = -100f
-        }
+
         if (gameEnd){
             gameStage.fireEvent(VictoryEvent())
             kbInputProcessor.pause = true

@@ -19,13 +19,14 @@ import ktx.style.touchpad
 enum class Fonts(val scale : Float = 1f){
     SEGOE_PRINT_GRADIENT_GREEN(0.4F),
     SEGOE_PRINT_GRADIENT_RED(0.4F),
+    CORBEL(0.3F),
     SYLFAEN(0.7F);
     val atlasKey = this.name.lowercase()
     val fontPath = "ui/${atlasKey}.fnt"
 }
 
 enum class Labels{
-    COLUMN,DIALOG
+    COLUMN,DIALOG,AD;
 }
 
 enum class TextFields{
@@ -61,6 +62,11 @@ fun loadSkin(){
         label(Labels.DIALOG.name){
             background = skin[Drawables.BIG_BACKGROUND]
             font = skin[Fonts.SYLFAEN]
+            fontColor = Color(67f/255f,54f/255f,29f/255f,1f)
+        }
+        label(Labels.AD.name){
+            background = skin[Drawables.BLUE_BACKGROUND]
+            font = skin[Fonts.CORBEL]
             fontColor = Color(67f/255f,54f/255f,29f/255f,1f)
         }
         imageButton(ImageButtons.ATTACK.skinKey) {

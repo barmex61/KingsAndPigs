@@ -193,7 +193,7 @@ class EntitySpawnSystem (
                         bodyType = BodyType.DynamicBody,
                         physicScaling = vec2(0.225f,0.45f),
                         physicOffset = vec2(-0.45f,-0.1f),
-                        attackScaling = 1.5f,
+                        attackScaling = 150f,
                         attackRange = 1.1f,
                         isRangeAttack = false,
                         critChance  = 50,
@@ -201,7 +201,7 @@ class EntitySpawnSystem (
                         attackFloatArray = floatArrayOf(- 0.6f , -1.1f , 0.7f , -1.55f , 1.8f, - 1.35f, 2.6f , - 0.6f, 2.63f , 0.4f, 1.8f, 1.3f, -0.6f , -1.1f),
                         attackFloatArrayMirror = floatArrayOf(0.6f , -1.1f , -0.7f , -1.55f , -1.8f, - 1.35f, -2.6f , - 0.6f, -2.63f , 0.4f, -1.8f, 1.3f, 0.6f , -1.1f),
                         lifeScaling = 2f,
-                        resurrectionTime = 4f,
+                        resurrectionTime = 2.5f,
                         canResurrect = true,
 
                     )

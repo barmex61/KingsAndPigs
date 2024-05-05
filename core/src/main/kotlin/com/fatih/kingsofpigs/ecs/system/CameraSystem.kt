@@ -39,16 +39,16 @@ class CameraSystem (
                 shakeCamera = false
             }
         }
-        val posX = imageComponent.image.x + imageComponent.image.width/2f + if(shakeCamera) (-1.5f..1.5f).random() else 0f
-        val posY = imageComponent.image.y + imageComponent.image.height/2f +if (shakeCamera) (-1.5f..1.5f).random() else 0f
+        val posX = imageComponent.image.x + imageComponent.image.width/2f + if(shakeCamera) (-3f..3f).random() else 0f
+        val posY = imageComponent.image.y + imageComponent.image.height/2f +if (shakeCamera) (-3f..3f).random() else 0f
         gameCamera.position.set(
             posX.coerceIn(
                 MathUtils.lerp(gameCamera.position.x,gameCamera.viewportWidth/2f,deltaTime ),
-                MathUtils.lerp(gameCamera.position.x,posX + 1f + gameCamera.viewportWidth/2f,deltaTime ),
+                MathUtils.lerp(gameCamera.position.x,posX + 6f + gameCamera.viewportWidth/2f,deltaTime ),
             ),
             posY.coerceIn(
                MathUtils.lerp(gameCamera.position.y,gameCamera.viewportHeight/2f,deltaTime *2F),
-                MathUtils.lerp(gameCamera.position.y,posY + 1f + gameCamera.viewportHeight/2f,deltaTime*2f),
+                MathUtils.lerp(gameCamera.position.y,posY + 6f + gameCamera.viewportHeight/2f,deltaTime*2f),
             ),
             gameCamera.position.z
         )
