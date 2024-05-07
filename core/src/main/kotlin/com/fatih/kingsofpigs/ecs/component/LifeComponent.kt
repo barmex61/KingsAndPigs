@@ -15,6 +15,6 @@ data class LifeComponent (
         const val DEFAULT_MAX_HP = 50f
         const val DEFAULT_MAX_LIFE = 3
         var playerLife = 3
-        var playerHp = 100f
+        var playerHp = 50f
     }
 }

@@ -29,18 +29,20 @@ class AndroidLauncher : AndroidApplication() , AdVisibilityListener,OnUserEarned
     private var rewardedInterstitialAd : RewardedInterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
 
-    private val adHandler = Handler(Looper.getMainLooper()){
-        when(it.what){
+    private val adHandler by lazy {
+        Handler(Looper.getMainLooper()){
+            when(it.what){
 
-            SHOW_INTERSTITIAL_AD ->{
-                rewardedInterstitialAd?.show(this,this)
-                true
+                SHOW_INTERSTITIAL_AD ->{
+                    rewardedInterstitialAd?.show(this,this)
+                    true
+                }
+                SHOW_REWARDED_AD -> {
+                    rewardedAd?.show(this,this)
+                    true
+                }
+                else -> false
             }
-            SHOW_REWARDED_AD -> {
-                rewardedAd?.show(this,this)
-                true
-            }
-            else -> false
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,13 +52,13 @@ class AndroidLauncher : AndroidApplication() , AdVisibilityListener,OnUserEarned
             loadInterstitialAd()
             loadRewardedAd()
         }
-        initialize(KingOfPigs(this), AndroidApplicationConfiguration().apply {
+        initialize(KingOfPigs().apply { adVisibilityListener = this@AndroidLauncher }, AndroidApplicationConfiguration().apply {
             useImmersiveMode = true
         })
     }
 
     private fun loadInterstitialAd() {
-        RewardedInterstitialAd.load(this, "ca-app-pub-3940256099942544/5354046379",
+        RewardedInterstitialAd.load(this, "ca-app-pub-7923951045985903/4447121592",
             AdRequest.Builder().build(), object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedInterstitialAd) {
                     rewardedInterstitialAd = ad
@@ -76,7 +78,7 @@ class AndroidLauncher : AndroidApplication() , AdVisibilityListener,OnUserEarned
     }
 
     private fun loadRewardedAd(){
-        RewardedAd.load(this,"ca-app-pub-3940256099942544/5224354917", AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
+        RewardedAd.load(this,"ca-app-pub-7923951045985903/2679261274", AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
             override fun onAdLoaded(ad: RewardedAd) {
                 rewardedAd = ad
                 rewardedAd!!.fullScreenContentCallback = object : FullScreenContentCallback(){

@@ -12,8 +12,9 @@ import ktx.app.KtxScreen
 import ktx.app.gdxError
 
 
-class KingOfPigs(val adVisibilityListener: AdVisibilityListener? = null) : KtxGame<KtxScreen>() {
+class KingOfPigs : KtxGame<KtxScreen>() {
 
+    var adVisibilityListener: AdVisibilityListener? = null
     private val spriteBatch by lazy {
         SpriteBatch()
     }
